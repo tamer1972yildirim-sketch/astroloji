@@ -1,0 +1,3159 @@
+<!DOCTYPE html>
+<html lang="tr" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>YILDIRIM ASTRA — Master Seviye Profesyonel Astroloji & Natal Harita Analiz Sistemi</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Astronomy Engine CDN (v2.1.19) -->
+  <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.browser.min.js"></script>
+
+  <!-- Marked.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            cosmic: {
+              950: '#04060e',
+              900: '#070b19',
+              800: '#0d1428',
+              700: '#131d38',
+              600: '#1c2a4f',
+            },
+            gold: {
+              200: '#fef08a',
+              300: '#fde047',
+              400: '#facc15',
+              500: '#d4af37',
+              600: '#b8860b',
+              700: '#926508',
+            }
+          },
+          fontFamily: {
+            display: ['Cinzel', 'serif'],
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    :root {
+      color-scheme: dark;
+    }
+
+    body {
+      background-color: #0f172a;
+      background-image:
+        radial-gradient(circle at 85% 10%, rgba(139, 92, 246, 0.22) 0%, transparent 45%),
+        radial-gradient(circle at 15% 25%, rgba(245, 158, 11, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 50% 65%, rgba(59, 130, 246, 0.16) 0%, transparent 50%),
+        radial-gradient(circle at 20% 90%, rgba(168, 85, 247, 0.18) 0%, transparent 40%),
+        linear-gradient(135deg, #1e153b 0%, #111836 50%, #0d122b 100%);
+      background-attachment: fixed;
+      color: #f1f5f9;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .cosmic-card {
+      background: rgba(26, 29, 63, 0.65);
+      border: 1px solid rgba(245, 158, 11, 0.26);
+      box-shadow: 0 12px 40px -8px rgba(10, 14, 38, 0.65), inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+    .cosmic-card-subtle {
+      background: rgba(30, 35, 75, 0.5);
+      border: 1px solid rgba(245, 158, 11, 0.2);
+      backdrop-filter: blur(10px);
+    }
+
+    .gold-gradient-text {
+      background: linear-gradient(135deg, #fffbeb 0%, #fde047 35%, #fbbf24 70%, #f59e0b 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .gold-border-glow:focus {
+      outline: none;
+      border-color: #fbbf24;
+      box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.28);
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
+      color: #0b0f19;
+      font-weight: 700;
+      transition: all 0.22s ease;
+    }
+
+    .btn-gold:hover {
+      background: linear-gradient(135deg, #fef08a 0%, #f59e0b 100%);
+      box-shadow: 0 0 25px rgba(251, 191, 36, 0.5);
+      transform: translateY(-1px);
+    }
+
+    .btn-gold:active {
+      transform: translateY(0);
+    }
+
+    .btn-cosmic {
+      background: rgba(49, 46, 129, 0.6);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      color: #fde047;
+      transition: all 0.2s ease;
+    }
+
+    .btn-cosmic:hover {
+      background: rgba(245, 158, 11, 0.2);
+      border-color: #fbbf24;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #070b19;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1c2a4f;
+      border-radius: 4px;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #d4af37;
+    }
+
+    /* Markdown Prose Styling for Master Astrolog Report */
+    .astro-prose {
+      color: #e2e8f0;
+      line-height: 1.8;
+      font-size: 0.98rem;
+    }
+    .astro-prose h1,
+    .astro-prose h2,
+    .astro-prose h3,
+    .astro-prose h4 {
+      font-family: 'Cinzel', serif;
+      color: #fde047;
+      margin-top: 1.85rem;
+      margin-bottom: 0.85rem;
+      line-height: 1.35;
+      letter-spacing: 0.02em;
+    }
+    .astro-prose h1 {
+      font-size: 1.65rem;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.35);
+      padding-bottom: 0.5rem;
+    }
+    .astro-prose h2 {
+      font-size: 1.35rem;
+      border-left: 4px solid #d4af37;
+      padding-left: 0.75rem;
+      background: linear-gradient(90deg, rgba(212, 175, 55, 0.1) 0%, transparent 100%);
+      padding-top: 0.35rem;
+      padding-bottom: 0.35rem;
+      border-radius: 0 0.375rem 0.375rem 0;
+    }
+    .astro-prose h3 {
+      font-size: 1.12rem;
+      color: #facc15;
+    }
+    .astro-prose p {
+      margin-bottom: 1rem;
+    }
+    .astro-prose ul,
+    .astro-prose ol {
+      margin-bottom: 1.15rem;
+      padding-left: 1.5rem;
+    }
+    .astro-prose ul {
+      list-style-type: disc;
+    }
+    .astro-prose ol {
+      list-style-type: decimal;
+    }
+    .astro-prose li {
+      margin-bottom: 0.45rem;
+    }
+    .astro-prose strong {
+      color: #fef08a;
+      font-weight: 600;
+    }
+    .astro-prose em {
+      color: #93c5fd;
+    }
+    .astro-prose blockquote {
+      border-left: 3px solid #d4af37;
+      background: rgba(212, 175, 55, 0.07);
+      padding: 0.85rem 1.2rem;
+      margin: 1.25rem 0;
+      border-radius: 0 0.5rem 0.5rem 0;
+      color: #f1f5f9;
+      font-style: italic;
+    }
+    .astro-prose code {
+      font-family: 'JetBrains Mono', monospace;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(212, 175, 55, 0.25);
+      color: #fde047;
+      padding: 0.15rem 0.4rem;
+      border-radius: 0.25rem;
+      font-size: 0.86em;
+    }
+    .astro-prose pre {
+      background: #050811;
+      border: 1px solid rgba(212, 175, 55, 0.25);
+      padding: 1rem;
+      border-radius: 0.5rem;
+      overflow-x: auto;
+      margin-bottom: 1.25rem;
+    }
+    .astro-prose pre code {
+      border: none;
+      padding: 0;
+      background: transparent;
+    }
+    .astro-prose table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.35rem 0;
+      font-size: 0.9rem;
+      background: rgba(7, 11, 25, 0.75);
+      border: 1px solid rgba(212, 175, 55, 0.28);
+      border-radius: 0.5rem;
+      overflow: hidden;
+    }
+    .astro-prose th {
+      background: rgba(212, 175, 55, 0.16);
+      color: #fde047;
+      font-weight: 600;
+      text-align: left;
+      padding: 0.7rem 0.85rem;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+    }
+    .astro-prose td {
+      padding: 0.65rem 0.85rem;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+      color: #e2e8f0;
+    }
+    .astro-prose tr:nth-child(even) td {
+      background: rgba(15, 23, 42, 0.45);
+    }
+    .astro-prose hr {
+      border: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.45), transparent);
+      margin: 2rem 0;
+    }
+
+    /* Print / PDF Export Rules */
+    @media print {
+      @page {
+        size: A4 portrait;
+        margin: 12mm;
+      }
+      body {
+        background: #ffffff !important;
+        color: #0f172a !important;
+        font-size: 10pt;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .cosmic-card,
+      .cosmic-card-subtle {
+        background: #ffffff !important;
+        border: 1px solid #cbd5e1 !important;
+        box-shadow: none !important;
+        color: #0f172a !important;
+        break-inside: avoid;
+        margin-bottom: 14px !important;
+      }
+      .gold-gradient-text {
+        background: none !important;
+        -webkit-text-fill-color: #0f172a !important;
+        color: #0f172a !important;
+      }
+      table {
+        border-collapse: collapse !important;
+        width: 100% !important;
+        font-size: 8.5pt !important;
+      }
+      th, td {
+        border: 1px solid #94a3b8 !important;
+        color: #0f172a !important;
+        padding: 4px 6px !important;
+      }
+      th {
+        background: #f1f5f9 !important;
+        font-weight: 700 !important;
+      }
+      .astro-prose,
+      .astro-prose p,
+      .astro-prose li,
+      .astro-prose td {
+        color: #0f172a !important;
+      }
+      .astro-prose h1,
+      .astro-prose h2,
+      .astro-prose h3,
+      .astro-prose h4,
+      .astro-prose strong {
+        color: #1e293b !important;
+        -webkit-text-fill-color: #1e293b !important;
+      }
+      .astro-prose h2 {
+        border-left: 4px solid #334155 !important;
+        background: #f8fafc !important;
+      }
+      .print-text-dark {
+        color: #0f172a !important;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen selection:bg-gold-500 selection:text-cosmic-950">
+
+  <!-- TOP HEADER -->
+  <header class="border-b border-amber-500/25 bg-[#121633]/85 backdrop-blur-md sticky top-0 z-40 no-print shadow-lg shadow-purple-950/30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div class="flex items-center gap-3.5">
+        <!-- Yıldırım & Kozmik Yıldız SVG İkonu -->
+        <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-300 via-amber-500 to-purple-600 p-[1.5px] shadow-lg shadow-amber-500/25">
+          <div class="w-full h-full bg-[#181a38] rounded-2xl flex items-center justify-center text-amber-400">
+            <svg class="w-7 h-7 drop-shadow-[0_0_8px_rgba(251,191,36,0.6)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" fill="url(#boltGrad)" stroke="#facc15" stroke-width="1.2"/>
+              <circle cx="18" cy="4" r="1.5" fill="#fde047" stroke="none"/>
+              <circle cx="5" cy="20" r="1.2" fill="#c084fc" stroke="none"/>
+              <defs>
+                <linearGradient id="boltGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#fef08a" />
+                  <stop offset="100%" stop-color="#f59e0b" />
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+        </div>
+        <div>
+          <h1 class="font-display text-xl sm:text-2xl font-bold tracking-wider gold-gradient-text flex items-center gap-2">
+            YILDIRIM ASTRA
+          </h1>
+          <p class="text-xs text-slate-300 font-medium">
+            Helenistik, Uranyen (Kozmobiyoloji), Medikal &amp; Karmik Master Natal Analiz Sistemi
+          </p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 text-xs font-mono text-slate-300">
+        <span class="px-2.5 py-1 rounded-full bg-slate-900/60 border border-amber-500/30 text-amber-300">
+          Astronomy Engine v2.1.19
+        </span>
+        <span class="px-2.5 py-1 rounded-full bg-slate-900/60 border border-emerald-500/40 text-emerald-300 font-medium">
+          Dahili Master Sentez Motoru v3.0 - API Gerektirmez
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+
+    <!-- 1. KULLANICI GİRİŞ EKRANI (FORM & UI) -->
+    <section class="cosmic-card rounded-2xl p-6 sm:p-8 no-print">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 mb-6 border-b border-amber-500/20">
+        <div>
+          <h2 class="font-display text-xl sm:text-2xl font-bold gold-gradient-text flex items-center gap-2">
+            <span>⚡</span> Natal Harita &amp; Ephemeris Parametreleri
+          </h2>
+          <p class="text-sm text-slate-300 mt-1">
+            Doğum bilgilerinizi, koordinatlarınızı ve yaşam yerinizi girerek hassas astronomik hesaplamayı ve master analizi başlatın.
+          </p>
+        </div>
+      </div>
+
+      <form id="astroForm" class="space-y-6" onsubmit="return false;">
+        <!-- Row 1: Ferah 3 Sütunlu Üst Satır: Ad Soyad (4) | Doğum Tarihi (4) | Doğum Saati (4) -->
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-5 items-start">
+          <!-- 1. Ad Soyad -->
+          <div class="md:col-span-4">
+            <label for="fullName" class="block text-xs font-semibold uppercase tracking-wider text-amber-300 mb-2">
+              1. Ad Soyad <span class="text-slate-400 font-normal">(Opsiyonel)</span>
+            </label>
+            <input
+              type="text"
+              id="fullName"
+              placeholder="Adınız ve Soyadınız"
+              class="w-full rounded-xl bg-[#1a1f42]/70 border border-amber-500/30 px-4 py-2.5 text-sm text-slate-100 placeholder-slate-400 gold-border-glow shadow-inner"
+            />
+          </div>
+
+          <!-- 2. Doğum Tarihi (Gün / Ay / Yıl) -->
+          <div class="md:col-span-4">
+            <label class="block text-xs font-semibold uppercase tracking-wider text-amber-300 mb-2">
+              2. Doğum Tarihi <span class="text-slate-300 font-normal">(Gün / Ay / Yıl)</span>
+            </label>
+            <div class="grid grid-cols-12 gap-2">
+              <input
+                type="number"
+                id="birthDay"
+                min="1"
+                max="31"
+                placeholder="GG"
+                title="Gün (1-31)"
+                class="col-span-3 w-full rounded-xl bg-[#1a1f42]/70 border border-amber-500/30 px-2 py-2.5 text-sm font-mono text-center text-slate-100 placeholder-slate-400 gold-border-glow"
+              />
+              <select
+                id="birthMonth"
+                title="Ay Seçiniz"
+                class="col-span-5 min-w-[110px] w-full rounded-xl bg-[#1a1f42]/70 border border-amber-500/30 px-2 py-2.5 text-xs sm:text-sm text-slate-100 gold-border-glow"
+              >
+                <option value="" disabled selected>Ay Seçiniz</option>
+                <option value="1">01 - Ocak</option>
+                <option value="2">02 - Şubat</option>
+                <option value="3">03 - Mart</option>
+                <option value="4">04 - Nisan</option>
+                <option value="5">05 - Mayıs</option>
+                <option value="6">06 - Haziran</option>
+                <option value="7">07 - Temmuz</option>
+                <option value="8">08 - Ağustos</option>
+                <option value="9">09 - Eylül</option>
+                <option value="10">10 - Ekim</option>
+                <option value="11">11 - Kasım</option>
+                <option value="12">12 - Aralık</option>
+              </select>
+              <input
+                type="number"
+                id="birthYear"
+                min="1900"
+                max="2100"
+                placeholder="YYYY"
+                title="Yıl (Örn: 1995)"
+                class="col-span-4 w-full rounded-xl bg-[#1a1f42]/70 border border-amber-500/30 px-2 py-2.5 text-sm font-mono text-center text-slate-100 placeholder-slate-400 gold-border-glow"
+              />
+            </div>
+          </div>
+
+          <!-- 3. Doğum Saati (Saat : Dakika) -->
+          <div class="md:col-span-4">
+            <label class="block text-xs font-semibold uppercase tracking-wider text-amber-300 mb-2">
+              3. Doğum Saati <span class="text-slate-300 font-normal">(Saat : Dakika)</span>
+            </label>
+            <div class="grid grid-cols-2 gap-2">
+              <input
+                type="number"
+                id="birthHour"
+                min="0"
+                max="23"
+                placeholder="SS"
+                title="Saat (0-23)"
+                class="w-full rounded-xl bg-[#1a1f42]/70 border border-amber-500/30 px-3 py-2.5 text-sm font-mono text-center text-slate-100 placeholder-slate-400 gold-border-glow"
+              />
+              <input
+                type="number"
+                id="birthMinute"
+                min="0"
+                max="59"
+                placeholder="DD"
+                title="Dakika (0-59)"
+                class="w-full rounded-xl bg-[#1a1f42]/70 border border-amber-500/30 px-3 py-2.5 text-sm font-mono text-center text-slate-100 placeholder-slate-400 gold-border-glow"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 1B: Saat Dilimi (UTC/GMT) Modülü - Kendi Ferah Satırında (Taşma Sorunu Çözüldü) -->
+        <div class="rounded-xl bg-[#15193b]/60 border border-amber-500/20 p-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
+            <label for="tzOffset" class="block text-xs font-semibold uppercase tracking-wider text-amber-300">
+              Saat Dilimi (UTC/GMT) &amp; Yaz/Kış Saati Hassasiyeti
+            </label>
+            <button
+              type="button"
+              id="btnAutoDetectTz"
+              class="self-start sm:self-auto text-xs font-mono text-sky-300 hover:text-amber-300 flex items-center gap-1.5 transition-colors"
+              title="Girilen tarihe göre Türkiye saat dilimini otomatik tespit et"
+            >
+              <span>⟳</span> <span class="underline">Tarihe Göre Otomatik Tespit Et</span>
+            </button>
+          </div>
+          <div class="flex flex-col sm:flex-row gap-2.5">
+            <select
+              id="tzOffset"
+              title="Doğum Anındaki Saat Dilimi (UTC/GMT)"
+              class="flex-1 w-full rounded-xl bg-[#1a1f42]/90 border border-amber-500/30 px-3.5 py-2.5 text-xs sm:text-sm font-mono text-amber-300 gold-border-glow truncate overflow-hidden"
+            >
+              <option value="auto" selected>Otomatik Tespit Et (Tarihe Göre Türkiye Saat Dilimi)</option>
+              <option value="2">GMT+2 (Türkiye Standart Kış Saati - 2016 Öncesi Kış Ayları)</option>
+              <option value="3">GMT+3 (Türkiye Yaz Saati / 2016 Sonrası Sabit Saat)</option>
+              <option value="1">GMT+1 (Avrupa Kış / Eski Uygulamalar)</option>
+              <option value="4">GMT+4 (İleri Yaz Saati - 1940'lar/70'ler Bazı Dönemler)</option>
+              <option value="manual">Manuel Giriş</option>
+            </select>
+
+            <!-- Manuel Giriş seçilirse açılan ondalıklı input (step="0.5") -->
+            <div id="manualTzWrapper" class="hidden sm:w-32">
+              <input
+                type="number"
+                id="manualTzInput"
+                step="0.5"
+                min="-12"
+                max="14"
+                placeholder="UTC± (Örn: 2)"
+                title="Manuel GMT/UTC Farkı (Örn: 2, 3, 3.5, -5)"
+                class="w-full rounded-xl bg-[#1a1f42]/90 border border-amber-400/60 px-3 py-2.5 text-xs font-mono text-center text-amber-300 gold-border-glow"
+              />
+            </div>
+          </div>
+
+          <!-- Otomatik Tespit ve Uyarı Kutusu (Sayfa açılışında gizli / hidden) -->
+          <div id="tzFeedbackBox" class="hidden mt-3 rounded-xl px-3.5 py-2.5 text-xs leading-relaxed border transition-all"></div>
+        </div>
+
+        <!-- Row 2: Birth Place & Nominatim Coordinates -->
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-end">
+          <!-- 4. Doğum Yeri -->
+          <div class="md:col-span-6">
+            <label for="birthPlace" class="block text-xs font-semibold uppercase tracking-wider text-amber-300 mb-2">
+              4. Doğum Yeri <span class="text-slate-300 font-normal">(İl, İlçe, Mahalle)</span>
+            </label>
+            <div class="flex gap-2">
+              <input
+                type="text"
+                id="birthPlace"
+                placeholder="Örn: İl, İlçe, Mahalle"
+                class="flex-1 rounded-xl bg-[#1a1f42]/70 border border-amber-500/30 px-4 py-2.5 text-sm text-slate-100 placeholder-slate-400 gold-border-glow"
+              />
+              <button
+                type="button"
+                id="btnFindBirthCoords"
+                class="btn-cosmic px-4 py-2.5 rounded-xl text-xs font-semibold whitespace-nowrap flex items-center gap-1.5"
+              >
+                <span id="birthGeoSpinner" class="hidden animate-spin">◌</span>
+                <span>📍 Koordinatları Bul</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 5. Enlem (Latitude) & Boylam (Longitude) -->
+          <div class="md:col-span-3">
+            <label for="birthLat" class="block text-xs font-semibold uppercase tracking-wider text-amber-300 mb-2">
+              5a. Doğum Enlemi <span class="text-slate-300 font-normal">(Latitude)</span>
+            </label>
+            <input
+              type="number"
+              id="birthLat"
+              step="any"
+              placeholder="Örn: 38.4237"
+              class="w-full rounded-xl bg-[#1a1f42]/70 border border-amber-500/30 px-4 py-2.5 text-sm font-mono text-slate-100 placeholder-slate-400 gold-border-glow"
+            />
+          </div>
+
+          <div class="md:col-span-3">
+            <label for="birthLon" class="block text-xs font-semibold uppercase tracking-wider text-amber-300 mb-2">
+              5b. Doğum Boylamı <span class="text-slate-300 font-normal">(Longitude)</span>
+            </label>
+            <input
+              type="number"
+              id="birthLon"
+              step="any"
+              placeholder="Örn: 27.1428"
+              class="w-full rounded-xl bg-[#1a1f42]/70 border border-amber-500/30 px-4 py-2.5 text-sm font-mono text-slate-100 placeholder-slate-400 gold-border-glow"
+            />
+          </div>
+        </div>
+
+        <!-- Row 3: Current Residence (Relocation) & Engine Information -->
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-end pt-2 border-t border-slate-700/60">
+          <!-- 6. Şu anki Yaşam Yeri (Relokasyon / Astrokartografi) -->
+          <div class="md:col-span-6">
+            <label for="currentPlace" class="block text-xs font-semibold uppercase tracking-wider text-amber-300 mb-2">
+              6. Şu Anki Yaşam Yeri <span class="text-slate-300 font-normal">(Relokasyon / Astrokartografi İçin İl, İlçe)</span>
+            </label>
+            <div class="flex gap-2">
+              <input
+                type="text"
+                id="currentPlace"
+                placeholder="Örn: İzmir, Menemen"
+                class="flex-1 rounded-xl bg-[#1a1f42]/70 border border-amber-500/30 px-4 py-2.5 text-sm text-slate-100 placeholder-slate-400 gold-border-glow"
+              />
+              <button
+                type="button"
+                id="btnFindRelocCoords"
+                class="btn-cosmic px-3.5 py-2.5 rounded-xl text-xs font-semibold whitespace-nowrap flex items-center gap-1"
+                title="Relokasyon enlem ve boylamını OpenStreetMap üzerinden bul"
+              >
+                <span id="relocGeoSpinner" class="hidden animate-spin">◌</span>
+                <span>🧭 Relokasyon Bul</span>
+              </button>
+            </div>
+            <div class="grid grid-cols-2 gap-2 mt-2">
+              <div class="flex items-center gap-2 bg-[#141838]/80 border border-slate-700/60 rounded-xl px-3 py-1.5">
+                <span class="text-[11px] text-slate-300">Relok. Enlem:</span>
+                <input
+                  type="number"
+                  id="relocLat"
+                  step="any"
+                  placeholder="Enlem"
+                  class="w-full bg-transparent text-xs font-mono text-sky-300 placeholder-slate-500 focus:outline-none"
+                />
+              </div>
+              <div class="flex items-center gap-2 bg-[#141838]/80 border border-slate-700/60 rounded-xl px-3 py-1.5">
+                <span class="text-[11px] text-slate-300">Relok. Boylam:</span>
+                <input
+                  type="number"
+                  id="relocLon"
+                  step="any"
+                  placeholder="Boylam"
+                  class="w-full bg-transparent text-xs font-mono text-sky-300 placeholder-slate-500 focus:outline-none"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Yerleşik Master Sentez Motoru Bilgi Paneli -->
+          <div class="md:col-span-6">
+            <div class="rounded-xl bg-[#141838]/80 border border-emerald-500/35 p-3.5 shadow-sm">
+              <div class="flex items-center gap-2 text-emerald-300 text-xs font-semibold uppercase tracking-wider mb-1">
+                <span>🛡️</span> %100 Yerel Dahili Master Sentez Motoru (API Anahtarı Gerekmez)
+              </div>
+              <p class="text-[11px] text-slate-300 leading-relaxed">
+                Bu sistem dışarıdan hiçbir yapay zekâ servisine veya API anahtarına ihtiyaç duymaz. Klasik Helenistik kurallar, Keldani dekanları, Mısır terimleri, Ebertin kozmobiyoloji orta noktaları, Hermetik lotlar, ikincil ilerletimler ve 2026-2028 transit sentezi doğrudan tarayıcınızın JavaScript çekirdeğinde <strong>anında</strong> hesaplanır ve raporlanır.
+              </p>
+              <div class="flex items-center gap-2 mt-2 text-[10px] font-mono text-slate-300">
+                <span class="text-emerald-400">● Çevrimdışı (Offline) Uyumlu</span>
+                <span>•</span>
+                <span class="text-amber-400">● Tam Veri Gizliliği</span>
+                <span>•</span>
+                <span class="text-sky-400">● 7 Bölümlük Master Sentez</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Status / Alert Banner -->
+        <div id="statusAlert" class="hidden rounded-xl px-4 py-3 text-xs font-medium border"></div>
+
+        <!-- Submit Buttons -->
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-end gap-3 pt-4 border-t border-gold-500/20">
+          <button
+            type="button"
+            id="btnCalculateOnly"
+            class="btn-cosmic px-6 py-3.5 rounded-xl text-sm font-semibold flex items-center justify-center gap-2"
+          >
+            <span>📐</span> Sadece Astronomik Tabloları Hesapla
+          </button>
+          <button
+            type="submit"
+            id="btnCalculateAndAnalyze"
+            class="btn-gold px-8 py-3.5 rounded-xl text-sm font-bold flex items-center justify-center gap-2 shadow-lg"
+          >
+            <span>✨</span> Haritayı Hesapla &amp; Detaylı Master Rapor Üret (Yerel Motor)
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- RESULTS WRAPPER (Hidden until first calculation) -->
+    <div id="resultsContainer" class="hidden space-y-8">
+
+      <!-- PRINT-ONLY HEADER -->
+      <div class="hidden print:block border-b-2 border-slate-800 pb-4 mb-6">
+        <h1 class="text-2xl font-bold text-slate-900">YILDIRIM ASTRA — Master Seviye Natal Harita &amp; Astroloji Raporu</h1>
+        <p id="printMetaSummary" class="text-sm text-slate-700 mt-1 font-mono"></p>
+      </div>
+
+      <!-- SUMMARY METADATA BAR -->
+      <section class="cosmic-card rounded-2xl p-5 sm:p-6">
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4" id="summaryCardsGrid">
+          <!-- Populated dynamically via JS -->
+        </div>
+      </section>
+
+      <!-- VISUAL NATAL WHEEL + SECT / HERMETIC LOTS / PROGRESSIONS OVERVIEW -->
+      <section class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- Interactive SVG Natal Wheel -->
+        <div class="lg:col-span-5 cosmic-card rounded-2xl p-5 flex flex-col items-center justify-center">
+          <div class="w-full flex items-center justify-between mb-3">
+            <h3 class="font-display text-sm font-bold uppercase tracking-wider text-gold-300">
+              ☸ Ekliptik Zodyak &amp; Placidus Çarkı
+            </h3>
+            <span id="wheelAscMcBadge" class="text-xs font-mono text-slate-400"></span>
+          </div>
+          <div id="natalWheelContainer" class="w-full max-w-[380px] aspect-square flex items-center justify-center">
+            <!-- SVG Rendered by JS -->
+          </div>
+        </div>
+
+        <!-- Hermetic Lots, Sect, Secondary Progressions & Relocation Summary -->
+        <div class="lg:col-span-7 flex flex-col gap-6">
+          <!-- 4. Sect & Hermetic Lots Table -->
+          <div class="cosmic-card rounded-2xl p-5 sm:p-6">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="font-display text-base sm:text-lg font-bold gold-gradient-text">
+                ☽☉ Sekt (Gündüz/Gece) &amp; Hermetik Arap Noktaları
+              </h3>
+              <span id="sectBadge" class="px-3 py-1 rounded-full text-xs font-mono font-semibold"></span>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse text-xs sm:text-sm">
+                <thead>
+                  <tr class="border-b border-gold-500/30 text-gold-300 bg-cosmic-950/60">
+                    <th class="py-2.5 px-3">Hermetik Nokta</th>
+                    <th class="py-2.5 px-3">Formül</th>
+                    <th class="py-2.5 px-3">Ekliptik Boylam</th>
+                    <th class="py-2.5 px-3">Burç &amp; Derece</th>
+                    <th class="py-2.5 px-3">Ev (Placidus / WS)</th>
+                    <th class="py-2.5 px-3">Yönetici &amp; Mısır Terimi</th>
+                  </tr>
+                </thead>
+                <tbody id="arabicLotsTableBody" class="divide-y divide-slate-800/80 font-mono text-xs"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Secondary Progressions & Mutual Reception / Dispositor Summary -->
+          <div class="cosmic-card rounded-2xl p-5 sm:p-6">
+            <h3 class="font-display text-base sm:text-lg font-bold gold-gradient-text mb-3">
+              ⏳ İkincil İlerletimler (Secondary Progressions) &amp; Karşılıklı Ağırlama
+            </h3>
+            <div id="progressionsAndReceptionsBox" class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2.1 & 2.3 TEKNİK EPHEMERİS VE KLASİK ASTROLOJİ ASALET TABLOSU -->
+      <section class="cosmic-card rounded-2xl p-5 sm:p-6">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+          <div>
+            <h3 class="font-display text-lg sm:text-xl font-bold gold-gradient-text">
+              🪐 Teknik Ephemeris &amp; Klasik Astroloji Asaletler Tablosu
+            </h3>
+            <p class="text-xs text-slate-400">
+              Gezegenlerin görünür ekliptik boylamları, günlük hızları, Retro durumları, Keldani Dekanları, Mısır Terimleri ve Temel Asaletleri
+            </p>
+          </div>
+          <span id="utcCalculationBadge" class="text-xs font-mono text-gold-400 bg-cosmic-950/80 px-3 py-1.5 rounded-lg border border-gold-500/20">
+            True Ecliptic of Date (Tropical)
+          </span>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse text-xs sm:text-sm">
+            <thead>
+              <tr class="border-b border-gold-500/30 text-gold-300 bg-cosmic-950/70">
+                <th class="py-3 px-3">Gök Cismi</th>
+                <th class="py-3 px-3">Boylam (°)</th>
+                <th class="py-3 px-3">Burç &amp; Derece</th>
+                <th class="py-3 px-3">Hız (°/gün) &amp; Rx</th>
+                <th class="py-3 px-3">Ev (Placidus / WS)</th>
+                <th class="py-3 px-3">Yönetici (Dispozitör)</th>
+                <th class="py-3 px-3">Dekan (Yüz / Keldani)</th>
+                <th class="py-3 px-3">Mısır Terimi (Bounds)</th>
+                <th class="py-3 px-3">Temel Asalet (Essential Dignity)</th>
+              </tr>
+            </thead>
+            <tbody id="ephemerisTableBody" class="divide-y divide-slate-800/80 font-mono text-xs">
+              <!-- Populated by JS -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 2.2 EV GİRİŞLERİ (PLACIDUS, WHOLE SIGN & RELOKASYON KARŞILAŞTIRMASI) -->
+      <section class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div class="lg:col-span-7 cosmic-card rounded-2xl p-5 sm:p-6">
+          <div class="mb-4">
+            <h3 class="font-display text-lg font-bold gold-gradient-text">
+              🏛️ 12 Ev Giriş Dereceleri (Placidus, Whole Sign &amp; Relokasyon Değişimi)
+            </h3>
+            <p class="text-xs text-slate-400">
+              Yerel Yıldız Zamanı (LST) üzerinden hesaplanan natal ev girişleri ve şu anki yaşam yeri boylamına göre relokasyon kayması
+            </p>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse text-xs">
+              <thead>
+                <tr class="border-b border-gold-500/30 text-gold-300 bg-cosmic-950/70">
+                  <th class="py-2.5 px-3">Ev</th>
+                  <th class="py-2.5 px-3">Placidus Girişi (Natal)</th>
+                  <th class="py-2.5 px-3">Klasik / Modern Yönetici</th>
+                  <th class="py-2.5 px-3">Whole Sign Girişi</th>
+                  <th class="py-2.5 px-3">Relokasyon Placidus</th>
+                  <th class="py-2.5 px-3">Fark (Δ°)</th>
+                </tr>
+              </thead>
+              <tbody id="housesTableBody" class="divide-y divide-slate-800/80 font-mono text-xs">
+                <!-- Populated by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 2.5 KOZMOBİYOLOJİ (URANYEN) ORTA NOKTALARI -->
+        <div class="lg:col-span-5 cosmic-card rounded-2xl p-5 sm:p-6 flex flex-col justify-between">
+          <div>
+            <div class="mb-4">
+              <h3 class="font-display text-lg font-bold gold-gradient-text">
+                ⌖ Kozmobiyoloji (Uranyen) Orta Noktaları
+              </h3>
+              <p class="text-xs text-slate-400">
+                Midpoint konumları, 90° Kadran (Mod 90°) izdüşümleri ve ±1.5° orb içindeki gezegen temasları (Ebertin Kombinasyonları)
+              </p>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse text-xs">
+                <thead>
+                  <tr class="border-b border-gold-500/30 text-gold-300 bg-cosmic-950/70">
+                    <th class="py-2.5 px-2.5">Orta Nokta</th>
+                    <th class="py-2.5 px-2.5">Boylam</th>
+                    <th class="py-2.5 px-2.5">Burç &amp; Derece</th>
+                    <th class="py-2.5 px-2.5">Mod 90°</th>
+                    <th class="py-2.5 px-2.5">Tetikleyen Noktalar (A/B = C)</th>
+                  </tr>
+                </thead>
+                <tbody id="midpointsTableBody" class="divide-y divide-slate-800/80 font-mono text-xs">
+                  <!-- Populated by JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Raw JSON Preview Accordion -->
+          <div class="mt-5 pt-4 border-t border-slate-800 no-print">
+            <details class="group">
+              <summary class="cursor-pointer text-xs font-mono text-gold-300 hover:text-gold-200 flex items-center justify-between">
+                <span>📦 Dahili Sentez Motorunun İşlediği Ham Matematiksel JSON Verisini Görüntüle</span>
+                <span class="group-open:rotate-180 transition-transform">▼</span>
+              </summary>
+              <pre id="rawJsonPreview" class="mt-3 max-h-48 overflow-auto rounded-xl bg-cosmic-950 p-3 text-[11px] font-mono text-slate-300 border border-slate-800"></pre>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3 & 4 & 5. DAHİLİ MASTER SENTEZ MOTORU ANALİZ ÇIKTISI -->
+      <section class="cosmic-card rounded-2xl p-6 sm:p-8">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-5 mb-6 border-b border-gold-500/25">
+          <div>
+            <h2 class="font-display text-xl sm:text-2xl font-bold gold-gradient-text flex items-center gap-2">
+              <span>📜</span> Master Astrolog Derinlemesine Harita Raporu
+            </h2>
+            <p class="text-xs sm:text-sm text-slate-400 mt-1">
+              Dahili Kural Tabanlı Master Sentez Motoru (Helenistik, Uranyen Kozmobiyoloji, Medikal, Karmik, İkincil İlerletimler, 2026-2028 Transit ve Relokasyon)
+            </p>
+          </div>
+
+          <!-- Export / Action Buttons -->
+          <div class="flex flex-wrap items-center gap-2.5 no-print">
+            <button
+              type="button"
+              id="btnRegenerateAI"
+              class="btn-cosmic px-4 py-2.5 rounded-xl text-xs font-semibold flex items-center gap-1.5"
+            >
+              <span>🔄</span> Raporu Yeniden Sentezle
+            </button>
+            <button
+              type="button"
+              id="btnDownloadMarkdown"
+              class="btn-cosmic px-4 py-2.5 rounded-xl text-xs font-semibold flex items-center gap-1.5"
+            >
+              <span>⬇️</span> Markdown Olarak İndir (.md)
+            </button>
+            <button
+              type="button"
+              id="btnPrintPdf"
+              class="btn-gold px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5"
+            >
+              <span>🖨️</span> Raporu PDF / Yazdır
+            </button>
+          </div>
+        </div>
+
+        <!-- Local Synthesis Loading State -->
+        <div id="aiLoadingBox" class="hidden py-10 text-center space-y-4 no-print">
+          <div class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-gold-500/10 border border-gold-500/40 text-gold-400 text-2xl animate-spin">
+            ☸
+          </div>
+          <div class="space-y-1">
+            <h4 class="font-display text-lg font-semibold text-gold-300">
+              Dahili Master Sentez Motoru 7 Bölümlük Raporu Oluşturuyor...
+            </h4>
+            <p class="text-xs text-slate-400 max-w-xl mx-auto">
+              Klasik asaletler, 12 ev dispozitör zincirleri, Ebertin kozmobiyoloji orta noktaları, Hermetik lotlar, ikincil ilerletimler ve 2026-2028 transitleri sentezleniyor.
+            </p>
+          </div>
+        </div>
+
+        <!-- AI Report Output Container -->
+        <article id="aiReportContent" class="astro-prose">
+          <div class="text-center py-8 text-slate-400 text-sm no-print">
+            Yukarıdaki <strong>"Haritayı Hesapla &amp; Detaylı Master Rapor Üret (Yerel Motor)"</strong> butonuna tıklayarak 7 bölümlük kapsamlı raporu anında üretebilirsiniz.
+          </div>
+        </article>
+      </section>
+    </div>
+  </main>
+
+  <footer class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center text-xs text-slate-500 border-t border-slate-900 no-print">
+    YILDIRIM ASTRA • Master Seviye Profesyonel Astroloji &amp; Natal Harita Analiz Sistemi • Astronomy Engine (JPL/VSOP87) &amp; Dahili Master Sentez Motoru v3.0
+  </footer>
+
+  <!-- ========================================================================= -->
+  <!-- JAVASCRIPT ASTRONOMICAL & ASTROLOGICAL ENGINE                             -->
+  <!-- ========================================================================= -->
+  <script>
+    (function () {
+      'use strict';
+
+      // -----------------------------------------------------------------------
+      // 1. ASTROLOGICAL CONSTANTS, ZODIAC, DIGNITIES, DECANS & EGYPTIAN TERMS
+      // -----------------------------------------------------------------------
+      const ZODIAC_SIGNS = [
+        { index: 0, name: 'Koç', latin: 'Aries', symbol: '♈', element: 'Ateş', modality: 'Öncü', classicalRuler: 'Mars', modernRuler: 'Mars' },
+        { index: 1, name: 'Boğa', latin: 'Taurus', symbol: '♉', element: 'Toprak', modality: 'Sabit', classicalRuler: 'Venüs', modernRuler: 'Venüs' },
+        { index: 2, name: 'İkizler', latin: 'Gemini', symbol: '♊', element: 'Hava', modality: 'Değişken', classicalRuler: 'Merkür', modernRuler: 'Merkür' },
+        { index: 3, name: 'Yengeç', latin: 'Cancer', symbol: '♋', element: 'Su', modality: 'Öncü', classicalRuler: 'Ay', modernRuler: 'Ay' },
+        { index: 4, name: 'Aslan', latin: 'Leo', symbol: '♌', element: 'Ateş', modality: 'Sabit', classicalRuler: 'Güneş', modernRuler: 'Güneş' },
+        { index: 5, name: 'Başak', latin: 'Virgo', symbol: '♍', element: 'Toprak', modality: 'Değişken', classicalRuler: 'Merkür', modernRuler: 'Merkür' },
+        { index: 6, name: 'Terazi', latin: 'Libra', symbol: '♎', element: 'Hava', modality: 'Öncü', classicalRuler: 'Venüs', modernRuler: 'Venüs' },
+        { index: 7, name: 'Akrep', latin: 'Scorpio', symbol: '♏', element: 'Su', modality: 'Sabit', classicalRuler: 'Mars', modernRuler: 'Plüton' },
+        { index: 8, name: 'Yay', latin: 'Sagittarius', symbol: '♐', element: 'Ateş', modality: 'Değişken', classicalRuler: 'Jüpiter', modernRuler: 'Jüpiter' },
+        { index: 9, name: 'Oğlak', latin: 'Capricorn', symbol: '♑', element: 'Toprak', modality: 'Öncü', classicalRuler: 'Satürn', modernRuler: 'Satürn' },
+        { index: 10, name: 'Kova', latin: 'Aquarius', symbol: '♒', element: 'Hava', modality: 'Sabit', classicalRuler: 'Satürn', modernRuler: 'Uranüs' },
+        { index: 11, name: 'Balık', latin: 'Pisces', symbol: '♓', element: 'Su', modality: 'Değişken', classicalRuler: 'Jüpiter', modernRuler: 'Neptün' }
+      ];
+
+      const CHALDEAN_DECANS = [
+        ['Mars', 'Güneş', 'Venüs'],     // Koç
+        ['Merkür', 'Ay', 'Satürn'],     // Boğa
+        ['Jüpiter', 'Mars', 'Güneş'],   // İkizler
+        ['Venüs', 'Merkür', 'Ay'],      // Yengeç
+        ['Satürn', 'Jüpiter', 'Mars'],  // Aslan
+        ['Güneş', 'Venüs', 'Merkür'],   // Başak
+        ['Ay', 'Satürn', 'Jüpiter'],    // Terazi
+        ['Mars', 'Güneş', 'Venüs'],     // Akrep
+        ['Merkür', 'Ay', 'Satürn'],     // Yay
+        ['Jüpiter', 'Mars', 'Güneş'],   // Oğlak
+        ['Venüs', 'Merkür', 'Ay'],      // Kova
+        ['Satürn', 'Jüpiter', 'Mars']   // Balık
+      ];
+
+      const TRIPLICITY_DECANS = [
+        ['Mars', 'Güneş', 'Jüpiter'],   // Koç
+        ['Venüs', 'Merkür', 'Satürn'],  // Boğa
+        ['Merkür', 'Venüs', 'Uranüs'],  // İkizler
+        ['Ay', 'Mars', 'Neptün'],       // Yengeç
+        ['Güneş', 'Jüpiter', 'Mars'],   // Aslan
+        ['Merkür', 'Satürn', 'Venüs'],  // Başak
+        ['Venüs', 'Satürn', 'Merkür'],  // Terazi
+        ['Mars', 'Jüpiter', 'Ay'],      // Akrep
+        ['Jüpiter', 'Mars', 'Güneş'],   // Yay
+        ['Satürn', 'Venüs', 'Merkür'],  // Oğlak
+        ['Satürn', 'Merkür', 'Venüs'],  // Kova
+        ['Jüpiter', 'Ay', 'Mars']       // Balık
+      ];
+
+      const EGYPTIAN_TERMS = [
+        // 0: Koç (Aries)
+        [
+          { upto: 6, ruler: 'Jüpiter' },
+          { upto: 12, ruler: 'Venüs' },
+          { upto: 20, ruler: 'Merkür' },
+          { upto: 25, ruler: 'Mars' },
+          { upto: 30, ruler: 'Satürn' }
+        ],
+        // 1: Boğa (Taurus)
+        [
+          { upto: 8, ruler: 'Venüs' },
+          { upto: 14, ruler: 'Merkür' },
+          { upto: 22, ruler: 'Jüpiter' },
+          { upto: 27, ruler: 'Satürn' },
+          { upto: 30, ruler: 'Mars' }
+        ],
+        // 2: İkizler (Gemini)
+        [
+          { upto: 6, ruler: 'Merkür' },
+          { upto: 12, ruler: 'Jüpiter' },
+          { upto: 17, ruler: 'Venüs' },
+          { upto: 24, ruler: 'Mars' },
+          { upto: 30, ruler: 'Satürn' }
+        ],
+        // 3: Yengeç (Cancer)
+        [
+          { upto: 7, ruler: 'Mars' },
+          { upto: 13, ruler: 'Venüs' },
+          { upto: 19, ruler: 'Merkür' },
+          { upto: 26, ruler: 'Jüpiter' },
+          { upto: 30, ruler: 'Satürn' }
+        ],
+        // 4: Aslan (Leo)
+        [
+          { upto: 6, ruler: 'Jüpiter' },
+          { upto: 11, ruler: 'Venüs' },
+          { upto: 18, ruler: 'Satürn' },
+          { upto: 24, ruler: 'Merkür' },
+          { upto: 30, ruler: 'Mars' }
+        ],
+        // 5: Başak (Virgo)
+        [
+          { upto: 7, ruler: 'Merkür' },
+          { upto: 17, ruler: 'Venüs' },
+          { upto: 21, ruler: 'Jüpiter' },
+          { upto: 28, ruler: 'Mars' },
+          { upto: 30, ruler: 'Satürn' }
+        ],
+        // 6: Terazi (Libra)
+        [
+          { upto: 6, ruler: 'Satürn' },
+          { upto: 14, ruler: 'Merkür' },
+          { upto: 21, ruler: 'Jüpiter' },
+          { upto: 28, ruler: 'Venüs' },
+          { upto: 30, ruler: 'Mars' }
+        ],
+        // 7: Akrep (Scorpio)
+        [
+          { upto: 7, ruler: 'Mars' },
+          { upto: 11, ruler: 'Venüs' },
+          { upto: 19, ruler: 'Merkür' },
+          { upto: 24, ruler: 'Jüpiter' },
+          { upto: 30, ruler: 'Satürn' }
+        ],
+        // 8: Yay (Sagittarius)
+        [
+          { upto: 12, ruler: 'Jüpiter' },
+          { upto: 17, ruler: 'Venüs' },
+          { upto: 21, ruler: 'Merkür' },
+          { upto: 26, ruler: 'Satürn' },
+          { upto: 30, ruler: 'Mars' }
+        ],
+        // 9: Oğlak (Capricorn)
+        [
+          { upto: 7, ruler: 'Merkür' },
+          { upto: 14, ruler: 'Jüpiter' },
+          { upto: 22, ruler: 'Venüs' },
+          { upto: 26, ruler: 'Satürn' },
+          { upto: 30, ruler: 'Mars' }
+        ],
+        // 10: Kova (Aquarius)
+        [
+          { upto: 7, ruler: 'Merkür' },
+          { upto: 13, ruler: 'Venüs' },
+          { upto: 20, ruler: 'Jüpiter' },
+          { upto: 25, ruler: 'Mars' },
+          { upto: 30, ruler: 'Satürn' }
+        ],
+        // 11: Balık (Pisces)
+        [
+          { upto: 12, ruler: 'Venüs' },
+          { upto: 16, ruler: 'Jüpiter' },
+          { upto: 19, ruler: 'Merkür' },
+          { upto: 28, ruler: 'Mars' },
+          { upto: 30, ruler: 'Satürn' }
+        ]
+      ];
+
+      const ESSENTIAL_DIGNITIES = {
+        'Güneş': {
+          domicile: ['Aslan'],
+          exaltation: ['Koç'],
+          exaltationDegree: '19° Koç',
+          detriment: ['Kova'],
+          fall: ['Terazi']
+        },
+        'Ay': {
+          domicile: ['Yengeç'],
+          exaltation: ['Boğa'],
+          exaltationDegree: '3° Boğa',
+          detriment: ['Oğlak'],
+          fall: ['Akrep']
+        },
+        'Merkür': {
+          domicile: ['İkizler', 'Başak'],
+          exaltation: ['Başak'],
+          exaltationDegree: '15° Başak',
+          detriment: ['Yay', 'Balık'],
+          fall: ['Balık']
+        },
+        'Venüs': {
+          domicile: ['Boğa', 'Terazi'],
+          exaltation: ['Balık'],
+          exaltationDegree: '27° Balık',
+          detriment: ['Akrep', 'Koç'],
+          fall: ['Başak']
+        },
+        'Mars': {
+          domicile: ['Koç', 'Akrep'],
+          exaltation: ['Oğlak'],
+          exaltationDegree: '28° Oğlak',
+          detriment: ['Terazi', 'Boğa'],
+          fall: ['Yengeç']
+        },
+        'Jüpiter': {
+          domicile: ['Yay', 'Balık'],
+          exaltation: ['Yengeç'],
+          exaltationDegree: '15° Yengeç',
+          detriment: ['İkizler', 'Başak'],
+          fall: ['Oğlak']
+        },
+        'Satürn': {
+          domicile: ['Oğlak', 'Kova'],
+          exaltation: ['Terazi'],
+          exaltationDegree: '21° Terazi',
+          detriment: ['Yengeç', 'Aslan'],
+          fall: ['Koç']
+        },
+        'Uranüs': {
+          domicile: ['Kova'],
+          exaltation: ['Akrep'],
+          exaltationDegree: '—',
+          detriment: ['Aslan'],
+          fall: ['Boğa']
+        },
+        'Neptün': {
+          domicile: ['Balık'],
+          exaltation: ['Yengeç', 'Aslan'],
+          exaltationDegree: '—',
+          detriment: ['Başak'],
+          fall: ['Oğlak', 'Kova']
+        },
+        'Plüton': {
+          domicile: ['Akrep'],
+          exaltation: ['Koç', 'Aslan'],
+          exaltationDegree: '—',
+          detriment: ['Boğa'],
+          fall: ['Terazi', 'Kova']
+        },
+        'Kuzey Ay Düğümü': {
+          domicile: [],
+          exaltation: ['İkizler'],
+          exaltationDegree: '3° İkizler',
+          detriment: [],
+          fall: ['Yay']
+        },
+        'Güney Ay Düğümü': {
+          domicile: [],
+          exaltation: ['Yay'],
+          exaltationDegree: '3° Yay',
+          detriment: [],
+          fall: ['İkizler']
+        }
+      };
+
+      const PLANET_DEFINITIONS = [
+        { key: 'Sun', name: 'Güneş', symbol: '☉', code: 'SO' },
+        { key: 'Moon', name: 'Ay', symbol: '☽', code: 'MO' },
+        { key: 'Mercury', name: 'Merkür', symbol: '☿', code: 'ME' },
+        { key: 'Venus', name: 'Venüs', symbol: '♀', code: 'VE' },
+        { key: 'Mars', name: 'Mars', symbol: '♂', code: 'MA' },
+        { key: 'Jupiter', name: 'Jüpiter', symbol: '♃', code: 'JU' },
+        { key: 'Saturn', name: 'Satürn', symbol: '♄', code: 'SA' },
+        { key: 'Uranus', name: 'Uranüs', symbol: '♅', code: 'UR' },
+        { key: 'Neptune', name: 'Neptün', symbol: '♆', code: 'NE' },
+        { key: 'Pluto', name: 'Plüton', symbol: '♇', code: 'PL' }
+      ];
+
+      // -----------------------------------------------------------------------
+      // 2. AKILLI TÜRKİYE SAAT DİLİMİ TESPİT VE UYARI ALGORİTMASI
+      // -----------------------------------------------------------------------
+      function renderTzFeedback(message, tone) {
+        const box = document.getElementById('tzFeedbackBox');
+        box.classList.remove('hidden');
+        const styles = {
+          green: 'bg-emerald-950/80 border-emerald-500/50 text-emerald-200',
+          info: 'bg-sky-950/80 border-sky-500/50 text-sky-200',
+          yellow: 'bg-amber-950/85 border-amber-400/60 text-amber-200'
+        };
+        box.className = `mt-3 rounded-xl px-3.5 py-2.5 text-xs leading-relaxed border ${styles[tone] || styles.info}`;
+        box.innerHTML = message;
+      }
+
+      function detectTurkeyTimezone(year, month, day) {
+        const tzSelect = document.getElementById('tzOffset');
+        const manualWrapper = document.getElementById('manualTzWrapper');
+        manualWrapper.classList.add('hidden');
+
+        const y = parseInt(year, 10);
+        const m = parseInt(month, 10);
+        const d = parseInt(day, 10);
+
+        if (isNaN(y) || isNaN(m) || isNaN(d)) {
+          return 3;
+        }
+
+        // 1. Eylül 2016 ve sonrası: Kalıcı GMT+3
+        if (y > 2016 || (y === 2016 && m >= 9)) {
+          tzSelect.value = '3';
+          renderTzFeedback(
+            '✅ <em>"2016 sonrası kalıcı GMT+3 uygulandığı için +3 seçildi."</em>',
+            'green'
+          );
+          return 3;
+        }
+
+        // 2. 2016 öncesi ve Kasım, Aralık, Ocak, Şubat veya Mart başı (1–25 Mart arası kış dönemi)
+        const isWinterMonth = (m === 11 || m === 12 || m === 1 || m === 2 || (m === 3 && d <= 25));
+        if (isWinterMonth) {
+          tzSelect.value = '2';
+          renderTzFeedback(
+            '❄️ <em>"Seçilen tarihte (Kış dönemi) Türkiye GMT+2 saat dilimini kullanıyordu. Yükselen (ASC) kaymasını önlemek için UTC+2 baz alındı."</em>',
+            'green'
+          );
+          return 2;
+        }
+
+        // 3. 2016 öncesi Nisan-Ekim (veya Mart sonu) yaz/bahar ayları
+        tzSelect.value = '3';
+        renderTzFeedback(
+          '⚠️ <em>"Yaz/Bahar aylarında doğdunuz. O yılki Resmi Gazete yaz saati (GMT+3) başlangıç/bitiş gününe göre lütfen +2 veya +3 seçeneğini kontrol edin."</em>',
+          'yellow'
+        );
+        return 3;
+      }
+
+      // Kullanıcının seçtiği veya otomatik tespit edilen kesin GMT/UTC offset değerini döndürür
+      function resolveActiveTimezoneOffset(year, month, day) {
+        const tzSelect = document.getElementById('tzOffset');
+        if (tzSelect.value === 'auto') {
+          return detectTurkeyTimezone(year, month, day);
+        }
+        if (tzSelect.value === 'manual') {
+          const manualVal = parseFloat(document.getElementById('manualTzInput').value);
+          return isNaN(manualVal) ? 0 : manualVal;
+        }
+        return parseFloat(tzSelect.value);
+      }
+
+      // -----------------------------------------------------------------------
+      // 3. MATHEMATICAL & ASTRONOMICAL HELPER FUNCTIONS
+      // -----------------------------------------------------------------------
+      const DEG2RAD = Math.PI / 180;
+      const RAD2DEG = 180 / Math.PI;
+
+      function norm360(deg) {
+        return ((deg % 360) + 360) % 360;
+      }
+
+      function shortestArc(deg1, deg2) {
+        return ((deg2 - deg1 + 540) % 360) - 180;
+      }
+
+      function formatDMS(degInSign) {
+        const totalSeconds = Math.round(degInSign * 3600);
+        const d = Math.floor(totalSeconds / 3600);
+        const m = Math.floor((totalSeconds % 3600) / 60);
+        const s = totalSeconds % 60;
+        return `${String(d).padStart(2, '0')}°${String(m).padStart(2, '0')}'${String(s).padStart(2, '0')}"`;
+      }
+
+      function formatDM(degInSign) {
+        const totalMinutes = Math.round(degInSign * 60);
+        const d = Math.floor(totalMinutes / 60);
+        const m = totalMinutes % 60;
+        return `${String(d).padStart(2, '0')}°${String(m).padStart(2, '0')}'`;
+      }
+
+      function getSignDetails(elon) {
+        const normalized = norm360(elon);
+        const signIndex = Math.floor(normalized / 30) % 12;
+        const degInSign = normalized - signIndex * 30;
+        const sign = ZODIAC_SIGNS[signIndex];
+
+        const decanIndex = Math.min(2, Math.floor(degInSign / 10));
+        const decanNumber = decanIndex + 1;
+        const chaldeanDecanRuler = CHALDEAN_DECANS[signIndex][decanIndex];
+        const triplicityDecanRuler = TRIPLICITY_DECANS[signIndex][decanIndex];
+
+        const terms = EGYPTIAN_TERMS[signIndex];
+        let termInfo = terms[terms.length - 1];
+        let prevBound = 0;
+        for (const t of terms) {
+          if (degInSign < t.upto) {
+            termInfo = { ruler: t.ruler, range: `${prevBound}°–${t.upto}°` };
+            break;
+          }
+          prevBound = t.upto;
+        }
+
+        return {
+          longitude: Number(normalized.toFixed(4)),
+          signIndex,
+          signName: sign.name,
+          signSymbol: sign.symbol,
+          element: sign.element,
+          modality: sign.modality,
+          classicalRuler: sign.classicalRuler,
+          modernRuler: sign.modernRuler,
+          degreeInSign: Number(degInSign.toFixed(4)),
+          formattedDMS: `${formatDMS(degInSign)} ${sign.name}`,
+          formattedShort: `${formatDM(degInSign)} ${sign.symbol} ${sign.name}`,
+          decan: {
+            number: decanNumber,
+            range: `${decanIndex * 10}°–${(decanIndex + 1) * 10}°`,
+            chaldeanRuler: chaldeanDecanRuler,
+            triplicityRuler: triplicityDecanRuler,
+            label: `${decanNumber}. Dekan (${chaldeanDecanRuler})`
+          },
+          egyptianTerm: {
+            ruler: termInfo.ruler,
+            range: termInfo.range,
+            label: `${termInfo.ruler} (${termInfo.range})`
+          }
+        };
+      }
+
+      function evaluateEssentialDignity(planetName, signName, chaldeanDecanRuler, termRuler) {
+        const rules = ESSENTIAL_DIGNITIES[planetName];
+        if (!rules) {
+          return { status: 'Peregrin', badges: ['Peregrin'] };
+        }
+        const statuses = [];
+        if (rules.domicile.includes(signName)) {
+          statuses.push('Yöneticilik (Domicile +5)');
+        }
+        if (rules.exaltation.includes(signName)) {
+          statuses.push('Yücelim (Exaltation +4)');
+        }
+        if (rules.detriment.includes(signName)) {
+          statuses.push('Zarar (Detriment -5)');
+        }
+        if (rules.fall.includes(signName)) {
+          statuses.push('Düşüş (Fall -4)');
+        }
+        if (termRuler === planetName) {
+          statuses.push('Terim Yöneticisi (+2)');
+        }
+        if (chaldeanDecanRuler === planetName) {
+          statuses.push('Dekan/Yüz Yöneticisi (+1)');
+        }
+        if (statuses.length === 0) {
+          statuses.push('Peregrin (Yabancı)');
+        }
+        return {
+          status: statuses.join(' • '),
+          badges: statuses
+        };
+      }
+
+      function getJulianCenturies(exactUtcDate) {
+        const jd = exactUtcDate.getTime() / 86400000 + 2440587.5;
+        const T = (jd - 2451545.0) / 36525.0;
+        return { jd, T };
+      }
+
+      function getTrueObliquity(exactUtcDate) {
+        if (typeof Astronomy !== 'undefined' && typeof Astronomy.e_tilt === 'function') {
+          const astroTime = Astronomy.MakeTime(exactUtcDate);
+          const tilt = Astronomy.e_tilt(astroTime);
+          if (tilt && typeof tilt.tobl === 'number') {
+            return tilt.tobl;
+          }
+        }
+        const { T } = getJulianCenturies(exactUtcDate);
+        const eps0 = 23.43929111 - 0.013004167 * T - 0.0000001639 * T * T + 0.0000005036 * T * T * T;
+        const omega = (125.04452 - 1934.136261 * T) * DEG2RAD;
+        const dEps = (9.20 / 3600) * Math.cos(omega);
+        return eps0 + dEps;
+      }
+
+      function getPlanetEclipticPosition(bodyKey, exactUtcDate) {
+        if (bodyKey === 'Sun') {
+          const sunPos = Astronomy.SunPosition(exactUtcDate);
+          return { elon: norm360(sunPos.elon), elat: sunPos.elat };
+        }
+        const body = Astronomy.Body[bodyKey];
+        const geoVec = Astronomy.GeoVector(body, exactUtcDate, true);
+        const ecl = Astronomy.Ecliptic(geoVec);
+        return { elon: norm360(ecl.elon), elat: ecl.elat };
+      }
+
+      function getTrueNorthNodeLongitude(exactUtcDate) {
+        const { T } = getJulianCenturies(exactUtcDate);
+
+        const D = norm360(297.8501921 + 445267.1114034 * T - 0.0018819 * T * T + (T * T * T) / 545868) * DEG2RAD;
+        const M = norm360(357.5291092 + 35999.0502909 * T - 0.0001536 * T * T + (T * T * T) / 24490000) * DEG2RAD;
+        const Mp = norm360(134.9633964 + 477198.8675055 * T + 0.0087414 * T * T + (T * T * T) / 69699) * DEG2RAD;
+        const F = norm360(93.2720950 + 483202.0175233 * T - 0.0036539 * T * T - (T * T * T) / 3526000) * DEG2RAD;
+        const meanNode = norm360(125.0445479 - 1934.1362891 * T + 0.0020754 * T * T + (T * T * T) / 467441);
+
+        const trueNodeOffset =
+          -1.4979 * Math.sin(2 * (D - F))
+          - 0.1500 * Math.sin(M)
+          - 0.1226 * Math.sin(2 * D)
+          + 0.1176 * Math.sin(2 * F)
+          - 0.0801 * Math.sin(2 * (Mp - F));
+
+        return norm360(meanNode + trueNodeOffset);
+      }
+
+      function calculateCelestialBody(def, exactUtcDate) {
+        const dtMs = 30 * 60 * 1000;
+        const tMinus = new Date(exactUtcDate.getTime() - dtMs);
+        const tPlus = new Date(exactUtcDate.getTime() + dtMs);
+
+        const posNow = getPlanetEclipticPosition(def.key, exactUtcDate);
+        const posMinus = getPlanetEclipticPosition(def.key, tMinus);
+        const posPlus = getPlanetEclipticPosition(def.key, tPlus);
+
+        const dLon = shortestArc(posMinus.elon, posPlus.elon);
+        const dailySpeed = dLon * 24;
+        const isRetrograde = dailySpeed < 0;
+
+        const signDetails = getSignDetails(posNow.elon);
+        const dignity = evaluateEssentialDignity(
+          def.name,
+          signDetails.signName,
+          signDetails.decan.chaldeanRuler,
+          signDetails.egyptianTerm.ruler
+        );
+
+        return {
+          key: def.key,
+          name: def.name,
+          symbol: def.symbol,
+          code: def.code,
+          latitude: Number(posNow.elat.toFixed(4)),
+          dailySpeed: Number(dailySpeed.toFixed(4)),
+          isRetrograde,
+          retrogradeLabel: isRetrograde ? 'Rx (Retro)' : 'D (Düz)',
+          ...signDetails,
+          dignity
+        };
+      }
+
+      function calculateLunarNodes(exactUtcDate) {
+        const dtMs = 2 * 3600 * 1000;
+        const lonNow = getTrueNorthNodeLongitude(exactUtcDate);
+        const lonMinus = getTrueNorthNodeLongitude(new Date(exactUtcDate.getTime() - dtMs));
+        const lonPlus = getTrueNorthNodeLongitude(new Date(exactUtcDate.getTime() + dtMs));
+
+        const dailySpeed = shortestArc(lonMinus, lonPlus) * 6;
+        const isRetrograde = dailySpeed < 0;
+
+        const northSign = getSignDetails(lonNow);
+        const northDignity = evaluateEssentialDignity(
+          'Kuzey Ay Düğümü',
+          northSign.signName,
+          northSign.decan.chaldeanRuler,
+          northSign.egyptianTerm.ruler
+        );
+
+        const southLon = norm360(lonNow + 180);
+        const southSign = getSignDetails(southLon);
+        const southDignity = evaluateEssentialDignity(
+          'Güney Ay Düğümü',
+          southSign.signName,
+          southSign.decan.chaldeanRuler,
+          southSign.egyptianTerm.ruler
+        );
+
+        return [
+          {
+            key: 'TrueNode',
+            name: 'Kuzey Ay Düğümü',
+            symbol: '☊',
+            code: 'NN',
+            latitude: 0,
+            dailySpeed: Number(dailySpeed.toFixed(4)),
+            isRetrograde,
+            retrogradeLabel: isRetrograde ? 'Rx (Retro)' : 'D (Düz)',
+            ...northSign,
+            dignity: northDignity
+          },
+          {
+            key: 'SouthNode',
+            name: 'Güney Ay Düğümü',
+            symbol: '☋',
+            code: 'SN',
+            latitude: 0,
+            dailySpeed: Number(dailySpeed.toFixed(4)),
+            isRetrograde,
+            retrogradeLabel: isRetrograde ? 'Rx (Retro)' : 'D (Düz)',
+            ...southSign,
+            dignity: southDignity
+          }
+        ];
+      }
+
+      // -----------------------------------------------------------------------
+      // 4. LOCAL SIDEREAL TIME (LST), ASC, MC & PLACIDUS / WHOLE SIGN HOUSES
+      // -----------------------------------------------------------------------
+      function calculateHousesAndAngles(exactUtcDate, latDeg, lonDeg) {
+        const epsDeg = getTrueObliquity(exactUtcDate);
+        const epsRad = epsDeg * DEG2RAD;
+        const latRad = latDeg * DEG2RAD;
+
+        // Greenwich Apparent Sidereal Time (in hours 0..24) from pure exactUtcDate
+        const gastHours = Astronomy.SiderealTime(exactUtcDate);
+        const lstHours = ((gastHours + lonDeg / 15) % 24 + 24) % 24;
+        const ramcDeg = lstHours * 15;
+        const ramcRad = ramcDeg * DEG2RAD;
+
+        const totalLstSec = Math.round(lstHours * 3600);
+        const lstH = Math.floor(totalLstSec / 3600) % 24;
+        const lstM = Math.floor((totalLstSec % 3600) / 60);
+        const lstS = totalLstSec % 60;
+        const lstFormatted = `${String(lstH).padStart(2, '0')}:${String(lstM).padStart(2, '0')}:${String(lstS).padStart(2, '0')}`;
+
+        // 1. Medium Coeli (MC - 10th Cusp)
+        const mcRad = Math.atan2(Math.sin(ramcRad), Math.cos(ramcRad) * Math.cos(epsRad));
+        const mcDeg = norm360(mcRad * RAD2DEG);
+        const icDeg = norm360(mcDeg + 180);
+
+        // 2. Ascendant (ASC - 1st Cusp)
+        const ascY = Math.cos(ramcRad);
+        const ascX = -Math.sin(ramcRad) * Math.cos(epsRad) - Math.tan(latRad) * Math.sin(epsRad);
+        const ascDeg = norm360(Math.atan2(ascY, ascX) * RAD2DEG);
+        const dscDeg = norm360(ascDeg + 180);
+
+        function raToEclipticLon(raDeg) {
+          const r = norm360(raDeg) * DEG2RAD;
+          return norm360(Math.atan2(Math.sin(r), Math.cos(r) * Math.cos(epsRad)) * RAD2DEG);
+        }
+
+        // 3. Iterative Placidus House Cusps (11, 12, 2, 3)
+        const arc10to1 = norm360(ascDeg - mcDeg);
+        const arc1to4 = norm360(icDeg - ascDeg);
+
+        function computePlacidusCusp(houseNum) {
+          if (Math.abs(latDeg) >= 65.5) {
+            if (houseNum === 11) return norm360(mcDeg + arc10to1 / 3);
+            if (houseNum === 12) return norm360(mcDeg + (2 * arc10to1) / 3);
+            if (houseNum === 2) return norm360(ascDeg + arc1to4 / 3);
+            if (houseNum === 3) return norm360(ascDeg + (2 * arc1to4) / 3);
+          }
+
+          let cuspLon =
+            houseNum === 11 ? norm360(mcDeg + arc10to1 / 3) :
+            houseNum === 12 ? norm360(mcDeg + (2 * arc10to1) / 3) :
+            houseNum === 2  ? norm360(ascDeg + arc1to4 / 3) :
+                              norm360(ascDeg + (2 * arc1to4) / 3);
+
+          for (let iter = 0; iter < 25; iter++) {
+            const sinDec = Math.sin(cuspLon * DEG2RAD) * Math.sin(epsRad);
+            const tanDec = sinDec / Math.sqrt(Math.max(1e-12, 1 - sinDec * sinDec));
+            const arg = -Math.tan(latRad) * tanDec;
+
+            if (arg <= -0.9999 || arg >= 0.9999) {
+              break;
+            }
+
+            const dsaDeg = Math.acos(arg) * RAD2DEG;
+            const nsaDeg = 180 - dsaDeg;
+
+            let targetRA;
+            if (houseNum === 11) {
+              targetRA = ramcDeg + dsaDeg / 3;
+            } else if (houseNum === 12) {
+              targetRA = ramcDeg + (2 * dsaDeg) / 3;
+            } else if (houseNum === 2) {
+              targetRA = ramcDeg + 180 - (2 * nsaDeg) / 3;
+            } else {
+              targetRA = ramcDeg + 180 - nsaDeg / 3;
+            }
+
+            const nextLon = raToEclipticLon(targetRA);
+            if (Math.abs(shortestArc(cuspLon, nextLon)) < 1e-5) {
+              cuspLon = nextLon;
+              break;
+            }
+            cuspLon = nextLon;
+          }
+          return norm360(cuspLon);
+        }
+
+        const c11 = computePlacidusCusp(11);
+        const c12 = computePlacidusCusp(12);
+        const c2 = computePlacidusCusp(2);
+        const c3 = computePlacidusCusp(3);
+
+        const placidusCuspsDeg = [
+          ascDeg,             // 1 (ASC)
+          c2,                 // 2
+          c3,                 // 3
+          icDeg,              // 4 (IC)
+          norm360(c11 + 180), // 5
+          norm360(c12 + 180), // 6
+          dscDeg,             // 7 (DSC)
+          norm360(c2 + 180),  // 8
+          norm360(c3 + 180),  // 9
+          mcDeg,              // 10 (MC)
+          c11,                // 11
+          c12                 // 12
+        ];
+
+        const ascSignIndex = Math.floor(ascDeg / 30) % 12;
+        const wholeSignCuspsDeg = Array.from({ length: 12 }, (_, i) => ((ascSignIndex + i) % 12) * 30);
+
+        const placidusHouses = placidusCuspsDeg.map((deg, idx) => ({
+          house: idx + 1,
+          ...getSignDetails(deg)
+        }));
+
+        const wholeSignHouses = wholeSignCuspsDeg.map((deg, idx) => ({
+          house: idx + 1,
+          ...getSignDetails(deg)
+        }));
+
+        return {
+          obliquity: Number(epsDeg.toFixed(5)),
+          gastHours: Number(gastHours.toFixed(5)),
+          lstHours: Number(lstHours.toFixed(5)),
+          lstFormatted,
+          ramc: Number(ramcDeg.toFixed(4)),
+          asc: getSignDetails(ascDeg),
+          dsc: getSignDetails(dscDeg),
+          mc: getSignDetails(mcDeg),
+          ic: getSignDetails(icDeg),
+          placidusCuspsDeg,
+          wholeSignCuspsDeg,
+          placidusHouses,
+          wholeSignHouses
+        };
+      }
+
+      function findPlanetHouses(planetLon, placidusCuspsDeg, ascSignIndex) {
+        const lon = norm360(planetLon);
+        const pSignIndex = Math.floor(lon / 30) % 12;
+        const wholeSignHouse = ((pSignIndex - ascSignIndex + 12) % 12) + 1;
+
+        let placidusHouse = 1;
+        for (let i = 0; i < 12; i++) {
+          const start = placidusCuspsDeg[i];
+          const end = placidusCuspsDeg[(i + 1) % 12];
+          const span = norm360(end - start);
+          const offset = norm360(lon - start);
+          if (offset < span) {
+            placidusHouse = i + 1;
+            break;
+          }
+        }
+        return { placidusHouse, wholeSignHouse };
+      }
+
+      // -----------------------------------------------------------------------
+      // 5. SECT (GÜNDÜZ / GECE) & HERMETIC ARABIC LOTS (PARS FORTUNAE & SPIRITUS)
+      // -----------------------------------------------------------------------
+      function calculateSectAndHermeticLots(sunLon, moonLon, housesObj) {
+        const ascLon = housesObj.asc.longitude;
+        const ascSignIdx = housesObj.asc.signIndex;
+
+        const arcAscMinusSun = norm360(ascLon - sunLon);
+        const isDayChart = arcAscMinusSun > 0 && arcAscMinusSun < 180;
+
+        const fortuneLon = isDayChart
+          ? norm360(ascLon + moonLon - sunLon)
+          : norm360(ascLon + sunLon - moonLon);
+
+        const spiritLon = isDayChart
+          ? norm360(ascLon + sunLon - moonLon)
+          : norm360(ascLon + moonLon - sunLon);
+
+        const fortuneDetails = getSignDetails(fortuneLon);
+        const fortuneHouses = findPlanetHouses(fortuneLon, housesObj.placidusCuspsDeg, ascSignIdx);
+
+        const spiritDetails = getSignDetails(spiritLon);
+        const spiritHouses = findPlanetHouses(spiritLon, housesObj.placidusCuspsDeg, ascSignIdx);
+
+        return {
+          isDayChart,
+          sectName: isDayChart ? 'Gündüz Haritası (Diurnal Sect)' : 'Gece Haritası (Nocturnal Sect)',
+          sectLight: isDayChart ? 'Güneş' : 'Ay',
+          sectBenefic: isDayChart ? 'Jüpiter' : 'Venüs',
+          sectMalefic: isDayChart ? 'Satürn' : 'Mars',
+          outOfSectMalefic: isDayChart ? 'Mars' : 'Satürn',
+          parsFortunae: {
+            name: 'Şans Noktası (Pars Fortunae)',
+            symbol: '⊗',
+            formula: isDayChart ? 'ASC + Ay − Güneş (Gündüz)' : 'ASC + Güneş − Ay (Gece)',
+            ...fortuneDetails,
+            ...fortuneHouses
+          },
+          parsSpiritus: {
+            name: 'Ruh Noktası (Pars Spiritus)',
+            symbol: '☼',
+            formula: isDayChart ? 'ASC + Güneş − Ay (Gündüz)' : 'ASC + Ay − Güneş (Gece)',
+            ...spiritDetails,
+            ...spiritHouses
+          }
+        };
+      }
+
+      // -----------------------------------------------------------------------
+      // 6. COSMOBIOLOGY (URANIAN) MIDPOINTS & 90° DIAL CONTACTS
+      // -----------------------------------------------------------------------
+      function calculateCosmobiologyMidpoints(planetsMap, housesObj) {
+        const midpointPairs = [
+          { id: 'SO/MO', title: 'Güneş / Ay', p1: 'Güneş', p2: 'Ay', theme: 'Yaşam Enerjisi, İçsel Bütünlük, İlişki ve Ruh-Beden Ekseni' },
+          { id: 'SO/ME', title: 'Güneş / Merkür', p1: 'Güneş', p2: 'Merkür', theme: 'Zihinsel İrade, Analitik Zeka, İfade ve Nörolojik Koordinasyon' },
+          { id: 'VE/MA', title: 'Venüs / Mars', p1: 'Venüs', p2: 'Mars', theme: 'Yaratıcı Tutku, Manyetizma, Cinsellik ve Sanatsal/Fiziksel Üretim' },
+          { id: 'ME/UR', title: 'Merkür / Uranüs', p1: 'Merkür', p2: 'Uranüs', theme: 'Sezgisel Şimşek, Mühendislik/Teknik Deha, İcat ve Hızlı Kavrayış' },
+          { id: 'AS/MC', title: 'ASC / MC', p1: 'ASC', p2: 'MC', theme: 'Kişisel Kimlik ile Toplumsal/Mesleki Kaderin Kesişim Noktası' },
+          { id: 'MA/SA', title: 'Mars / Satürn', p1: 'Mars', p2: 'Satürn', theme: 'Dayanıklılık, Odaklanmış Güç, Kronik Direnç veya Kırılma Ekseni' }
+        ];
+
+        const allPoints = [
+          ...Object.values(planetsMap),
+          { name: 'ASC', symbol: 'ASC', longitude: housesObj.asc.longitude },
+          { name: 'MC', symbol: 'MC', longitude: housesObj.mc.longitude }
+        ];
+
+        return midpointPairs.map(pair => {
+          const lon1 = pair.p1 === 'ASC' ? housesObj.asc.longitude :
+                       pair.p1 === 'MC'  ? housesObj.mc.longitude :
+                       planetsMap[pair.p1].longitude;
+          const lon2 = pair.p2 === 'ASC' ? housesObj.asc.longitude :
+                       pair.p2 === 'MC'  ? housesObj.mc.longitude :
+                       planetsMap[pair.p2].longitude;
+
+          const arc = shortestArc(lon1, lon2);
+          const midLon = norm360(lon1 + arc / 2);
+          const mod90 = Number((midLon % 90).toFixed(2));
+          const mod45 = Number((midLon % 45).toFixed(2));
+          const signDetails = getSignDetails(midLon);
+          const houseInfo = findPlanetHouses(midLon, housesObj.placidusCuspsDeg, housesObj.asc.signIndex);
+
+          const contacts = [];
+          for (const pt of allPoints) {
+            if (pt.name === pair.p1 || pt.name === pair.p2) continue;
+            const diff45 = Math.abs((((pt.longitude - midLon) % 45) + 45 + 22.5) % 45 - 22.5);
+            if (diff45 <= 1.6) {
+              const rawDiff = Math.abs(shortestArc(midLon, pt.longitude));
+              let aspectType = 'Mod 45°';
+              if (rawDiff <= 1.8) aspectType = '0° (Kavuşum)';
+              else if (Math.abs(rawDiff - 180) <= 1.8) aspectType = '180° (Karşıt)';
+              else if (Math.abs(rawDiff - 90) <= 1.8) aspectType = '90° (Kare)';
+              else if (Math.abs(rawDiff - 45) <= 1.8) aspectType = '45° (Yarım Kare)';
+              else if (Math.abs(rawDiff - 135) <= 1.8) aspectType = '135° (Seskuikadrat)';
+
+              contacts.push({
+                point: pt.name,
+                aspect: aspectType,
+                orb: Number(diff45.toFixed(2)),
+                formula: `${pair.id} = ${pt.name} (${aspectType}, orb ${diff45.toFixed(2)}°)`
+              });
+            }
+          }
+
+          return {
+            id: pair.id,
+            title: pair.title,
+            theme: pair.theme,
+            mod90,
+            mod45,
+            contacts,
+            ...signDetails,
+            ...houseInfo
+          };
+        });
+      }
+
+      // -----------------------------------------------------------------------
+      // 7. MUTUAL RECEPTIONS, DISPOSITORS, SECONDARY PROGRESSIONS & TRANSITS
+      // -----------------------------------------------------------------------
+      function detectMutualReceptions(planetsList) {
+        const classicalSeven = planetsList.filter(p =>
+          ['Güneş', 'Ay', 'Merkür', 'Venüs', 'Mars', 'Jüpiter', 'Satürn'].includes(p.name)
+        );
+        const receptions = [];
+
+        for (let i = 0; i < classicalSeven.length; i++) {
+          for (let j = i + 1; j < classicalSeven.length; j++) {
+            const pA = classicalSeven[i];
+            const pB = classicalSeven[j];
+
+            if (pA.classicalRuler === pB.name && pB.classicalRuler === pA.name) {
+              receptions.push({
+                type: 'Yöneticilik (Domicile) Karşılıklı Ağırlaması',
+                pair: `${pA.name} (${pA.signName}) ↔ ${pB.name} (${pB.signName})`
+              });
+            }
+
+            const exA = ESSENTIAL_DIGNITIES[pA.name]?.exaltation || [];
+            const exB = ESSENTIAL_DIGNITIES[pB.name]?.exaltation || [];
+            if (exA.includes(pB.signName) && exB.includes(pA.signName)) {
+              receptions.push({
+                type: 'Yücelim (Exaltation) Karşılıklı Ağırlaması',
+                pair: `${pA.name} (${pA.signName}) ↔ ${pB.name} (${pB.signName})`
+              });
+            }
+
+            if (
+              (pA.classicalRuler === pB.name && exA.includes(pB.signName)) ||
+              (pB.classicalRuler === pA.name && exB.includes(pA.signName))
+            ) {
+              receptions.push({
+                type: 'Karma (Yöneticilik/Yücelim) Karşılıklı Ağırlama',
+                pair: `${pA.name} (${pA.signName}) ↔ ${pB.name} (${pB.signName})`
+              });
+            }
+          }
+        }
+        return receptions;
+      }
+
+      function calculateSecondaryProgressions(exactUtcDate, latDeg, lonDeg) {
+        const currentUtcMs = Date.now();
+        const ageYears = (currentUtcMs - exactUtcDate.getTime()) / (365.2425 * 86400000);
+        const progressedUtcDate = new Date(exactUtcDate.getTime() + ageYears * 86400000);
+
+        const pSunPos = getPlanetEclipticPosition('Sun', progressedUtcDate);
+        const pMoonPos = getPlanetEclipticPosition('Moon', progressedUtcDate);
+        const pMercuryPos = getPlanetEclipticPosition('Mercury', progressedUtcDate);
+        const pVenusPos = getPlanetEclipticPosition('Venus', progressedUtcDate);
+        const pMarsPos = getPlanetEclipticPosition('Mars', progressedUtcDate);
+        const pHouses = calculateHousesAndAngles(progressedUtcDate, latDeg, lonDeg);
+
+        return {
+          currentAgeYears: Number(ageYears.toFixed(2)),
+          progressedEphemerisDateUTC: progressedUtcDate.toISOString(),
+          progressedSun: getSignDetails(pSunPos.elon),
+          progressedMoon: getSignDetails(pMoonPos.elon),
+          progressedMercury: getSignDetails(pMercuryPos.elon),
+          progressedVenus: getSignDetails(pVenusPos.elon),
+          progressedMars: getSignDetails(pMarsPos.elon),
+          progressedASC: pHouses.asc,
+          progressedMC: pHouses.mc
+        };
+      }
+
+      function calculateMajorNatalAspects(planetsList, housesObj) {
+        const points = [
+          ...planetsList,
+          { name: 'ASC', symbol: 'ASC', longitude: housesObj.asc.longitude },
+          { name: 'MC', symbol: 'MC', longitude: housesObj.mc.longitude }
+        ];
+        const aspectDefs = [
+          { name: 'Kavuşum (0°)', angle: 0, maxOrb: 8 },
+          { name: 'Sekstil (60°)', angle: 60, maxOrb: 5 },
+          { name: 'Kare (90°)', angle: 90, maxOrb: 7 },
+          { name: 'Üçgen (120°)', angle: 120, maxOrb: 7 },
+          { name: 'Karşıt (180°)', angle: 180, maxOrb: 8 }
+        ];
+
+        const aspects = [];
+        for (let i = 0; i < points.length; i++) {
+          for (let j = i + 1; j < points.length; j++) {
+            const p1 = points[i];
+            const p2 = points[j];
+            if (p1.name === 'Kuzey Ay Düğümü' && p2.name === 'Güney Ay Düğümü') continue;
+
+            const dist = Math.abs(shortestArc(p1.longitude, p2.longitude));
+            for (const asp of aspectDefs) {
+              const orb = Math.abs(dist - asp.angle);
+              if (orb <= asp.maxOrb) {
+                aspects.push({
+                  point1: p1.name,
+                  point2: p2.name,
+                  aspect: asp.name,
+                  orb: Number(orb.toFixed(2))
+                });
+                break;
+              }
+            }
+          }
+        }
+        return aspects.sort((a, b) => a.orb - b.orb);
+      }
+
+      function calculate2026To2028TransitCheckpoints() {
+        const checkpoints = [
+          '2026-01-01T12:00:00Z',
+          '2026-04-15T12:00:00Z',
+          '2026-07-15T12:00:00Z',
+          '2026-10-15T12:00:00Z',
+          '2027-01-15T12:00:00Z',
+          '2027-06-15T12:00:00Z',
+          '2027-11-15T12:00:00Z',
+          '2028-03-15T12:00:00Z',
+          '2028-07-15T12:00:00Z',
+          '2028-11-15T12:00:00Z'
+        ];
+        const transitBodies = [
+          { key: 'Pluto', name: 'Plüton' },
+          { key: 'Neptune', name: 'Neptün' },
+          { key: 'Uranus', name: 'Uranüs' },
+          { key: 'Saturn', name: 'Satürn' },
+          { key: 'Jupiter', name: 'Jüpiter' }
+        ];
+
+        return checkpoints.map(iso => {
+          const d = new Date(iso);
+          const positions = {};
+          for (const b of transitBodies) {
+            const pos = getPlanetEclipticPosition(b.key, d);
+            const sd = getSignDetails(pos.elon);
+            positions[b.name] = sd.formattedShort;
+          }
+          const nnLon = getTrueNorthNodeLongitude(d);
+          positions['Kuzey Ay Düğümü'] = getSignDetails(nnLon).formattedShort;
+          return {
+            date: iso.slice(0, 10),
+            positions
+          };
+        });
+      }
+
+      // -----------------------------------------------------------------------
+      // 8. MASTER CALCULATION ORCHESTRATOR (SAF UTC DÖNÜŞÜMÜ)
+      // -----------------------------------------------------------------------
+      let latestChartPayload = null;
+      let latestMarkdownReport = '';
+
+      function performFullAstronomicalCalculation() {
+        const fullName = document.getElementById('fullName').value.trim() || 'İsimsiz Danışan';
+        const day = parseInt(document.getElementById('birthDay').value, 10);
+        const month = parseInt(document.getElementById('birthMonth').value, 10);
+        const year = parseInt(document.getElementById('birthYear').value, 10);
+        const hour = parseInt(document.getElementById('birthHour').value, 10);
+        const minute = parseInt(document.getElementById('birthMinute').value, 10);
+
+        const birthPlace = document.getElementById('birthPlace').value.trim() || 'Belirtilmedi';
+        const birthLat = parseFloat(document.getElementById('birthLat').value);
+        const birthLon = parseFloat(document.getElementById('birthLon').value);
+
+        const currentPlace = document.getElementById('currentPlace').value.trim() || birthPlace;
+        const relocLat = parseFloat(document.getElementById('relocLat').value) || birthLat;
+        const relocLon = parseFloat(document.getElementById('relocLon').value) || birthLon;
+
+        if (isNaN(day) || isNaN(month) || isNaN(year) || isNaN(hour) || isNaN(minute)) {
+          throw new Error('Lütfen doğum tarihi ve saat bilgilerini eksiksiz giriniz.');
+        }
+        if (isNaN(birthLat) || isNaN(birthLon)) {
+          throw new Error('Lütfen geçerli Enlem (Latitude) ve Boylam (Longitude) değerleri giriniz.');
+        }
+
+        // Eğer hala "auto" seçiliyse tarihe göre Türkiye saat dilimini tespit et
+        const tzSelectEl = document.getElementById('tzOffset');
+        if (tzSelectEl.value === 'auto') {
+          detectTurkeyTimezone(year, month, day);
+        }
+
+        // Kullanıcının girdiği yerel saat ve seçilen GMT offset (Örn: 1972 Şubat için offset = 2)
+        const offsetHours = tzSelectEl.value === 'manual'
+          ? parseFloat(document.getElementById('manualTzInput').value)
+          : parseFloat(document.getElementById('tzOffset').value);
+
+        if (isNaN(offsetHours)) {
+          throw new Error('Lütfen geçerli bir Saat Dilimi (UTC/GMT) değeri seçiniz veya giriniz.');
+        }
+
+        // KRİTİK KURAL: Yerel new Date(year, month, day...) KULLANILMAZ.
+        // Önce tarihi UTC kabul ederek milisaniyeye çevir, sonra offset kadar saati çıkar:
+        const utcTimestamp = Date.UTC(year, month - 1, day, hour, minute, 0) - (offsetHours * 3600 * 1000);
+        const exactUtcDate = new Date(utcTimestamp);
+
+        // Astronomy-engine ve Local Sidereal Time (LST) hesaplamalarında SADECE `exactUtcDate` kullanılır!
+        const natalHouses = calculateHousesAndAngles(exactUtcDate, birthLat, birthLon);
+        const relocationHouses = calculateHousesAndAngles(exactUtcDate, relocLat, relocLon);
+
+        const planets = PLANET_DEFINITIONS.map(def => calculateCelestialBody(def, exactUtcDate));
+        const nodes = calculateLunarNodes(exactUtcDate);
+        const allBodies = [...planets, ...nodes];
+
+        const planetsMap = {};
+        for (const body of allBodies) {
+          const hInfo = findPlanetHouses(body.longitude, natalHouses.placidusCuspsDeg, natalHouses.asc.signIndex);
+          const relocHInfo = findPlanetHouses(body.longitude, relocationHouses.placidusCuspsDeg, relocationHouses.asc.signIndex);
+          body.placidusHouse = hInfo.placidusHouse;
+          body.wholeSignHouse = hInfo.wholeSignHouse;
+          body.relocatedPlacidusHouse = relocHInfo.placidusHouse;
+          planetsMap[body.name] = body;
+        }
+
+        const sectAndLots = calculateSectAndHermeticLots(
+          planetsMap['Güneş'].longitude,
+          planetsMap['Ay'].longitude,
+          natalHouses
+        );
+
+        const midpoints = calculateCosmobiologyMidpoints(planetsMap, natalHouses);
+        const mutualReceptions = detectMutualReceptions(allBodies);
+        const secondaryProgressions = calculateSecondaryProgressions(exactUtcDate, birthLat, birthLon);
+        const majorAspects = calculateMajorNatalAspects(allBodies, natalHouses);
+        const transitCheckpoints2026_2028 = calculate2026To2028TransitCheckpoints();
+
+        const relocationComparison = natalHouses.placidusHouses.map((nh, idx) => {
+          const rh = relocationHouses.placidusHouses[idx];
+          const deltaDeg = Number(shortestArc(nh.longitude, rh.longitude).toFixed(2));
+          return {
+            house: nh.house,
+            natalCusp: nh.formattedDMS,
+            natalRuler: `${nh.classicalRuler}${nh.modernRuler !== nh.classicalRuler ? ' / ' + nh.modernRuler : ''}`,
+            wholeSignCusp: natalHouses.wholeSignHouses[idx].formattedShort,
+            relocatedCusp: rh.formattedDMS,
+            relocatedRuler: rh.classicalRuler,
+            deltaDegrees: deltaDeg
+          };
+        });
+
+        const payload = {
+          meta: {
+            fullName,
+            birthDateLocal: `${String(day).padStart(2, '0')}.${String(month).padStart(2, '0')}.${year}`,
+            birthTimeLocal: `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')} (GMT${offsetHours >= 0 ? '+' : ''}${offsetHours})`,
+            utcOffsetHours: offsetHours,
+            exactBirthDateUTC: exactUtcDate.toISOString(),
+            birthPlace,
+            birthCoordinates: { latitude: birthLat, longitude: birthLon },
+            currentResidence: {
+              place: currentPlace,
+              latitude: relocLat,
+              longitude: relocLon,
+              longitudeDifferenceDeg: Number((relocLon - birthLon).toFixed(4))
+            }
+          },
+          siderealAndAngles: {
+            localSiderealTime: natalHouses.lstFormatted,
+            ramcDegrees: natalHouses.ramc,
+            trueObliquityDegrees: natalHouses.obliquity,
+            ascendant: natalHouses.asc,
+            midheavenMC: natalHouses.mc,
+            descendant: natalHouses.dsc,
+            imumCoeliIC: natalHouses.ic
+          },
+          sectAndHermeticLots: sectAndLots,
+          ephemerisAndDignities: allBodies,
+          houses: {
+            placidus: natalHouses.placidusHouses,
+            wholeSign: natalHouses.wholeSignHouses,
+            relocationComparison
+          },
+          mutualReceptions,
+          cosmobiologyMidpoints: midpoints,
+          secondaryProgressions,
+          majorNatalAspects: majorAspects,
+          transitEphemeris2026_2028: transitCheckpoints2026_2028
+        };
+
+        latestChartPayload = payload;
+        renderAllVisualTables(payload);
+        return payload;
+      }
+
+      // -----------------------------------------------------------------------
+      // 9. UI RENDERING FUNCTIONS (TABLES, SUMMARY CARDS & SVG NATAL WHEEL)
+      // -----------------------------------------------------------------------
+      function renderAllVisualTables(data) {
+        const container = document.getElementById('resultsContainer');
+        container.classList.remove('hidden');
+
+        document.getElementById('printMetaSummary').textContent =
+          `${data.meta.fullName} | Doğum: ${data.meta.birthDateLocal} ${data.meta.birthTimeLocal} [Saf UTC: ${data.meta.exactBirthDateUTC}] — ${data.meta.birthPlace} (${data.meta.birthCoordinates.latitude.toFixed(4)}°K, ${data.meta.birthCoordinates.longitude.toFixed(4)}°D) | Relokasyon: ${data.meta.currentResidence.place}`;
+
+        document.getElementById('utcCalculationBadge').textContent =
+          `Saf UTC: ${data.meta.exactBirthDateUTC.replace('T', ' ').slice(0, 16)} UTC (GMT${data.meta.utcOffsetHours >= 0 ? '+' : ''}${data.meta.utcOffsetHours})`;
+
+        const sun = data.ephemerisAndDignities.find(p => p.name === 'Güneş');
+        const moon = data.ephemerisAndDignities.find(p => p.name === 'Ay');
+        const asc = data.siderealAndAngles.ascendant;
+        const mc = data.siderealAndAngles.midheavenMC;
+
+        const summaryCards = [
+          { label: 'Güneş Burcu', value: `${sun.signSymbol} ${sun.signName}`, sub: `${formatDM(sun.degreeInSign)} • ${sun.placidusHouse}. Ev` },
+          { label: 'Ay Burcu', value: `${moon.signSymbol} ${moon.signName}`, sub: `${formatDM(moon.degreeInSign)} • ${moon.placidusHouse}. Ev` },
+          { label: 'Yükselen (ASC)', value: `${asc.signSymbol} ${asc.signName}`, sub: `${formatDMS(asc.degreeInSign)} • Yönetici: ${asc.classicalRuler}` },
+          { label: 'Tepe Noktası (MC)', value: `${mc.signSymbol} ${mc.signName}`, sub: `${formatDMS(mc.degreeInSign)} • Yönetici: ${mc.classicalRuler}` },
+          { label: 'Yerel Yıldız Zamanı', value: data.siderealAndAngles.localSiderealTime, sub: `RAMC: ${data.siderealAndAngles.ramcDegrees.toFixed(2)}° • GMT${data.meta.utcOffsetHours >= 0 ? '+' : ''}${data.meta.utcOffsetHours}` },
+          { label: 'Harita Sekti', value: data.sectAndHermeticLots.isDayChart ? '☀️ Gündüz (Diurnal)' : '🌙 Gece (Nocturnal)', sub: `Sekt Işığı: ${data.sectAndHermeticLots.sectLight}` }
+        ];
+
+        document.getElementById('summaryCardsGrid').innerHTML = summaryCards.map(c => `
+          <div class="cosmic-card-subtle rounded-xl p-3.5 border border-gold-500/20">
+            <div class="text-[11px] uppercase tracking-wider text-slate-400">${c.label}</div>
+            <div class="text-base sm:text-lg font-display font-bold text-gold-300 mt-1">${c.value}</div>
+            <div class="text-[11px] font-mono text-slate-300 mt-0.5">${c.sub}</div>
+          </div>
+        `).join('');
+
+        const sectBadge = document.getElementById('sectBadge');
+        if (data.sectAndHermeticLots.isDayChart) {
+          sectBadge.className = 'px-3 py-1 rounded-full text-xs font-mono font-semibold bg-amber-500/20 text-amber-300 border border-amber-400/40';
+          sectBadge.textContent = '☀️ GÜNDÜZ HARİTASI (DIURNAL SECT)';
+        } else {
+          sectBadge.className = 'px-3 py-1 rounded-full text-xs font-mono font-semibold bg-indigo-500/20 text-indigo-300 border border-indigo-400/40';
+          sectBadge.textContent = '🌙 GECE HARİTASI (NOCTURNAL SECT)';
+        }
+
+        const lots = [data.sectAndHermeticLots.parsFortunae, data.sectAndHermeticLots.parsSpiritus];
+        document.getElementById('arabicLotsTableBody').innerHTML = lots.map(lot => `
+          <tr class="hover:bg-cosmic-800/50 transition-colors">
+            <td class="py-3 px-3 font-sans font-semibold text-gold-300">${lot.symbol} ${lot.name}</td>
+            <td class="py-3 px-3 text-slate-300">${lot.formula}</td>
+            <td class="py-3 px-3 text-sky-300">${lot.longitude.toFixed(4)}°</td>
+            <td class="py-3 px-3 text-slate-100 font-semibold">${lot.formattedDMS}</td>
+            <td class="py-3 px-3 text-amber-300">${lot.placidusHouse}. Ev (Placidus) / ${lot.wholeSignHouse}. Ev (WS)</td>
+            <td class="py-3 px-3 text-slate-300">Yön: <strong>${lot.classicalRuler}</strong> • Terim: ${lot.egyptianTerm.label}</td>
+          </tr>
+        `).join('');
+
+        const sp = data.secondaryProgressions;
+        const mrHtml = data.mutualReceptions.length > 0
+          ? data.mutualReceptions.map(r => `<li class="text-emerald-300">✦ <strong>${r.type}:</strong> ${r.pair}</li>`).join('')
+          : `<li class="text-slate-400">Klasik 7 gezegen arasında doğrudan burç/yücelim karşılıklı ağırlaması bulunmamaktadır (Terim/Dekan bağlantıları AI analizinde detaylandırılır).</li>`;
+
+        document.getElementById('progressionsAndReceptionsBox').innerHTML = `
+          <div class="cosmic-card-subtle rounded-xl p-3.5 space-y-1.5 font-mono">
+            <div class="text-xs font-sans font-semibold text-gold-300 uppercase tracking-wider">
+              İkincil İlerletim (Yaş: ${sp.currentAgeYears})
+            </div>
+            <div class="text-slate-200">☉ İlerletilmiş Güneş: <span class="text-amber-300 font-semibold">${sp.progressedSun.formattedDMS}</span></div>
+            <div class="text-slate-200">☽ İlerletilmiş Ay: <span class="text-sky-300 font-semibold">${sp.progressedMoon.formattedDMS}</span></div>
+            <div class="text-slate-200">ASC İlerletilmiş Yükselen: <span class="text-emerald-300 font-semibold">${sp.progressedASC.formattedDMS}</span></div>
+            <div class="text-slate-200">MC İlerletilmiş MC: <span class="text-purple-300 font-semibold">${sp.progressedMC.formattedDMS}</span></div>
+          </div>
+          <div class="cosmic-card-subtle rounded-xl p-3.5 space-y-1.5">
+            <div class="text-xs font-semibold text-gold-300 uppercase tracking-wider">
+              Karşılıklı Ağırlama (Mutual Reception) &amp; Sekt Aktörleri
+            </div>
+            <ul class="space-y-1 text-xs">${mrHtml}</ul>
+            <div class="pt-1.5 text-[11px] text-slate-400 font-mono border-t border-slate-800">
+              Sekt İyicili: <strong class="text-emerald-300">${data.sectAndHermeticLots.sectBenefic}</strong> •
+              Sekt Kötücülü: <strong class="text-amber-300">${data.sectAndHermeticLots.sectMalefic}</strong> •
+              Sekt Dışı Kötücül: <strong class="text-rose-400">${data.sectAndHermeticLots.outOfSectMalefic}</strong>
+            </div>
+          </div>
+        `;
+
+        document.getElementById('ephemerisTableBody').innerHTML = data.ephemerisAndDignities.map(p => {
+          const rxBadge = p.isRetrograde
+            ? `<span class="px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/40 font-semibold">Rx (${p.dailySpeed.toFixed(2)}°)</span>`
+            : `<span class="text-emerald-400">${p.dailySpeed >= 0 ? '+' : ''}${p.dailySpeed.toFixed(2)}° (Düz)</span>`;
+
+          let dignityColor = 'text-slate-300';
+          if (p.dignity.status.includes('Yöneticilik') || p.dignity.status.includes('Yücelim')) {
+            dignityColor = 'text-emerald-300 font-semibold';
+          } else if (p.dignity.status.includes('Zarar') || p.dignity.status.includes('Düşüş')) {
+            dignityColor = 'text-rose-300 font-semibold';
+          }
+
+          return `
+            <tr class="hover:bg-cosmic-800/50 transition-colors">
+              <td class="py-2.5 px-3 font-sans font-semibold text-gold-300 whitespace-nowrap">
+                <span class="text-base mr-1">${p.symbol}</span> ${p.name}
+              </td>
+              <td class="py-2.5 px-3 text-sky-300">${p.longitude.toFixed(4)}°</td>
+              <td class="py-2.5 px-3 text-slate-100 font-semibold whitespace-nowrap">${p.signSymbol} ${p.formattedDMS}</td>
+              <td class="py-2.5 px-3 whitespace-nowrap">${rxBadge}</td>
+              <td class="py-2.5 px-3 text-amber-300 whitespace-nowrap">${p.placidusHouse}. Ev / ${p.wholeSignHouse}. WS</td>
+              <td class="py-2.5 px-3 text-slate-200 whitespace-nowrap">
+                ${p.classicalRuler}${p.modernRuler !== p.classicalRuler ? ` <span class="text-slate-500">(${p.modernRuler})</span>` : ''}
+              </td>
+              <td class="py-2.5 px-3 text-purple-300 whitespace-nowrap">${p.decan.label}</td>
+              <td class="py-2.5 px-3 text-cyan-300 whitespace-nowrap">${p.egyptianTerm.label}</td>
+              <td class="py-2.5 px-3 ${dignityColor}">${p.dignity.status}</td>
+            </tr>
+          `;
+        }).join('');
+
+        document.getElementById('housesTableBody').innerHTML = data.houses.relocationComparison.map(h => {
+          const isAngle = [1, 4, 7, 10].includes(h.house);
+          const angleLabel = h.house === 1 ? ' (ASC)' : h.house === 4 ? ' (IC)' : h.house === 7 ? ' (DSC)' : h.house === 10 ? ' (MC)' : '';
+          return `
+            <tr class="${isAngle ? 'bg-gold-500/10 font-semibold' : 'hover:bg-cosmic-800/40'} transition-colors">
+              <td class="py-2.5 px-3 text-gold-300 whitespace-nowrap">${h.house}. Ev${angleLabel}</td>
+              <td class="py-2.5 px-3 text-slate-100 whitespace-nowrap">${h.natalCusp}</td>
+              <td class="py-2.5 px-3 text-amber-300 whitespace-nowrap">${h.natalRuler}</td>
+              <td class="py-2.5 px-3 text-slate-300 whitespace-nowrap">${h.wholeSignCusp}</td>
+              <td class="py-2.5 px-3 text-sky-300 whitespace-nowrap">${h.relocatedCusp}</td>
+              <td class="py-2.5 px-3 ${h.deltaDegrees >= 0 ? 'text-emerald-300' : 'text-rose-300'} whitespace-nowrap">
+                ${h.deltaDegrees >= 0 ? '+' : ''}${h.deltaDegrees}°
+              </td>
+            </tr>
+          `;
+        }).join('');
+
+        document.getElementById('midpointsTableBody').innerHTML = data.cosmobiologyMidpoints.map(m => {
+          const contactsHtml = m.contacts.length > 0
+            ? m.contacts.map(c => `<span class="inline-block px-1.5 py-0.5 rounded bg-gold-500/15 text-gold-300 border border-gold-500/30 mr-1 mb-1">${c.formula}</span>`).join('')
+            : `<span class="text-slate-500">Doğrudan sert temas yok (±1.5°)</span>`;
+
+          return `
+            <tr class="hover:bg-cosmic-800/40 transition-colors">
+              <td class="py-2.5 px-2.5 font-sans font-semibold text-gold-300 whitespace-nowrap" title="${m.theme}">
+                ${m.id} <span class="text-slate-400 font-normal">(${m.title})</span>
+              </td>
+              <td class="py-2.5 px-2.5 text-sky-300 whitespace-nowrap">${m.longitude.toFixed(2)}°</td>
+              <td class="py-2.5 px-2.5 text-slate-100 whitespace-nowrap">${m.signSymbol} ${m.formattedDMS} (${m.placidusHouse}.Ev)</td>
+              <td class="py-2.5 px-2.5 text-amber-300 whitespace-nowrap">${m.mod90.toFixed(2)}°</td>
+              <td class="py-2.5 px-2.5 text-[11px]">${contactsHtml}</td>
+            </tr>
+          `;
+        }).join('');
+
+        document.getElementById('rawJsonPreview').textContent = JSON.stringify(data, null, 2);
+        renderNatalWheelSVG(data);
+      }
+
+      function renderNatalWheelSVG(data) {
+        const container = document.getElementById('natalWheelContainer');
+        const ascLon = data.siderealAndAngles.ascendant.longitude;
+        document.getElementById('wheelAscMcBadge').textContent =
+          `ASC ${data.siderealAndAngles.ascendant.formattedShort} • MC ${data.siderealAndAngles.midheavenMC.formattedShort}`;
+
+        const size = 360;
+        const cx = size / 2;
+        const cy = size / 2;
+        const rOuter = 168;
+        const rZodiacInner = 136;
+        const rHouseInner = 64;
+
+        function lonToSvgAngleRad(lon) {
+          const rel = norm360(lon - ascLon);
+          const deg = 180 - rel;
+          return deg * DEG2RAD;
+        }
+
+        function polar(r, angleRad) {
+          return {
+            x: cx + r * Math.cos(angleRad),
+            y: cy + r * Math.sin(angleRad)
+          };
+        }
+
+        let svgParts = [
+          `<svg viewBox="0 0 ${size} ${size}" class="w-full h-full select-none">`,
+          `<defs>
+            <radialGradient id="wheelBg" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#0d1428" />
+              <stop offset="100%" stop-color="#04060e" />
+            </radialGradient>
+          </defs>`,
+          `<circle cx="${cx}" cy="${cy}" r="${rOuter}" fill="url(#wheelBg)" stroke="#d4af37" stroke-width="1.5" stroke-opacity="0.7" />`,
+          `<circle cx="${cx}" cy="${cy}" r="${rZodiacInner}" fill="none" stroke="#d4af37" stroke-width="1" stroke-opacity="0.45" />`,
+          `<circle cx="${cx}" cy="${cy}" r="${rHouseInner}" fill="#04060e" stroke="#d4af37" stroke-width="1" stroke-opacity="0.4" />`
+        ];
+
+        for (let i = 0; i < 12; i++) {
+          const signStartLon = i * 30;
+          const aStart = lonToSvgAngleRad(signStartLon);
+          const p1 = polar(rZodiacInner, aStart);
+          const p2 = polar(rOuter, aStart);
+          svgParts.push(
+            `<line x1="${p1.x.toFixed(1)}" y1="${p1.y.toFixed(1)}" x2="${p2.x.toFixed(1)}" y2="${p2.y.toFixed(1)}" stroke="#d4af37" stroke-opacity="0.4" stroke-width="1" />`
+          );
+
+          const midAngle = lonToSvgAngleRad(signStartLon + 15);
+          const pSym = polar((rOuter + rZodiacInner) / 2, midAngle);
+          const sign = ZODIAC_SIGNS[i];
+          const color =
+            sign.element === 'Ateş' ? '#f87171' :
+            sign.element === 'Toprak' ? '#4ade80' :
+            sign.element === 'Hava' ? '#38bdf8' : '#c084fc';
+
+          svgParts.push(
+            `<text x="${pSym.x.toFixed(1)}" y="${pSym.y.toFixed(1)}" fill="${color}" font-size="13" font-weight="bold" text-anchor="middle" dominant-baseline="central">${sign.symbol}</text>`
+          );
+        }
+
+        data.houses.placidus.forEach((h, idx) => {
+          const angle = lonToSvgAngleRad(h.longitude);
+          const isAngle = [0, 3, 6, 9].includes(idx);
+          const p1 = polar(rHouseInner, angle);
+          const p2 = polar(rZodiacInner, angle);
+          svgParts.push(
+            `<line x1="${p1.x.toFixed(1)}" y1="${p1.y.toFixed(1)}" x2="${p2.x.toFixed(1)}" y2="${p2.y.toFixed(1)}" stroke="${isAngle ? '#fde047' : '#64748b'}" stroke-width="${isAngle ? '1.8' : '0.8'}" stroke-opacity="${isAngle ? '0.9' : '0.5'}" />`
+          );
+
+          const nextLon = data.houses.placidus[(idx + 1) % 12].longitude;
+          const span = norm360(nextLon - h.longitude);
+          const midLon = norm360(h.longitude + span / 2);
+          const pNum = polar(rHouseInner + 14, lonToSvgAngleRad(midLon));
+          svgParts.push(
+            `<text x="${pNum.x.toFixed(1)}" y="${pNum.y.toFixed(1)}" fill="#94a3b8" font-size="9" font-family="JetBrains Mono" text-anchor="middle" dominant-baseline="central">${h.house}</text>`
+          );
+        });
+
+        data.majorNatalAspects.slice(0, 18).forEach(asp => {
+          const b1 = data.ephemerisAndDignities.find(p => p.name === asp.point1);
+          const b2 = data.ephemerisAndDignities.find(p => p.name === asp.point2);
+          if (!b1 || !b2) return;
+          const p1 = polar(rHouseInner - 4, lonToSvgAngleRad(b1.longitude));
+          const p2 = polar(rHouseInner - 4, lonToSvgAngleRad(b2.longitude));
+          const stroke =
+            asp.aspect.includes('120') || asp.aspect.includes('60') ? '#38bdf8' :
+            asp.aspect.includes('90') || asp.aspect.includes('180') ? '#f43f5e' : '#facc15';
+          svgParts.push(
+            `<line x1="${p1.x.toFixed(1)}" y1="${p1.y.toFixed(1)}" x2="${p2.x.toFixed(1)}" y2="${p2.y.toFixed(1)}" stroke="${stroke}" stroke-width="0.75" stroke-opacity="0.45" />`
+          );
+        });
+
+        const rPlanet = 112;
+        data.ephemerisAndDignities.forEach((p, idx) => {
+          const angle = lonToSvgAngleRad(p.longitude);
+          const radiusOffset = (idx % 2 === 0) ? rPlanet : rPlanet - 14;
+          const pos = polar(radiusOffset, angle);
+          const dotPos = polar(rZodiacInner - 3, angle);
+
+          svgParts.push(
+            `<circle cx="${dotPos.x.toFixed(1)}" cy="${dotPos.y.toFixed(1)}" r="2" fill="#fde047" />`,
+            `<text x="${pos.x.toFixed(1)}" y="${pos.y.toFixed(1)}" fill="${p.isRetrograde ? '#fda4af' : '#fef08a'}" font-size="13" font-weight="bold" text-anchor="middle" dominant-baseline="central"><title>${p.name}: ${p.formattedDMS}</title>${p.symbol}</text>`
+          );
+        });
+
+        svgParts.push(
+          `<text x="${cx}" y="${cy}" fill="#fbbf24" font-size="10" font-family="Cinzel" font-weight="bold" text-anchor="middle" dominant-baseline="central" opacity="0.9">YILDIRIM</text>`,
+          `</svg>`
+        );
+
+        container.innerHTML = svgParts.join('');
+      }
+
+      // -----------------------------------------------------------------------
+      // 10. OPENSTREETMAP NOMINATIM GEOCODING
+      // -----------------------------------------------------------------------
+      async function fetchCoordinatesFromNominatim(queryText, latInputId, lonInputId, spinnerId, labelPrefix) {
+        const query = queryText.trim();
+        if (!query) {
+          showStatus('Lütfen koordinatlarını bulmak için bir yer adı (İl, İlçe, Mahalle) giriniz.', 'error');
+          return;
+        }
+        const spinner = document.getElementById(spinnerId);
+        spinner.classList.remove('hidden');
+
+        try {
+          const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}`;
+          const response = await fetch(url, {
+            headers: {
+              'Accept': 'application/json',
+              'Accept-Language': 'tr'
+            }
+          });
+          if (!response.ok) {
+            throw new Error(`Nominatim API Hatası: HTTP ${response.status}`);
+          }
+          const results = await response.json();
+          if (!Array.isArray(results) || results.length === 0) {
+            showStatus(`"${query}" için koordinat bulunamadı. Lütfen "İl, İlçe" şeklinde tekrar deneyin veya koordinatları elle girin.`, 'warning');
+            return;
+          }
+
+          const best = results[0];
+          const lat = parseFloat(best.lat);
+          const lon = parseFloat(best.lon);
+
+          document.getElementById(latInputId).value = lat.toFixed(4);
+          document.getElementById(lonInputId).value = lon.toFixed(4);
+
+          showStatus(
+            `📍 ${labelPrefix} koordinatları bulundu: ${best.display_name} → Enlem: ${lat.toFixed(4)}°, Boylam: ${lon.toFixed(4)}°`,
+            'success'
+          );
+        } catch (err) {
+          showStatus(`Koordinat sorgulama hatası: ${err.message}`, 'error');
+        } finally {
+          spinner.classList.add('hidden');
+        }
+      }
+
+      // -----------------------------------------------------------------------
+      // 11. DAHİLİ KURAL TABANLI MASTER SENTEZ MOTORU (INTERNAL RULE-BASED ENGINE)
+      // %100 Yerel / Çevrimdışı (Client-Side) - Dış API Gerektirmez
+      // -----------------------------------------------------------------------
+
+      function getAspectMeaning(p1, p2, aspName) {
+        const key = `${p1}-${p2}`;
+        const rev = `${p2}-${p1}`;
+        const isHarmonious = aspName.includes('Üçgen') || aspName.includes('Sekstil') || aspName.includes('Kavuşum');
+        
+        const database = {
+          'Güneş-Ay': isHarmonious
+            ? 'Bilinçli irade (Güneş) ile bilinçdışı güdüler ve duygusal ihtiyaçlar (Ay) arasında akıcı bir rezonans mevcuttur. Kişi hedeflerini içsel doyumuyla çatışmadan gerçekleştirebilir; canlılık ve psikosomatik denge yüksektir.'
+            : 'Benlik ideali (Güneş) ile duygusal güvence ihtiyacı (Ay) arasında kutuplaşma veya sürtünme görülür. Ebeveyn arketiplerinin içselleştirilmesinde çatışma yaşanabilir; irade kararları duygusal dalgalanmalarla test edilir.',
+          'Güneş-Merkür': 'Zihinsel odak ile yaşam enerjisinin doğrudan kenetlenmesi. Bilişsel fonksiyonlar hızlı, stratejik kabiliyet ve analitik muhakeme belirgindir; fikirler kişisel kimliğin ayrılmaz bir parçası olarak savunulur.',
+          'Güneş-Venüs': 'Manyetik çekim, estetik sezgi ve diplomatik zarafet. Sosyal ilişkilerde değer üretme, sanatsal incelik ve yaşamdan keyif alma güdüsü karakterin merkezindedir.',
+          'Güneş-Mars': isHarmonious
+            ? 'Yüksek fiziksel dinamizm, doğrudan inisiyatif alma kabiliyeti, savaşçı cesaret ve liderlik enerjisi. Karar anlarında tereddütsüz aksiyon üretilir.'
+            : 'İçsel sabırsızlık, fevrilik ve rekabetçi sürtünme potansiyeli. Kişi otorite figürleriyle sürtüşebilir; enerjiyi fiziksel disiplin ve yapıcı inşa projelerine kanalize etmek şarttır.',
+          'Güneş-Jüpiter': isHarmonious
+            ? 'Asil vizyon, entelektüel ve felsefi cömertlik, ahlaki genişleme ve şans faktörü. Hayatın tıkandığı kavşaklarda koruyucu bir el gibi yükselme olanağı sunar.'
+            : 'Aşırı özgüven, kaynakları hesapsız genişletme veya kibir tuzağı. Hukuki, finansal veya inançsal konularda ölçülülük ve somut denetim gerektirir.',
+          'Güneş-Satürn': isHarmonious
+            ? 'Sarsılmaz irade, sabırla inşa edilen prestij, metodik olgunluk ve yüksek sorumluluk bilinci. Yaşamda geç gelen ancak kalıcı olan sağlam başarılar sağlar.'
+            : 'Erken yaşlarda baskı, yetersizlik hissi veya katı baba/otorite sınavları. Kişi kendi değerini çetin mücadelelerle kanıtlamak zorunda kalır; ancak olgunlukta üstün bir direnç abidesine dönüşür.',
+          'Güneş-Uranüs': 'Konvansiyonel kuralları reddeden özgün deha, devrimci dürtü ve ani sıçramalar. Birey sıradan kalıplara sığmaz, yenilikçi ve sıra dışı patikalar açar.',
+          'Güneş-Neptün': 'Yüksek sezgisellik, kozmik empati, sanatsal ilham ve vizyoner derinlik. Ancak sınırların erimesi veya hayal kırıklıklarına karşı rasyonel zemin muhafaza edilmelidir.',
+          'Güneş-Plüton': 'Küllerinden doğma (metamorfoz) kapasitesi, sarsıcı bir içsel irade, psişik derinlik ve kriz anlarında otorite kurma gücü.',
+          'Ay-Merkür': isHarmonious
+            ? 'Hissiyat ile mantığın mükemmel koordinasyonu. Sezgileri söze dökme, pedagojik anlatım ve psikolojik kavrayış yeteneği güçlüdür.'
+            : 'Duygusal tepkilerin rasyonel analizi gölgelemesi veya zihinsel aşırı uyarılmaya bağlı anksiyete ve sinirsel yorgunluk eğilimi.',
+          'Ay-Venüs': 'Sıcak, kucaklayıcı ve estetik bir mizaç. Yuva huzuru, besleyici ilişkiler ve içsel konfor alanı yaratma konusunda doğal bir ustalık verir.',
+          'Ay-Mars': isHarmonious
+            ? 'Duygusal cesaret, içgüdüsel atiklik ve hızlı savunma refleksi. Gerektiğinde sevdiklerini koruma azmi çok kuvvetlidir.'
+            : 'Çabuk alevlenen öfke, sindirim ve mide hassasiyetleri, fevri duygusal patlamalar. Duyguların fiziksel eforla topraklanması gerekir.',
+          'Ay-Jüpiter': 'Ruhsal genişlik, iyimser mizaç, cömert kalp ve bereket duygusu. Halkla ilişkilerde ve manevi yolculuklarda destekleyicidir.',
+          'Ay-Satürn': isHarmonious
+            ? 'Duygusal dayanıklılık, ciddiyet, ketum sadakat ve kriz anlarında soğukkanlılığı koruma becerisi.'
+            : 'Duygusal mesafe, yalnızlık hissi, melankoli ve erken yaşta sırtlanan ağır ailevi yükler. Zamanla duygusal olgunluk ve sarsılmaz bir kale inşa edilir.',
+          'Merkür-Mars': isHarmonious
+            ? 'Keskin zeka, münazara yeteneği, teknik problem çözme hızı ve el-beyin koordinasyonu üst düzeydedir.'
+            : 'Söz düelloları, sarkazm, sinirsel gerilim ve aceleci kararlar nedeniyle hata yapma riski. Zihnin teknik projelere odaklanması şarttır.',
+          'Merkür-Satürn': isHarmonious
+            ? 'Matematiksel mantık, sistematik araştırma, metodik yazım ve derin konsantrasyon kapasitesi.'
+            : 'Zihinsel şüphecilik, aşırı eleştirellik, melankolik takıntılar veya ifade blokajları. Sabırla bilgi yapıları inşa eder.',
+          'Merkür-Uranüs': 'Yıldırım hızıyla gelen kavrayış, teknolojik kavrayış, bilgisayar/kodlama yeteneği ve ezber bozan teorik buluşlar.',
+          'Venüs-Mars': isHarmonious
+            ? 'Kuvvetli yaratıcı manyetizma, erotik ve sanatsal denge, tutkulu estetik anlayışı ve insan ilişkilerinde çekicilik.'
+            : 'İlişkilerde dramatik kutuplaşmalar, arzu ile eylem arasında tatminsizlik veya harcama/haz dengesizlikleri.',
+          'Venüs-Satürn': isHarmonious
+            ? 'Köklü sadakat, ilişkilerde olgunluk ve ciddiyet, sanat ve tasarımda kalıcı formlar üretme kabiliyeti.'
+            : 'Duygusal güvensizlik, sevgiyi hak etmediğine dair kök inançlar veya yaşça büyük/mesafeli ilişkiler arayışı.',
+          'Mars-Satürn': isHarmonious
+            ? 'Demir gibi disiplin, kontrol altında tutulan güç, askeri veya mühendislik düzeyinde dayanıklılık.'
+            : 'Gaza basarken aynı anda frene basma hissi; derin engellenme öfkesi, kemik/eklem hassasiyeti ve kronik direnç testleri.',
+          'Mars-Plüton': 'Olağanüstü stratejik güç, nükleer düzeyde içsel enerji, krizleri güce dönüştürme ve ölümcül baskılar altında pes etmeme.',
+          'Jüpiter-Satürn': 'Genişleme (Jüpiter) ile daralma/sınır (Satürn) arasında büyük toplumsal döngü; projeleri hem vizyoner tutup hem de somut kurallarla yere indirme bilgeliği.'
+        };
+
+        if (database[key]) return database[key];
+        if (database[rev]) return database[rev];
+
+        return `${p1} ile ${p2} arasındaki ${aspName} açısı, bu iki ilkenin haritanın genel tonunda sürekli bir diyalog ve tetiklenme ürettiğini gösterir. ${isHarmonious ? 'Uyumlu hatlar enerjinin rahat akmasını ve doğal yeteneklerin ortaya çıkmasını sağlar.' : 'Sürtünmeli dinamik, kişiyi konfor alanından çıkartarak derin bir olgunlaşma sınavına tabi tutar.'}`;
+      }
+
+      function generateLocalMasterReport(data) {
+        const meta = data.meta;
+        const sid = data.siderealAndAngles;
+        const sect = data.sectAndHermeticLots;
+        const bodies = data.ephemerisAndDignities;
+        const pMap = {};
+        bodies.forEach(b => { pMap[b.name] = b; });
+
+        const sun = pMap['Güneş'];
+        const moon = pMap['Ay'];
+        const asc = sid.ascendant;
+        const mc = sid.midheavenMC;
+
+        const pHouses = data.houses.placidus;
+        const wsHouses = data.houses.wholeSign;
+        const relocComp = data.houses.relocationComparison;
+        const midpoints = data.cosmobiologyMidpoints;
+        const sp = data.secondaryProgressions;
+        const aspects = data.majorNatalAspects;
+
+        // BÖLÜM 1: KLASİK ASTROLOJİ, ASALETLER, SEKT VE DİSPOZİTÖR
+        let sec1 = '';
+        sec1 += `## 1. Klasik Astroloji, Dekan, Mısır Terimleri, Sekt ve Dispozitör Analizi\n\n`;
+        sec1 += `### 1.1. Sekt (Gündüz / Gece) Dinamiği ve Işık Hükümdarlığı\n\n`;
+        if (sect.isDayChart) {
+          sec1 += `Doğum haritanız bir **Gündüz Haritasıdır (Diurnal Sect)**. Güneş ufuk düzleminin üzerinde konumlanarak haritanın mutlak hakimi ve yaşam enerjisinin birincil dağıtıcısı rolünü üstlenmiştir. `;
+          sec1 += `Helenistik ekolün kurallarına göre gündüz haritasında **Sekt Lideri Güneş**, gece ışığı ise Ay'dır. Bu yerleşimde gündüz takımının büyük iyicili **Jüpiter (${pMap['Jüpiter'] ? pMap['Jüpiter'].formattedShort : ''})**, lütuf, genişleme ve ahlaki rehberlik ilkelerini en saf ve verimli haliyle tezahür ettirir. `;
+          sec1 += `Gündüz haritalarında Sekt Malefiği (soğuk/kuru doğasıyla gündüze uyum sağlayabilen) **Satürn (${pMap['Satürn'] ? pMap['Satürn'].formattedShort : ''})** olup; disiplin, zaman yönetimi, inşa kabiliyeti ve ağır sorumlulukları taşıma gücü verir. `;
+          sec1 += `Buna karşın haritanın en yıkıcı ve kontrol edilmesi gereken **Sekt Dışı Kötücülü (Out of Sect Malefic) Mars'tır (${pMap['Mars'] ? pMap['Mars'].formattedShort : ''})**. Mars bu haritada serinletici bir gece neminden yoksun kaldığı için fevrilik, ani iltihabi patlamalar, sabırsızlık ve sürtüşmeler yoluyla kendini gösterebilir; dolayısıyla Mars enerjisinin bilinçli bir askeri strateji, yoğun spor veya teknik mühendislik disipliniyle kanalize edilmesi hayati önem taşır.\n\n`;
+        } else {
+          sec1 += `Doğum haritanız bir **Gece Haritasıdır (Nocturnal Sect)**. Güneş ufkun altında yer alırken, gecenin gümüş kraliçesi **Ay**, haritanın başat yöneticisi ve içsel psişenin, bedensel biyolojik ritimlerin birincil taşıyıcısıdır. `;
+          sec1 += `Gece haritasında Sekt İyicili **Venüs (${pMap['Venüs'] ? pMap['Venüs'].formattedShort : ''})** olup; sevgi bağı kurma, sosyal uzlaşı, sanatsal incelik ve yaşam konforu üretme potansiyelini zirveye taşır. `;
+          sec1 += `Gece takımının yapıcı savaşçısı **Mars (${pMap['Mars'] ? pMap['Mars'].formattedShort : ''})**, gecenin nemli ve serin yapısıyla yumuşatılarak fevri bir saldırganlıktan ziyade keskin bir stratejik zekaya, cesarete ve hedefe kilitlenme azmine dönüşür. `;
+          sec1 += `Buna mukabil bu haritada dikkatle yönetilmesi gereken **Sekt Dışı Kötücül Satürn'dür (${pMap['Satürn'] ? pMap['Satürn'].formattedShort : ''})**. Satürn gece haritasında aşırı donuk, izole edici, melankolik gecikmeler ve katı engeller yaratma meylindedir; bu sebeple otorite sınavları ve sabır gerektiren süreçler harita sahibini en çok olgunlaştıracak manevi potadır.\n\n`;
+        }
+
+        sec1 += `### 1.2. Temel Asaletler, Keldani Dekanları ve Mısır Terimleri (Egyptian Bounds)\n\n`;
+        sec1 += `Aşağıdaki teknik döküm, gezegenlerin zodyak derecelerindeki feodal otoritesini ve Mısır Terimi sınırlarında hangi gezegenin yasalarına tabi olduklarını gösterir:\n\n`;
+        sec1 += `| Gök Cismi | Boylam & Burç | Keldani Dekanı | Mısır Terimi (Bound) | Asalet Durumu | Ev (Placidus/WS) |\n`;
+        sec1 += `|---|---|---|---|---|---|\n`;
+        bodies.forEach(p => {
+          sec1 += `| **${p.symbol} ${p.name}** | ${p.formattedDMS} | ${p.decan.label} | ${p.egyptianTerm.label} | ${p.dignity.status} | ${p.placidusHouse}.Ev / ${p.wholeSignHouse}.WS |\n`;
+        });
+        sec1 += `\n`;
+
+        sec1 += `#### Asalet ve Kozmik Mikro-Yönetim Analizi:\n`;
+        bodies.slice(0, 7).forEach(p => {
+          sec1 += `- **${p.name} (${p.signName} ${formatDM(p.degreeInSign)}):** ${p.dignity.status} asaletine sahiptir. `;
+          sec1 += `Bu gök cismi **${p.decan.label}** altında olup Keldani sıralamasına göre dışsal motivasyonunu ${p.decan.chaldeanRuler} arketiplerinden alır. `;
+          sec1 += `Mısır Terimi (Hellenistik sınır yasası) ise **${p.egyptianTerm.ruler}** hakimiyetindedir (${p.egyptianTerm.range}). Bu durum, ${p.name}'ın eylemlerinde ve getirdiği yaşam olaylarında nihai filtrenin ${p.egyptianTerm.ruler} kurallarıyla denetlendiğini; enerjinin bu terim yöneticisinin tabiatına bürünerek somutlaştığını kanıtlar.\n`;
+        });
+        sec1 += `\n`;
+
+        sec1 += `### 1.3. Karşılıklı Ağırlama (Mutual Reception) ve Nihai Dispozitör Hiyerarşisi\n\n`;
+        if (data.mutualReceptions && data.mutualReceptions.length > 0) {
+          sec1 += `Haritanızda son derece kıymetli **Karşılıklı Ağırlama (Mutual Reception)** ağları tespit edilmiştir:\n\n`;
+          data.mutualReceptions.forEach(mr => {
+            sec1 += `- **${mr.type}:** ${mr.pair}\n`;
+          });
+          sec1 += `\nBu karşılıklı ağırlamalar, birbirinin burcunda veya yücelim alanında bulunan gezegenlerin kapalı devre bir enerji santrali gibi yardımlaşmasını sağlar. Harita sahibi hayatın çıkmaza girdiği dönemlerde bu iki aktör arasında sezgisel bir köprü kurarak sorunları mucizevi bir diplomatik esneklik ve zihinsel çeviklikle aşabilir.\n\n`;
+        } else {
+          sec1 += `Klasik yedi gezegen arasında doğrudan tam burç karşılıklı ağırlaması bulunmamakla birlikte, dispozitör zinciri incelendiğinde gezegenlerin yöneticilik akışı haritanın ağırlık merkezini belirler. `;
+          const ascRuler = asc.classicalRuler;
+          sec1 += `Yükselen burcun yöneticisi olan **${ascRuler}**, haritanın dümencisi (Kybernetes) sıfatıyla ruhun bu enkarnasyondaki pusulasıdır ve yerleştiği ${pMap[ascRuler] ? pMap[ascRuler].placidusHouse : 1}. ev temalarını tüm haritanın ana motivasyon kaynağı haline getirir.\n\n`;
+        }
+
+        // BÖLÜM 2: 12 EVİN HASSAS GİRİŞ DERECELERİ VE YÖNETİCİLERİNE GÖRE KATMANLI ANALİZİ
+        let sec2 = '';
+        sec2 += `## 2. 12 Evin Hassas Giriş Derecelerine ve Yöneticilerine Göre Katmanlı Analizi\n\n`;
+        sec2 += `Placidus ev sistemi, doğum anındaki Yerel Yıldız Zamanının (LST: ${sid.localSiderealTime}) gökkubbeyi zaman dilimlerine bölmesiyle hesaplanmıştır. Aşağıda her evin giriş burcu, yönetici dispozitörünün yerleşimi ve somut yaşam tezahürleri katman katman çözümlenmiştir:\n\n`;
+
+        const houseDescriptions = [
+          {
+            num: 1,
+            title: '1. Ev — Vita (Kişilik, Fiziksel Beden, Mizaç & Canlılık Enerjisi)',
+            theme: 'Bireyin dünyaya açılan penceresi, başkaları üzerinde bıraktığı ilk izlenim, kafa ve beyin sağlığı, hayatiyet (vitality) ve fiziksel direnç kapasitesi.',
+            medicalFocus: 'Kraniyal sinirler, yüz, beyin dolaşımı, baş ağrıları ve genel canlılık rezervi.'
+          },
+          {
+            num: 2,
+            title: '2. Ev — Lucrum (Maddi Kaynaklar, Öz Değer, Finansal Üretim & Taşınabilir Mallar)',
+            theme: 'Kişisel emekle kazanılan gelirler, para akışının sürekliliği, harcama alışkanlıkları, beslenme biçimi ve öz güven algısı.',
+            medicalFocus: 'Boğaz, tiroid bezi, ses telleri ve boyun omurları.'
+          },
+          {
+            num: 3,
+            title: '3. Ev — Fratres (Zihinsel Süreçler, İletişim, Yakın Çevre & Teknik Öğrenme)',
+            theme: 'Kardeşler, kuzenler, yakın çevre, kısa seyahatler, ticari sözleşmeler, yazı/konuşma kabiliyeti, el becerisi ve temel teknik beceriler.',
+            medicalFocus: 'Akciğerler, solunum yolları, kollar, eller, omuzlar ve periferik sinir sistemi.'
+          },
+          {
+            num: 4,
+            title: '4. Ev — Genitor / IC (Kökler, Gayrimenkul, Aile, İçsel Barınak & Vatan)',
+            theme: 'Babanın ve ataların mirası, ev içi düzen, toprak, arsa, gayrimenkul yatırımları, bilinçdışı temeller ve ömrün son dönemindeki huzur.',
+            medicalFocus: 'Mide, göğüs kafesi, kaburgalar ve sindirim sistemi sıvıları.'
+          },
+          {
+            num: 5,
+            title: '5. Ev — Nati (Yaratıcılık, Spekülatif Kazançlar, Çocuklar, Aşk & Sahne)',
+            theme: 'Kişisel yaratıcı projeler, sanatsal performans, borsada veya riskli girişimlerdeki şans, zevkler, romantizm ve soyun devamı.',
+            medicalFocus: 'Kalp, sırt, omurilik ve üst omurga sağlığı.'
+          },
+          {
+            num: 6,
+            title: '6. Ev — Valetudo (Günlük Çalışma Rutini, Ustalık, Cihazlar/Sistemler & Medikal Sağlık)',
+            theme: 'Zanaat ustalığı, teknik cihazlar, problem çözme mekanizmaları, hizmet alanı, çalışma arkadaşları, evcil hayvanlar ve kronik beden hassasiyetleri.',
+            medicalFocus: 'Bağırsaklar, karın içi sindirim enzimleri, bağışıklık dengesi ve psikosomatik gerilimler.'
+          },
+          {
+            num: 7,
+            title: '7. Ev — Uxor / DSC (Evlilik, Ortaklıklar, Açık Düşmanlıklar & Kontratlar)',
+            theme: 'Birebir ilişkiler, hayat arkadaşı seçimi, resmi ortaklıklar, mahkemeler, açık rekabet ve kişinin ötekinde aradığı tamamlayıcı ayna.',
+            medicalFocus: 'Böbrekler, bel bölgesi, sıvı-elektrolit dengesi ve adrenal bezler.'
+          },
+          {
+            num: 8,
+            title: '8. Ev — Mors (Başkalarının Kaynakları, Kriz Yönetimi, Okültizm, Ameliyatlar & Miras)',
+            theme: 'Banka kredileri, vergi, miras, eşin/ortağın parası, dönüşüm (metamorfoz), psişik sırlar, krizleri güce çevirme ve cerrahi operasyonlar.',
+            medicalFocus: 'Üreme organları, boşaltım sistemi, prostat ve hücresel yenilenme mekanizmaları.'
+          },
+          {
+            num: 9,
+            title: '9. Ev — Iter (Yüksek Felsefe, Uzak Seferler, Akademi, Hukuk & Vizyon)',
+            theme: 'Akademik kariyer, yabancı diller, yurtdışı seyahatleri, felsefi ve dini inançlar, yayıncılık, uluslararası ticaret ve yüksek bilgelik.',
+            medicalFocus: 'Kalçalar, uyluk kemikleri, siyatik siniri ve karaciğer fonksiyonları.'
+          },
+          {
+            num: 10,
+            title: '10. Ev — Regnum / MC (Kariyer Zirvesi, Toplumsal Statü, Otorite & Mesleki Ustalık)',
+            theme: 'Toplumsal şöhret, mesleki unvan, yöneticilik, devletle ilişkiler, görünür başarılar ve kişinin toplum önünde bıraktığı kalıcı miras.',
+            medicalFocus: 'Dizler, iskelet sistemi, eklemler, kemikler ve diş sağlığı.'
+          },
+          {
+            num: 11,
+            title: '11. Ev — Benefacta (Gelecek Vizyonu, Sosyal Kolektifler, İttifaklar & Umutlar)',
+            theme: 'Toplumsal dernekler, dost çevreleri, teknolojik ve dijital ağlar, fütüristik hedefler, hamiler ve kariyerden elde edilen nihai meyveler.',
+            medicalFocus: 'Bacak alt kısımları, baldırlar, kaval kemiği ve dolaşım sistemi ritmi.'
+          },
+          {
+            num: 12,
+            title: '12. Ev — Carcer (Bilinçdışı Labirenti, İzolasyon, Gizli Düşmanlar & Manevi Arınma)',
+            theme: 'Kişinin kendi kendine koyduğu engeller, inziva, manastır/hastane/laboratuvar gibi kapalı alanlar, rüyalar, kolektif bilinçdışı ve karmik borçlar.',
+            medicalFocus: 'Ayaklar, lenf dolaşım sistemi, epifiz bezi ve psişik bağışıklık.'
+          }
+        ];
+
+        houseDescriptions.forEach(hd => {
+          const pH = pHouses[hd.num - 1];
+          const wsH = wsHouses[hd.num - 1];
+          const rulerName = pH.classicalRuler;
+          const rulerBody = pMap[rulerName];
+
+          // Evin içindeki gezegenleri bul
+          const planetsInHouse = bodies.filter(b => b.placidusHouse === hd.num);
+          const planetsText = planetsInHouse.length > 0
+            ? planetsInHouse.map(b => `**${b.symbol} ${b.name} (${b.formattedShort}, ${b.retrogradeLabel})**`).join(', ')
+            : 'Bu evin içinde yerleşik gezegen bulunmamaktadır (Ev boş olup enerjisini bütünüyle yöneticisi üzerinden akıtır).';
+
+          sec2 += `### ${hd.title}\n`;
+          sec2 += `- **Giriş Derecesi (Placidus Cusp):** ${pH.formattedDMS} (${pH.decan.label}, Terim: ${pH.egyptianTerm.label})\n`;
+          sec2 += `- **Whole Sign Girişi:** ${wsH.formattedShort}\n`;
+          sec2 += `- **Klasik Ev Yöneticisi:** **${rulerName}** ${rulerBody ? `→ ${rulerBody.placidusHouse}. Evde (${rulerBody.formattedShort}, ${rulerBody.dignity.status})` : ''}\n`;
+          sec2 += `- **Evde Yerleşen Gök Cisimleri:** ${planetsText}\n\n`;
+
+          sec2 += `**Analiz ve Yaşamsal Tezahür:** ${hd.theme} `;
+          if (rulerBody) {
+            sec2 += `Bu evin yöneticisi olan **${rulerName}**, haritanın **${rulerBody.placidusHouse}. evinde (${rulerBody.signName} burcunda)** konuşlanmıştır. `;
+            sec2 += `Bu durum, ${hd.num}. evin vaat ettiği gelişmelerin doğrudan ${rulerBody.placidusHouse}. evin temalarıyla kilitlendiğini gösterir. Örneğin; ${hd.num}. evin meseleleri çözülürken kişi ${rulerBody.placidusHouse}. evin araçlarını ve eforunu devreye sokmak mecburiyetindedir. `;
+          }
+
+          if (hd.num === 1) {
+            sec2 += `Yükselen'in ${pH.signName} olması, kişinin fiziksel bünyesine ${pH.element} elementinin dinamizmini ve ${pH.modality} niteliğin karakteristiğini kazandırır. Hayata karşı duruş kararlı, mizaç özgündür. `;
+          } else if (hd.num === 2 || hd.num === 8) {
+            sec2 += `Maddi kazanç ve kriz ekseninde bu hat, finansal istikrarın tesadüflere değil, disiplinli bir nakit akışı yönetimine bağlı olduğunu kanıtlar. `;
+          } else if (hd.num === 4) {
+            sec2 += `Gayrimenkul, mülk edinme ve ev içi mekan tasarımında köklü, korunaklı ve mahrem bir mimari arayışı ön plandadır. Kişi kendi kalesini sağlam zeminlere kurma içgüdüsündedir. `;
+          } else if (hd.num === 6) {
+            sec2 += `Teknik el becerileri, mekanik/dijital cihazlar, algoritmik sistemler ve çalışma alanındaki düzen konusunda titiz bir mükemmeliyetçilik göze çarpar. `;
+            sec2 += `**Medikal Astroloji Uyarısı:** ${hd.medicalFocus} alanlarında aşırı iş yükü, stres veya düzensiz uykunun tetikleyebileceği biyolojik hassasiyetlere karşı erken önlem alınmalı, koruyucu hekimlik ve doğru beslenme ihmal edilmemelidir. `;
+          } else if (hd.num === 10 || hd.num === 11) {
+            sec2 += `Kariyer zirvesi (MC) ve toplumsal hedefler konusunda bu yerleşim, kişiye otoriter figürlerle doğru ittifaklar kurma, kurumsal hiyerarşide adım adım tırmanma ve mesleki uzmanlık üretme gücü sunar. `;
+          }
+
+          sec2 += `\n\n`;
+        });
+
+        // BÖLÜM 3: URANYEN ASTROLOJİ VE KOZMOBİYOLOJİ (ORTA NOKTALAR)
+        let sec3 = '';
+        sec3 += `## 3. Uranyen Astroloji ve Kozmobiyoloji (Orta Noktalar / Midpoints Analizi)\n\n`;
+        sec3 += `Reinhold Ebertin'in *The Combination of Stellar Influences* ve Alfred Witte'nin Uranyen kural sistemine göre, gezegenlerin orta noktaları (Midpoints) haritadaki en derin psikosomatik ve kaderi şifreleri taşır. 90° Kadranında incelenen 8. harmonik sert temaslar (Kavuşum, Karşıt, Kare, Yarım Kare, Seskuikadrat) kişinin bilinçaltı potansiyelini tetikleyen anahtar denklemlerdir:\n\n`;
+
+        sec3 += `| Orta Nokta | Formül | Boylam & Burç | Mod 90° | Ebertin Kombinasyon Teması | Tetikleyen Noktalar (A/B = C) |\n`;
+        sec3 += `|---|---|---|---|---|---|\n`;
+        midpoints.forEach(m => {
+          const contactsStr = m.contacts.length > 0
+            ? m.contacts.map(c => `**${c.formula}**`).join('<br>')
+            : '±1.5° içinde doğrudan sert temas yok';
+          sec3 += `| **${m.id}** | ${m.title} | ${m.formattedShort} (${m.placidusHouse}.Ev) | ${m.mod90}° | ${m.theme} | ${contactsStr} |\n`;
+        });
+        sec3 += `\n`;
+
+        sec3 += `### Kozmobiyolojik Kombinasyonların Detaylı Değerlendirmesi:\n\n`;
+        midpoints.forEach(m => {
+          sec3 += `#### ⌖ ${m.title} (${m.id}) = ${m.formattedShort} [Kadran: ${m.mod90}°]\n`;
+          sec3 += `- **Temel Prensip:** ${m.theme}\n`;
+          if (m.contacts.length > 0) {
+            sec3 += `- **Aktif Gezegen Temasları:**\n`;
+            m.contacts.forEach(c => {
+              sec3 += `  * **${c.formula}:** Bu denklem harita sahibinin yaşamında somut bir uyanış noktasıdır. `;
+              if (m.id === 'SO/MO') {
+                sec3 += `Bilinç ile bilinçdışının kesiştiği bu eksene ${c.point}'in teması, kişinin evlilik, ortaklık ve bedensel canlılık dengesinde ${c.point} ilkelerinin katalizör görevi göreceğini gösterir.\n`;
+              } else if (m.id === 'SO/ME') {
+                sec3 += `Zihinsel irade ve idrak ekseninde ${c.point} teması; ticari zeka, teknik karar mekanizmaları, mühendislik muhakemesi ve stratejik yazışmalarda ${c.point}'in doğrudan devrede olduğunu kanıtlar.\n`;
+              } else if (m.id === 'VE/MA') {
+                sec3 += `Arzu, tutku ve estetik aksiyon ekseninde ${c.point} teması; sanatsal üretimde, erotik enerjide veya fiziksel projelerin hayata geçirilmesinde yüksek bir manyetik güç açığa çıkarır.\n`;
+              } else if (m.id === 'ME/UR') {
+                sec3 += `Düşünce şimşekleri ve teknik kavrayış ekseninde ${c.point} teması; sıra dışı fikirler, anlık sezgisel aydınlanmalar, dijital/teknolojik sistemlere yatkınlık ve ezber bozan bir zeka yapısı vadeder.\n`;
+              } else if (m.id === 'MA/SA') {
+                sec3 += `Dayanıklılık ve kontrol altında tutulan güç ekseninde ${c.point} teması; zorlu kriz süreçlerinde kırılmadan direnebilme, ağır fiziki/zihinsel işleri tamamlama kapasitesi verir.\n`;
+              } else {
+                sec3 += `Bireysel kimlik ile mesleki kaderin kesişiminde ${c.point} ilkeleri toplum önündeki prestiji ve hayattaki yönü doğrudan biçimlendirir.\n`;
+              }
+            });
+          } else {
+            sec3 += `- Bu orta nokta derecesi doğrudan bir gezegen tarafından sert orbla kuşatılmamış olup, ilerleyen yıllardaki ikincil ilerletimler ve transit gezegen tetiklemeleri sırasında kritik bir uyanış kapısı olarak çalışacaktır.\n`;
+          }
+          sec3 += `\n`;
+        });
+
+        // BÖLÜM 4: HELENİSTİK ARAP NOKTALARI (HERMETİK LOTLAR)
+        let sec4 = '';
+        sec4 += `## 4. Helenistik Arap Noktaları (Hermetik Lotlar)\n\n`;
+        sec4 += `Helenistik astrolojinin kurucularından Nechepso-Petosiris, Dorotheus ve Vettius Valens metinlerinde Lotlar (Arap Noktaları), ruhun kader çizgisine müdahale eden ilahi denklemler olarak tanımlanır. Sekt kuralına göre hesaplanan iki kadim kutup haritanızda şu şekildedir:\n\n`;
+
+        const pf = sect.parsFortunae;
+        const ps = sect.parsSpiritus;
+
+        sec4 += `### 4.1. Şans Noktası — Pars Fortunae (⊗)\n`;
+        sec4 += `- **Kullanılan Formül:** ${pf.formula}\n`;
+        sec4 += `- **Zodyak Konumu:** **${pf.formattedDMS}** (${pf.placidusHouse}. Ev Placidus / ${pf.wholeSignHouse}. Ev Whole Sign)\n`;
+        sec4 += `- **Dekan ve Mısır Terimi:** ${pf.decan.label} • Terim Yöneticisi: **${pf.egyptianTerm.label}**\n`;
+        sec4 += `- **Klasik Dispozitör:** **${pf.classicalRuler}**\n\n`;
+        sec4 += `**Maddi ve Bedensel Kader Analizi:** Şans Noktası; fiziksel bedenin refahını, dünyevi talihin yönünü ve somut kazanımların hangi kanaldan akacağını temsil eder. `;
+        sec4 += `Şans Noktası'nın **${pf.placidusHouse}. evde ve ${pf.signName} burcunda** bulunması, hayatın size en cömert maddi fırsatları ve fiziki güvenceyi bu evin temaları aracılığıyla sunacağını gösterir. `;
+        sec4 += `Yöneticisi olan **${pf.classicalRuler}** gezegeninin haritadaki durumu incelendiğinde; talihin sürdürülebilir olması, bu gezegenin temsil ettiği erdemlerin ve asalet durumunun doğru işletilmesine bağlıdır.\n\n`;
+
+        sec4 += `### 4.2. Ruh Noktası — Pars Spiritus (☼)\n`;
+        sec4 += `- **Kullanılan Formül:** ${ps.formula}\n`;
+        sec4 += `- **Zodyak Konumu:** **${ps.formattedDMS}** (${ps.placidusHouse}. Ev Placidus / ${ps.wholeSignHouse}. Ev Whole Sign)\n`;
+        sec4 += `- **Dekan ve Mısır Terimi:** ${ps.decan.label} • Terim Yöneticisi: **${ps.egyptianTerm.label}**\n`;
+        sec4 += `- **Klasik Dispozitör:** **${ps.classicalRuler}**\n\n`;
+        sec4 += `**Ruhsal Amaç ve İrade Analizi:** Ruh Noktası (Daimon/Spiritus), beden kaygılarından bağımsız olarak kişinin zihinsel tutkularını, entelektüel inisiyatifini, mesleki şevkini ve manevi misyonunu gösterir. `;
+        sec4 += `Ruh Noktası'nın **${ps.placidusHouse}. evde (${ps.signName})** yer alması, bireyin kendi kaderini bilinçli iradesiyle tayin edeceği en güçlü eylem alanının burası olduğunu belgeler. `;
+        sec4 += `Şans Noktası ile Ruh Noktası arasındaki açısal ilişki, harita sahibinin dünyevi talepleriyle (Fortune) manevi idealleri (Spirit) arasında kuracağı ahengin anahtarını sunar.\n\n`;
+
+        // BÖLÜM 5: İKİNCİL İLERLETİMLER (SECONDARY PROGRESSIONS)
+        let sec5 = '';
+        sec5 += `## 5. İkincil İlerletimler (Secondary Progressions - Güncel Yaş Analizi)\n\n`;
+        sec5 += `Astrolojinin en kadim öngörü tekniklerinden biri olan İkincil İlerletimlerde *"Doğumdan sonraki her 1 Dünya günü = Yaşamın 1 Tropikal yılına"* tekabül eder. `;
+        sec5 += `Kişinin güncel yaşı olan **${sp.currentAgeYears} yaş** baz alınarak saf UTC doğum anına ${sp.currentAgeYears} gün ilave edilmiş ve güncel ilerletilmiş efemeris koordinatları hassasiyetle hesaplanmıştır:\n\n`;
+
+        sec5 += `| İlerletilmiş Gösterge | Doğum (Natal) Konumu | İlerletilmiş (Progressed) Konumu | Değişim / Evre |\n`;
+        sec5 += `|---|---|---|---|\n`;
+        sec5 += `| **İlerletilmiş Güneş (pSun)** | ${sun.formattedShort} | **${sp.progressedSun.formattedDMS}** | Yılda ~1° hızla bilincin olgunlaştığı yeni burç/dekan arenası |\n`;
+        sec5 += `| **İlerletilmiş Ay (pMoon)** | ${moon.formattedShort} | **${sp.progressedMoon.formattedDMS}** | Ayda ~1° hızla ilerleyen duygusal iklim ve 2.5 yıllık odak döngüsü |\n`;
+        sec5 += `| **İlerletilmiş Yükselen (pASC)** | ${asc.formattedShort} | **${sp.progressedASC.formattedDMS}** | Bireyin dış dünyaya verdiği tepkilerin ve fiziksel imajın evrimi |\n`;
+        sec5 += `| **İlerletilmiş Tepe Noktası (pMC)** | ${mc.formattedShort} | **${sp.progressedMC.formattedDMS}** | Toplumsal kariyer hedeflerindeki ve unvandaki stratejik dönüşüm |\n`;
+        sec5 += `\n`;
+
+        sec5 += `### İlerletilmiş Harita Dinamiklerinin Yorumu:\n\n`;
+        sec5 += `1. **İlerletilmiş Güneş (${sp.progressedSun.formattedShort}):** Hayatınızın bu evresinde temel yaşam motivasyonunuz ve benlik kurgunuz ${sp.progressedSun.signName} burcunun ${sp.progressedSun.decan.label} nitelikleriyle yoğrulmaktadır. Natal Güneş'in ${sun.signName} tabiatına kıyasla artık daha olgun, tecrübeli ve ${sp.progressedSun.signName} arketipinin sorumluluklarını üstlenen bir irade sahnede yer almaktadır.\n`;
+        sec5 += `2. **İlerletilmiş Ay (${sp.progressedMoon.formattedShort}):** İlerletilmiş Ay, yaklaşık 28 yılda bir tüm haritayı turlayan içsel duygu saatidir. Şu an bulunduğu ${sp.progressedMoon.signName} burcu, yaklaşık 2.5 yıl sürecek olan mevcut psikolojik odak noktanızı belirler. Bu süreçte ruhsal doyum, iç huzur ve duygusal güven arayışınız ${sp.progressedMoon.signName} temalarıyla tatmin edilecektir.\n`;
+        sec5 += `3. **İlerletilmiş Yükselen ve MC Ekseni:** İlerletilmiş ASC'nin ${sp.progressedASC.formattedShort} ve MC'nin ${sp.progressedMC.formattedShort} derecelerine varmış olması, çevrenizin sizi algılama biçiminin ve profesyonel hedeflerinizin yeni bir faz kazandığını, geçmişteki amatör yaklaşımların yerini profesyonel bir ustalığa bıraktığını gösterir.\n\n`;
+
+        // BÖLÜM 6: 2026-2028 KRONOLOJİK TRANSİT VE ÖNGÖRÜ TAKVİMİ
+        let sec6 = '';
+        sec6 += `## 6. 2026-2028 Kronolojik Transit ve Öngörü Takvimi\n\n`;
+        sec6 += `2026-2028 dönemi, astroloji tarihinde kollektif paradigma değişimlerinin zirve yaptığı nadir kavşaklardan biridir: **Plüton Kova'da** dijital ve zihinsel devrimleri kökleştirirken; **Uranüs Boğa/İkizler geçişinde** enformasyon ve yapay zeka sıçramaları yaratmakta; **Satürn ve Neptün Koç burcuna** adım atarak bireysel inisiyatif ve yeni dünya düzeni kurallarını şekillendirmekte; **Jüpiter Yengeç ve Aslan** hatlarında genişleme sağlamaktadır. `;
+        sec6 += `Bu ağır gezegen transitlerinin sizin natal haritanızın hassas derecelerine ve evlerine yaptığı etkiler aşağıda kronolojik olarak analiz edilmiştir:\n\n`;
+
+        sec6 += `### 6.1. Ağır Gezegen Transitlerinin Natal Harita Evlerindeki Seyri\n\n`;
+        const t2026 = data.transitEphemeris2026_2028 ? data.transitEphemeris2026_2028[0].positions : {};
+        sec6 += `- **Plüton Transit (Kova):** Natal haritanızın Kova burcunun kestiği ev alanında radikal bir arınma, güçlenme ve metamorfoz yaratmaktadır. Yıllardır süregelen çürümüş kalıplar yıkılarak yerini sarsılmaz bir otantik güce bırakmaktadır.\n`;
+        sec6 += `- **Uranüs Transit (Boğa / İkizler):** Boğa'nın son derecelerinden İkizler burcuna geçiş yapan Uranüs; zihinsel esneklik, ani teknolojik fırsatlar, seyahatler, ticari ve bilişsel atılımlar alanında beklenmedik sıçramalar getirmektedir.\n`;
+        sec6 += `- **Satürn & Neptün Transit (Koç Girişi):** Koç burcundaki bu tarihi kavuşum, haritanızın Koç evinde yeni bir 36 yıllık döngünün tohumlarını ekmektedir. Satürn'ün somut disiplini ile Neptün'ün vizyoner idealleri birleşerek, hayal edilen projelerin çelik bir disiplinle projelendirilmesini zorunlu kılmaktadır.\n`;
+        sec6 += `- **Jüpiter Transit (Yengeç / Aslan):** Yüceldiği Yengeç burcundan geçerek Aslan'a ilerleyen Jüpiter, natal haritanızın bu evlerinde bereket, ahlaki koruma, özgüven artışı ve saygınlık genişlemesi üretmektedir.\n\n`;
+
+        sec6 += `### 6.2. 2026 - 2028 Dönemi İçin Kritik Kronolojik Öngörüler\n\n`;
+        sec6 += `1. **2026 İlk Yarı (Ocak - Haziran 2026): Stratejik Yeniden Yapılanma**\n`;
+        sec6 += `   - Transit Plüton ve Uranüs aksı, haritanızın köşe veya halef evlerini tetikleyerek konfor alanınızdan çıkmanızı ve modern sistemleri benimsemenizi talep eder. Finansal yatırımlarda dijital/teknolojik araçların kullanılması lehinizedir.\n`;
+        sec6 += `   - Natal Güneş ve Merkür derecelerine gelen transit açılar, profesyonel kontratlarda ve resmi imzalarda netliği şart koşar.\n\n`;
+        sec6 += `2. **2026 İkinci Yarı (Temmuz - Aralık 2026): Genişleme ve Yeni İttifaklar**\n`;
+        sec6 += `   - Jüpiter'in bereketli transitiyle birlikte sosyal ağlar, iş birlikleri ve ailevi güvence alanında belirgin bir rahatlama yaşanacaktır. Bu dönemde atılacak uzun vadeli adımlar sonraki yılların temelini atacaktır.\n\n`;
+        sec6 += `3. **2027 Yılı (Ocak - Aralık 2027): Disiplin İle İdeallerin Sınanması**\n`;
+        sec6 += `   - Satürn'ün Koç burcundaki seyri, haritanızın öncü burç akslarında yer alan gezegenlerle temas kurdukça sabır, dayanıklılık ve liderlik kapasitenizi ölçecektir. Sağlıkta kas-iskelet ve bağışıklık sistemine özen gösterilmelidir.\n\n`;
+        sec6 += `4. **2028 Yılı (Ocak - Aralık 2028): Hasat ve Kalıcı Başarı Döngüsü**\n`;
+        sec6 += `   - Ağır transitlerin natal Kuzey Ay Düğümü ve MC ekseniyle kuracağı uyumlu kontaklar, kişinin geçmişte verdiği emeklerin toplumsal takdir, unvan ve kalıcı refah olarak geri dönüşünü müjdeler.\n\n`;
+
+        // BÖLÜM 7: ASTROKARTOGRAFİ VE RELOKASYON ANALİZİ
+        let sec7 = '';
+        sec7 += `## 7. Astrokartografi ve Relokasyon (Yer Değiştirme) Analizi\n\n`;
+        const bPlace = meta.birthPlace;
+        const cPlace = meta.currentResidence.place;
+        const bLon = meta.birthCoordinates.longitude;
+        const rLon = meta.currentResidence.longitude;
+        const dLon = meta.currentResidence.longitudeDifferenceDeg;
+
+        sec7 += `### 7.1. Doğum Yeri ile Şu Anki Yaşam Yeri Arasındaki Koordinat Karşılaştırması\n\n`;
+        sec7 += `- **Doğum Yeri:** ${bPlace} (Enlem: ${meta.birthCoordinates.latitude.toFixed(4)}°, Boylam: ${bLon.toFixed(4)}°)\n`;
+        sec7 += `- **Şu Anki Yaşam Yeri (Relokasyon):** ${cPlace} (Enlem: ${meta.currentResidence.latitude.toFixed(4)}°, Boylam: ${rLon.toFixed(4)}°)\n`;
+        sec7 += `- **Boylam Farkı (Δ Longitude):** **${dLon >= 0 ? '+' : ''}${dLon}°** (${Math.abs(dLon * 4).toFixed(1)} Zaman Dakikası Farkı)\n\n`;
+
+        sec7 += `### 7.2. Ev Girişlerinin Relokasyon Kayması Tablosu\n\n`;
+        sec7 += `| Ev | Doğum Yeri Placidus Girişi | Klasik / Modern Yönetici | Relokasyon Placidus Girişi | Açısal Kayma (Δ°) |\n`;
+        sec7 += `|---|---|---|---|---|\n`;
+        relocComp.forEach(rc => {
+          sec7 += `| **${rc.house}. Ev** | ${rc.natalCusp} | ${rc.natalRuler} | ${rc.relocatedCusp} | ${rc.deltaDegrees >= 0 ? '+' : ''}${rc.deltaDegrees}° |\n`;
+        });
+        sec7 += `\n`;
+
+        sec7 += `### 7.3. Relokasyonun Enerji, Sağlık ve Yaşam Tarzı Üzerindeki Somut Etkileri\n\n`;
+        if (Math.abs(dLon) < 0.2) {
+          sec7 += `Doğum yeriniz ile şu anki yaşam yeriniz arasındaki boylam farkı çok küçük olduğundan (${Math.abs(dLon).toFixed(2)}°), ev girişlerinde radikal bir burç kayması gözlemlenmemektedir. Yerel enerji alanınız natal potansiyelinizle neredeyse birebir örtüşmektedir.\n\n`;
+        } else {
+          sec7 += `Doğum yeriniz (${bPlace}) ile şu anki yaşam yeriniz (${cPlace}) arasındaki **${Math.abs(dLon).toFixed(2)} derecelik boylam farkı**, Yerel Yıldız Zamanını (LST) kaydırarak gökyüzü çarkını döndürmüştür. `;
+          sec7 += `Bu coğrafi relokasyon sonucunda:\n\n`;
+          sec7 += `1. **Yükselen (ASC) ve Ufuk Hattı Değişimi:** Yükselen dereceniz natal haritaya kıyasla **${relocComp[0].deltaDegrees >= 0 ? '+' : ''}${relocComp[0].deltaDegrees}°** kaymıştır. Bu kayma, ${cPlace} şehrinde yaşarken dış dünyaya yaydığınız manyetik auranın, fiziksel canlılık hissinizin ve çevrenin size yönelik tepkilerinin değiştiğini belgeler.\n`;
+          sec7 += `2. **Kariyer ve MC Ekseni Değişimi:** Tepe Noktanız (MC) **${relocComp[9].deltaDegrees >= 0 ? '+' : ''}${relocComp[9].deltaDegrees}°** kayarak mesleki hedeflerinize ve toplumsal statünüze yeni bir ton kazandırmıştır. Bu şehirde iş hayatındaki fırsatlar ve tanınırlık alanınız doğum şehrinizdekinden farklı parametrelerle çalışır.\n`;
+
+          // Ev değiştiren gezegen kontrolü
+          const shiftedPlanets = [];
+          bodies.forEach(b => {
+            if (b.placidusHouse !== b.relocatedPlacidusHouse) {
+              shiftedPlanets.push({
+                name: b.name,
+                symbol: b.symbol,
+                from: b.placidusHouse,
+                to: b.relocatedPlacidusHouse
+              });
+            }
+          });
+
+          if (shiftedPlanets.length > 0) {
+            sec7 += `3. **Ev Değiştiren Gezegenler (Relocation House Shifts):** En kritik astrokartografik bulgu, bazı gök cisimlerinin bu şehirde farklı evlere geçmesidir:\n`;
+            shiftedPlanets.forEach(spItem => {
+              sec7 += `   - **${spItem.symbol} ${spItem.name}:** Natal ${spItem.from}. evden Relokasyon **${spItem.to}. evine** kaymıştır! Bu gezegenin temsil ettiği yaşam alanı ve psikolojik fonksiyon, ${cPlace} sınırları içinde yaşarken artık ${spItem.to}. evin somut konuları (örneğin kariyer, finans veya ilişkiler) üzerinden kendini ifade edecektir.\n`;
+            });
+          } else {
+            sec7 += `3. Gezegenler ev sınırlarını aşacak büyüklükte bir sıçrama yapmamış olmakla birlikte, ev kasp derecelerine olan mesafeleri değiştiği için gezegenlerin olay üretme hızında ve gündelik psikolojinizdeki ağırlığında hissedilir bir ferahlama veya yoğunlaşma meydana gelmiştir.\n`;
+          }
+
+          sec7 += `\n4. **Gündelik Enerji ve Sağlık Tavsiyesi:** Yeni koordinatlarınızda 6. ve 1. ev akslarındaki derece değişimleri doğrultusunda, uyku saatlerinizi yerel güneş saatine göre hizalamanız, beslenme düzeninizi mevsime göre dengelemeniz ve bu şehrin sunduğu coğrafi dinamikleri lehinize kullanmanız önerilir.\n\n`;
+        }
+
+// ---------------------------------------------------------------------
+        // BÖLÜM 8: BÜTÜNSEL YAŞAM VE KARAKTER SENTEZİ (MASTER YAŞAM REHBERİ)
+        // ---------------------------------------------------------------------
+        let conclusion = '';
+        conclusion += `## 8. Bütünsel Yaşam ve Karakter Sentezi (Master Yaşam & Karakter Rehberi)\n\n`;
+        conclusion += `> **Master Astrolog Notu:** Haritanın ilk yedi bölümünde incelenen teknik asaletler, ev kaspları, Uranyen orta noktalar ve Hermetik lotlar; gökyüzünün doğum anınızda aldığı matematiksel pozun anatomisidir. Bu final bölümünde ise tüm bu kozmik dişliler bir araya getirilerek; doğrudan günlük hayatınıza, zihninize, mesleğinize, ilişkilerinize ve sağlığınıza ışık tutan **bütünsel bir karakter ve yaşam pusulası** olarak sunulmaktadır.\n\n`;
+
+        // Element ve Nitelik Hesaplaması
+        const elemCounts = { 'Ateş': 0, 'Toprak': 0, 'Hava': 0, 'Su': 0 };
+        const modCounts = { 'Öncü': 0, 'Sabit': 0, 'Değişken': 0 };
+
+        // 10 gezegen + ASC + MC (12 gösterge)
+        const corePoints = [
+          ...bodies.slice(0, 10),
+          { name: 'ASC', element: asc.element, modality: asc.modality },
+          { name: 'MC', element: mc.element, modality: mc.modality }
+        ];
+
+        corePoints.forEach(pt => {
+          if (elemCounts[pt.element] !== undefined) elemCounts[pt.element]++;
+          if (modCounts[pt.modality] !== undefined) modCounts[pt.modality]++;
+        });
+
+        const totalPts = corePoints.length; // 12
+        const elemPerc = {
+          'Ateş': Math.round((elemCounts['Ateş'] / totalPts) * 100),
+          'Toprak': Math.round((elemCounts['Toprak'] / totalPts) * 100),
+          'Hava': Math.round((elemCounts['Hava'] / totalPts) * 100),
+          'Su': Math.round((elemCounts['Su'] / totalPts) * 100)
+        };
+        const modPerc = {
+          'Öncü': Math.round((modCounts['Öncü'] / totalPts) * 100),
+          'Sabit': Math.round((modCounts['Sabit'] / totalPts) * 100),
+          'Değişken': Math.round((modCounts['Değişken'] / totalPts) * 100)
+        };
+
+        const sortedElems = Object.entries(elemPerc).sort((a, b) => b[1] - a[1]);
+        const dominantElem = sortedElems[0];
+        const weakestElem = sortedElems[3];
+
+        const sortedMods = Object.entries(modPerc).sort((a, b) => b[1] - a[1]);
+        const dominantMod = sortedMods[0];
+
+        // 1. ALT BAŞLIK: RUHSAL ÇEKİRDEK VE KARAKTER PORTRESİ
+        conclusion += `### 8.1. Ruhsal Çekirdek ve Karakter Portresi (Kimlik, Duygu ve Dış Duruşun Sentezi)\n\n`;
+        conclusion += `Bireyin astrolojik varoluşunun omurgasını oluşturan **Kutsal Üçlü**; **${sun.signName}** Güneş'iniz (bilinçli iradeniz ve varoluş amacınız), **${moon.signName}** Ay'ınız (bilinçdışı refleksleriniz, duygusal güvenlik ihtiyacınız ve içsel eviniz) ile **${asc.signName}** Yükseleninizden (hayata yaklaşım biçiminiz, fiziksel auranız ve dünyaya açılan vitrininiz) meydana gelir. `;
+        conclusion += `Güneş'inizin **${sun.signName} (${sun.element} / ${sun.modality})** doğası, dünyada bağımsız bir benlik inşa etme, kendine has bir amaç doğrultusunda var olma arzusunu körüklerken; Ay'ınızın **${moon.signName} (${moon.element} / ${moon.modality})** yerleşimi, ruhunuzun kapalı kapılar ardında neyle beslendiğini açığa çıkarır. `;
+        conclusion += `Dışarıdan bakıldığında **${asc.signName}** yükselenin getirdiği ${asc.element === 'Ateş' ? 'atak, cesur ve doğrudan' : asc.element === 'Toprak' ? 'sakin, temkinli, güvenilir ve sağlamcı' : asc.element === 'Hava' ? 'iletişimci, tarafsız, meraklı ve sosyal' : 'sezgisel, derin, korumacı ve duyarlı'} duruşunuzla karşılanırsınız. İnsanlar sizi ilk temaslarında bu ${asc.signName} filtresiyle tanır; fakat samimiyet derinleştikçe Güneş'inizin asıl niyetleri ve Ay'ınızın şefkatli veya korumacı iç iklimi sahneye çıkar.\n\n`;
+
+        conclusion += `Bu üç gösterge arasındaki etkileşim, günlük hayatınızda son derece kıymetli ve dinamik bir denge yaratır. `;
+        if (sun.element === moon.element) {
+          conclusion += `Güneş ve Ay'ınızın aynı element grubunda (${sun.element}) buluşması, ne hissettiğiniz ile ne yapmak istediğiniz arasında doğal bir mutabakat olduğunu gösterir; içsel çatışmalarınız hızla çözülür, kararlarınızda tutarlılık ve bütünlük ön plandadır. `;
+        } else {
+          conclusion += `Güneş'inizin ${sun.element} elementi ile Ay'ınızın ${moon.element} elementi arasındaki mizaç farkı, kimi zaman mantık ile duygu, özgürleşme isteği ile güvende kalma arzusu arasında tatlı bir içsel diyalog doğurur. Örneğin; aklınız yeni bir projeye atılmak isterken kalbiniz sevdiklerinizin onayını ve konfor alanını gözetebilir. Bu gerilim haritanızda bir zaaf değil, sizi tek boyutlu biri olmaktan koruyan ve empati yeteneğinizi derinleştiren en büyük zenginliktir. `;
+        }
+        conclusion += `Yükselen'inizin **${asc.classicalRuler}** tarafından yönetilmesi, bu içsel enerjinin dış dünyada nasıl bir araçla icra edileceğini belirler; hedeflerinize ulaşırken ${asc.classicalRuler} prensiplerini rehber edinirsiniz.\n\n`;
+
+        conclusion += `**Element ve Nitelik Matrisi Analizi:**\n\n`;
+        conclusion += `Haritanızın 12 ana kutbuna ait mizaç dağılımı şu şekildedir:\n`;
+        conclusion += `- **Element Dağılımı:** Ateş: %${elemPerc['Ateş']} (${elemCounts['Ateş']} puan) | Toprak: %${elemPerc['Toprak']} (${elemCounts['Toprak']} puan) | Hava: %${elemPerc['Hava']} (${elemCounts['Hava']} puan) | Su: %${elemPerc['Su']} (${elemCounts['Su']} puan)\n`;
+        conclusion += `- **Nitelik Dağılımı:** Öncü: %${modPerc['Öncü']} | Sabit: %${modPerc['Sabit']} | Değişken: %${modPerc['Değişken']}\n\n`;
+        conclusion += `Haritanızda en baskın element **%${dominantElem[1]} ile ${dominantElem[0]}** iken, en düşük element **%${weakestElem[1]} ile ${weakestElem[0]}** olarak ölçülmüştür. `;
+        if (dominantElem[0] === 'Ateş') {
+          conclusion += `Baskın Ateş enerjisi, sizi harekete geçiren yüksek bir coşku, vizyoner inisiyatif ve cesaret aşılar; durağanlıktan hızla sıkılır ve yeni hedeflerin peşinden koşarsınız. `;
+        } else if (dominantElem[0] === 'Toprak') {
+          conclusion += `Baskın Toprak enerjisi, ayakları yere basan sarsılmaz bir gerçekçilik, pratik fayda üretme kabiliyeti ve sabırla inşa etme ustalığı kazandırır; soyut vaatler yerine somut sonuçlara odaklanırsınız. `;
+        } else if (dominantElem[0] === 'Hava') {
+          conclusion += `Baskın Hava enerjisi, keskin bir zihinsel merak, objektif analiz gücü, tarafsız muhakeme ve geniş bir enformasyon ağı kurma yeteneği sağlar; sorunları konuşarak ve mantık süzgecinden geçirerek çözersiniz. `;
+        } else {
+          conclusion += `Baskın Su enerjisi, insan sarrafı düzeyinde bir sezgi, yüksek duygusal kavrayış, empati ve görünmeyenin ardındaki psikolojik akımları okuma becerisi kazandırır. `;
+        }
+
+        if (weakestElem[0] === 'Toprak') {
+          conclusion += `Buna mukabil düşük Toprak elementi, zaman zaman hayal edilen parlak planların bürokratik veya maddi detaylarını takip etmekte sabırsızlık yaratabilir; bu eksiği hayatınızda somut listeler, takvimler ve bütçe disiplini oluşturarak dengelemelisiniz.\n\n`;
+        } else if (weakestElem[0] === 'Su') {
+          conclusion += `Düşük Su elementi ise olayları aşırı rasyonel veya pratik değerlendirip kendi duygusal yorgunluğunuzu görmezden gelme tehlikesine işaret eder; bedeninize ve ruhunuza dinlenme molaları tanımalısınız.\n\n`;
+        } else if (weakestElem[0] === 'Ateş') {
+          conclusion += `Düşük Ateş elementi, her adımı fazla düşünüp inisiyatif alırken aşırı garantici davranmanıza yol açabilir; bazen şartların kusursuz olmasını beklemeden ilk adımı atma cesaretini sergilemelisiniz.\n\n`;
+        } else {
+          conclusion += `Düşük Hava elementi, yoğun eylem veya duygu içinde bazen durup büyük resmi objektif bir mesafeden gözlemlemeyi zorlaştırabilir; düşüncelerinizi yazıya dökmek size büyük berraklık sağlayacaktır.\n\n`;
+        }
+
+        // 2. ALT BAŞLIK: ZİHİNSEL MİMARİ VE PRATİK USTALIK
+        const mer = pMap['Merkür'] || sun;
+        const mar = pMap['Mars'] || sun;
+        const h3 = pHouses[2];
+        const h6 = pHouses[5];
+
+        conclusion += `### 8.2. Zihinsel Mimari, Problem Çözme ve Pratik Ustalık\n\n`;
+        conclusion += `Zihninizin işletim sistemi olan **Merkür (${mer.signName} ${formatDM(mer.degreeInSign)}, ${mer.placidusHouse}. Ev)** ile eylem ve kas gücünüzü temsil eden **Mars'ın (${mar.signName} ${formatDM(mar.degreeInSign)}, ${mar.placidusHouse}. Ev)** kombinasyonu, entelektüel zekanız ile el becerilerinizin nasıl kenetlendiğini gösterir. `;
+        conclusion += `Merkür'ün ${mer.signName} burcundaki mizacı, bilginin sizde nasıl işlendiğini belirler: Siz bilgiyi sadece ezberlemek için değil, arkasındaki mantığı kavramak ve işe yarar bir çözüme dönüştürmek için alırsınız. `;
+        conclusion += `Mars'ın ${mar.signName} yerleşimi ise hedefe giderken kullandığınız yöntemi çizer; zorluklarla karşılaştığınızda ${mar.element === 'Ateş' ? 'doğrudan atağa geçerek' : mar.element === 'Toprak' ? 'metodik bir sabırla, adım adım' : mar.element === 'Hava' ? 'stratejik hamleler ve müzakereyle' : 'sezgisel manevralarla'} engelleri aşarsınız.\n\n`;
+
+        conclusion += `Haritanızın **3. Evi (${h3.signName})** zihinsel merakınızı ve hızlı öğrenme refleksinizi beslerken, **6. Evi (${h6.signName})** teknik işçiliğinizi, cihazlar ve mekanizmalar üzerindeki titizliğinizi şekillendirir. `;
+        conclusion += `Bu hat, sizin başkalarının gözden kaçırdığı küçük aksaklıkları anında fark edebilen keskin bir dikkat radarınız olduğunu gösterir. `;
+        conclusion += `İster mekanik bir alet, ister karmaşık bir yazılım/kod sistemi, ister ev içi teknik bir arıza veya resmi bir evrak akışı olsun; "kendi işini kendi görme", sorunun kaynağına inip sistemi yeniden çalışır hale getirme dürtünüz son derece gelişmiştir. Yarım bırakılmış, savsaklanmış veya kurallara uyulmadan yapılmış işler zihninizi yorar; başladığınız işi sağlam ve estetik bir standartta teslim etmeden rahat etmezsiniz.\n\n`;
+
+        // 3. ALT BAŞLIK: FİNANSAL STRATEJİ VE KARİYER PUSULASI
+        const h2 = pHouses[1];
+        const h8 = pHouses[7];
+        const h10 = pHouses[9];
+
+        conclusion += `### 8.3. Finansal Strateji, Maddi Güvenlik ve Kariyer Pusulası\n\n`;
+        conclusion += `Maddi dünyadaki duruşunuz, kendi emeğinizle kazandığınız kaynakları temsil eden **2. Ev (${h2.signName}, Yöneticisi: ${h2.classicalRuler})**, banka, vergi, ortaklıklar ve kriz yönetimini simgeleyen **8. Ev (${h8.signName}, Yöneticisi: ${h8.classicalRuler})** ile toplum önündeki unvanınızı ve mesleki zirvenizi gösteren **10. Ev / MC (${mc.signName}, Yöneticisi: ${mc.classicalRuler})** üçgeni tarafından yönetilir.\n\n`;
+
+        conclusion += `Parayla kurduğunuz ilişki temelde **"Özgürlüğün ve Onurlu Yaşamın Teminatı"** felsefesine dayanır. Lüks tüketimden ziyade, geleceğinizi teminat altına alan, sizi kimseye muhtaç etmeyecek kalıcı değerler üretmek asıl gayenizdir. `;
+        conclusion += `2. Ev kaspınızın ${h2.signName} olması, gelirinizin tesadüflere değil, uzmanlaştığınız bilgi ve zanaat gücüne bağlı olduğunu kanıtlar. `;
+        conclusion += `8. Evdeki ${h8.signName} etkisi ise başkalarıyla ortak finansal hamleler yaparken, borç-alacak dengesinde veya resmi kontratlarda her şeyi yazılı ve net tutmanız gerektiğini; sözlü taahhütlerin kriz doğurabileceğini fısıldar. Yatırımlarınızda spekülatif kumar oyunları yerine; **toprak, gayrimenkul, sağlam fiziki varlıklar veya değer üreten dijital/teknolojik altyapılar** size en güvenli büyümeyi sağlayacaktır.\n\n`;
+
+        conclusion += `Kariyer pusulanız olan **MC (${mc.signName})**, otorite figürleriyle ilişkinizde profesyonel saygınlığı her şeyin üstünde tuttuğunuzu gösterir. `;
+        conclusion += `Mikro yönetim uygulayan, sürekli tepede durup gereksiz müdahalelerde bulunan ortamlarda enerjiniz hızla tükenir. Sizin en yüksek verimle çalıştığınız yer; yetki ve sorumluluk sınırlarının net olduğu, kendi özerk çalışma alanınızı yönetebildiğiniz ve liyakate dayalı kurumsal veya bağımsız uzmanlık pozisyonlarıdır. Başarı basamaklarını başkalarını ezerek değil, işinizin kalitesiyle görünür hale gelerek tırmanırsınız.\n\n`;
+
+        // 4. ALT BAŞLIK: İLİŞKİLER, AİLE DÜZENİ VE YAŞAM ALANI
+        const ven = pMap['Venüs'] || sun;
+        const h4 = pHouses[3];
+        const h7 = pHouses[6];
+
+        conclusion += `### 8.4. İlişkiler, Aile Düzeni ve Yaşam Alanı (Ev/Yuva) Dinamikleri\n\n`;
+        conclusion += `Gönül bağlarınızı, estetik beğeninizi ve sevgi dilinizi simgeleyen **Venüs (${ven.signName} ${formatDM(ven.degreeInSign)}, ${ven.placidusHouse}. Ev)** ile ikili ortaklıklar aynası olan **7. Eviniz (${h7.signName}, Yöneticisi: ${h7.classicalRuler})**, ilişkilerde ne aradığınızı açıkça ortaya koyar. `;
+        conclusion += `Sizin için gerçek bir ilişki; sadece romantik kelimelerden ibaret olamaz. Siz ilişkide her şeyden evvel **güvenilirlik, dürüstlük, karşılıklı zihinsel saygı ve tutarlılık** ararsınız. Maske takan, ne istediğini bilmeyen, pasif-agresif oyunlar oynayan veya sınırlarınıza tecavüz eden insanlarla bağ kuramazsınız. `;
+        conclusion += `Birlikte olduğunuz kişinin kendi ayakları üzerinde durabilen, sizin gibi hayatın yükünü omuzlayabilecek olgunlukta bir hayat arkadaşı olması önceliğinizdir.\n\n`;
+
+        conclusion += `İçsel kaleniz ve yuvanız olan **4. Ev (${h4.signName}, Yöneticisi: ${h4.classicalRuler})**, yaşam alanınızda nasıl bir düzen inşa ettiğinizi fısıldar. Eviniz sizin için sadece uyunacak bir yer değil; dış dünyanın kaosundan arındığınız, kendi kutsal tapınağınızdır. `;
+        conclusion += `Ev içi düzende sadelik, sağlam mobilyalar, doğal materyaller ve fonksiyonellik ön plandadır. Yaşam alanınızda her eşyanın bir yeri ve bir amacı olmalıdır. Dağınıklık ve gürültü iç dünyanızda huzursuzluk yaratır; evinizde geçirdiğiniz sessiz saatler, ertesi gün dış dünyaya meydan okumak için ihtiyaç duyduğunuz ruhsal şarj istasyonudur.\n\n`;
+
+        // 5. ALT BAŞLIK: BÜTÜNSEL SAĞLIK VE YAŞAM KALİTESİ
+        const sat = pMap['Satürn'] || sun;
+
+        conclusion += `### 8.5. Bütünsel Sağlık, Biyolojik Ritim ve Yaşam Kalitesi Tavsiyeleri\n\n`;
+        conclusion += `Medikal astrolojide fiziksel dayanıklılık Yükselen burç, genel biyoritim Ay, çalışma koşullarına bağlı yıpranma 6. Ev (${h6.signName}) ve kronik yavaşlamalar ise Satürn (${sat.signName}) yerleşimiyle teşhis edilir. Haritanızdaki yerleşimler, bünyenizin sağlam bir omurgaya sahip olduğunu ancak aşırı sorumluluk ve zihinsel yükün bedeninizde belirli organlara yansıyabileceğini göstermektedir:\n\n`;
+
+        conclusion += `#### Biyolojik Hassasiyet Haritanız ve Korunma Yolları:\n\n`;
+        conclusion += `1. **Kas-İskelet ve Duruş Hassasiyeti (${sat.signName} / ${mc.signName}):** Omurga, bel omurları, dizler ve diş/kemik sağlığı özen ister. Uzun süreli hareketsiz oturarak çalışma dönemlerinde duruşunuza (postür) dikkat etmeli, kalsiyum ve D vitamini dengenizi korumalısınız.\n`;
+        conclusion += `2. **Sinir Sistemi ve Zihinsel Aşırı Uyarılma (${mer.signName} / 3. ve 6. Evler):** Çözüm üretmeye çalışan zihniniz gece yatağa girdiğinizde dahi çalışmaya devam edebilir. Zihinsel yorgunluk periferik sinirlerde gerginliğe ve baş/boyun ağrılarına zemin hazırlayabilir; akşam saatlerinde mavi ışık maruziyetini azaltmak şarttır.\n`;
+        conclusion += `3. **Sindirim ve Mide-Bağırsak Ekseni (${moon.signName} / ${h6.signName}):** Stres ve bastırılmış duygular doğrudan mide asidinizi veya bağırsak floranızı etkileyebilir. Ayaküstü hızlı yemek yemek yerine, sakin bir ortamda, doğal ve lifli gıdalarla beslenmek sindirim sisteminizi koruyacaktır.\n`;
+        conclusion += `4. **Su ve Elektrolit Dengesi:** Gün içinde yeterli temiz su tüketmek, böbreklerin ve hücresel temizliğin aksamadan işlemesini sağlayacak en ucuz ve en güçlü detoks aracınızdır.\n`;
+        conclusion += `5. **Doğada Topraklanma:** Entelektüel ve teknik yükünüzü boşaltmak için haftada en az bir gün toprakla, ağaçlarla veya deniz/göl kenarıyla temas ederek bedensel statik elektriğinizi boşaltmanız yaşam enerjinizi yenileyecektir.\n\n`;
+
+        // 6. ALT BAŞLIK: ALTIN TAVSİYELER VE YOL HARİTASI (2026-2028 ÖZETİ)
+        const nn = pMap['Kuzey Ay Düğümü'];
+        const sn = pMap['Güney Ay Düğümü'];
+
+        conclusion += `### 8.6. Hayatın Bu Evresi İçin Altın Tavsiyeler ve Yol Haritası (2026-2028 Özeti)\n\n`;
+        conclusion += `Ruhun bu enkarnasyondaki tekamül pusulası **Kuzey Ay Düğümü (${nn.signName} ${formatDM(nn.degreeInSign)}, ${nn.placidusHouse}. Ev)** ile geçmiş alışkanlıkların ve konfor tuzağının simgesi **Güney Ay Düğümü'dür (${sn.signName} ${formatDM(sn.degreeInSign)}, ${sn.placidusHouse}. Ev)**. `;
+        conclusion += `Geçmişte ${sn.signName} burcunun aşina olduğunuz kalıplarına sığınmak size kolay gelebilir; fakat asıl büyümeniz, ${nn.signName} burcunun ve ${nn.placidusHouse}. evin talep ettiği yeni yetkinlikleri cesaretle üstlendiğinizde başlayacaktır. `;
+        conclusion += `Şu anki yaşınızda ilerleyen **İlerletilmiş Güneş'iniz (${sp.progressedSun.signName} ${formatDM(sp.progressedSun.degreeInSign)})** ve gökyüzünde 2026-2028 yıllarını şekillendiren Plüton Kova, Uranüs İkizler ve Satürn/Neptün Koç transitleri hayatınızın bu dönemini bir **"Büyük Yapılanma ve Hasat Fazı"** haline getirmektedir.\n\n`;
+
+        conclusion += `#### 2026-2028 Dönemi İçin 5 Maddelik Altın Eylem Planı:\n\n`;
+        conclusion += `1. **Geçmişin Yüklerini Tasfiye Edin:** Artık size hizmet etmeyen, enerjinizi tüketen eski anlaşmaları, kangren olmuş ilişkileri ve verimsiz alışkanlıkları geride bırakmaktan çekinmeyin. Boşluk açmadan yenisi gelemez.\n`;
+        conclusion += `2. **Dijital ve Teknik Becerilerinizi Kurumsallaştırın:** 2026 ve sonrasında Uranüs İkizler ve Plüton Kova hattı, modern teknolojileri, yapay zekayı ve dijital sistemleri işine entegre edebilenleri ödüllendirecektir. Yeteneklerinizi sistemli bir iş modeline dönüştürün.\n`;
+        conclusion += `3. **Maddi Alanınızı Sağlamlaştırın:** Gelirlerinizi spekülasyona değil, somut, değer kaybetmeyen varlıklara (mülk, altyapı, teknik donanım) yönlendirin. 8. ev krizlerini önlemenin en iyi yolu şeffaf muhasebedir.\n`;
+        conclusion += `4. **Özerk Sisteminizi Kurun:** Kendi kurallarınızı belirleyebileceğiniz, liyakatinizin doğrudan karşılık bulduğu alanlara odaklanın. Enerjinizi başkalarını ikna etmeye değil, mükemmel sonuçlar üretmeye harcayın.\n`;
+        conclusion += `5. **Bedeninize Saygı Gösterin:** Zihniniz ne kadar güçlü olursa olsun, onu taşıyan fiziksel tapınağınızdır. Uyku ritminizi ve bedensel dinlenmenizi hiçbir dünyevi telaşın kurbanı etmeyin.\n\n`;
+
+        conclusion += `> ### ✦ Kozmik Mühür\n`;
+        conclusion += `> *"Astra inclinant, sed non obligant."*\n`;
+        conclusion += `> **(Yıldızlar eğilimi gösterir, imkânları önünüze serer; ancak kaderinizin nihai mimarı sizin özgür iradeniz, dürüstlüğünüz ve emeğinizdir.)**\n`;
+
+        return `${sec1}\n---\n\n${sec2}\n---\n\n${sec3}\n---\n\n${sec4}\n---\n\n${sec5}\n---\n\n${sec6}\n---\n\n${sec7}\n---\n\n${conclusion}`;
+      }
+
+      // -----------------------------------------------------------------------
+      // 12. EXPORT TO MARKDOWN & PDF / PRINT
+      // -----------------------------------------------------------------------
+      function downloadMarkdownFile() {
+        if (!latestChartPayload) {
+          showStatus('Önce harita hesaplaması yapmalısınız.', 'warning');
+          return;
+        }
+        const d = latestChartPayload;
+        const headerMd = [
+          `# YILDIRIM ASTRA — Master Seviye Natal Harita & Astroloji Raporu`,
+          ``,
+          `- **Danışan:** ${d.meta.fullName}`,
+          `- **Doğum Tarihi & Saati:** ${d.meta.birthDateLocal} ${d.meta.birthTimeLocal}`,
+          `- **Saf UTC Zamanı:** ${d.meta.exactBirthDateUTC}`,
+          `- **Doğum Yeri:** ${d.meta.birthPlace} (${d.meta.birthCoordinates.latitude}°, ${d.meta.birthCoordinates.longitude}°)`,
+          `- **Şu Anki Yaşam Yeri (Relokasyon):** ${d.meta.currentResidence.place} (${d.meta.currentResidence.latitude}°, ${d.meta.currentResidence.longitude}°)`,
+          `- **Yerel Yıldız Zamanı (LST):** ${d.siderealAndAngles.localSiderealTime} | **Yükselen (ASC):** ${d.siderealAndAngles.ascendant.formattedDMS} | **MC:** ${d.siderealAndAngles.midheavenMC.formattedDMS}`,
+          `- **Harita Sekti:** ${d.sectAndHermeticLots.sectName}`,
+          `- **Şans Noktası (Pars Fortunae):** ${d.sectAndHermeticLots.parsFortunae.formattedDMS} (${d.sectAndHermeticLots.parsFortunae.placidusHouse}. Ev)`,
+          `- **Ruh Noktası (Pars Spiritus):** ${d.sectAndHermeticLots.parsSpiritus.formattedDMS} (${d.sectAndHermeticLots.parsSpiritus.placidusHouse}. Ev)`,
+          ``,
+          `## Teknik Ephemeris Özeti`,
+          `| Gök Cismi | Boylam | Burç & Derece | Hız / Rx | Ev (Placidus/WS) | Dekan | Mısır Terimi | Temel Asalet |`,
+          `|---|---|---|---|---|---|---|---|`,
+          ...d.ephemerisAndDignities.map(p =>
+            `| ${p.symbol} ${p.name} | ${p.longitude.toFixed(4)}° | ${p.formattedDMS} | ${p.retrogradeLabel} (${p.dailySpeed.toFixed(2)}°) | ${p.placidusHouse} / ${p.wholeSignHouse} | ${p.decan.label} | ${p.egyptianTerm.label} | ${p.dignity.status} |`
+          ),
+          ``,
+          `---`,
+          ``,
+          latestMarkdownReport || '*(AI metin analizi henüz üretilmedi.)*'
+        ].join('\n');
+
+        const blob = new Blob([headerMd], { type: 'text/markdown;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        const safeName = d.meta.fullName.toLowerCase().replace(/[^a-z0-9ğüşıöç]/gi, '_');
+        a.href = url;
+        a.download = `natal_analiz_${safeName || 'rapor'}.md`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }
+
+      // -----------------------------------------------------------------------
+      // 13. UI EVENT LISTENERS & INITIALIZATION
+      // -----------------------------------------------------------------------
+      function showStatus(message, type = 'info') {
+        const box = document.getElementById('statusAlert');
+        box.classList.remove('hidden');
+        const styles = {
+          success: 'bg-emerald-950/70 border-emerald-500/40 text-emerald-200',
+          warning: 'bg-amber-950/70 border-amber-500/40 text-amber-200',
+          error: 'bg-rose-950/70 border-rose-500/40 text-rose-200',
+          info: 'bg-sky-950/70 border-sky-500/40 text-sky-200'
+        };
+        box.className = `rounded-xl px-4 py-3 text-xs font-medium border ${styles[type] || styles.info}`;
+        box.textContent = message;
+      }
+
+
+
+      function triggerAutoTimezoneDetectionFromInputs() {
+        const yVal = document.getElementById('birthYear').value.trim();
+        const mVal = document.getElementById('birthMonth').value.trim();
+        const dVal = document.getElementById('birthDay').value.trim();
+        if (!yVal || !mVal || !dVal) {
+          return;
+        }
+        const year = parseInt(yVal, 10);
+        const month = parseInt(mVal, 10);
+        const day = parseInt(dVal, 10);
+        detectTurkeyTimezone(year, month, day);
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        // Doğum tarihi değiştikçe otomatik Türkiye saat dilimi tespitini çalıştır
+        ['birthDay', 'birthMonth', 'birthYear'].forEach(id => {
+          document.getElementById(id).addEventListener('change', triggerAutoTimezoneDetectionFromInputs);
+          document.getElementById(id).addEventListener('input', triggerAutoTimezoneDetectionFromInputs);
+        });
+
+        // "Tarihe Göre Tespit Et" butonu
+        document.getElementById('btnAutoDetectTz').addEventListener('click', () => {
+          triggerAutoTimezoneDetectionFromInputs();
+          performFullAstronomicalCalculation();
+        });
+
+        // Saat Dilimi açılır menüsü (tzOffset) değişim kontrolü
+        document.getElementById('tzOffset').addEventListener('change', (e) => {
+          const val = e.target.value;
+          const manualWrapper = document.getElementById('manualTzWrapper');
+          if (val === 'auto') {
+            triggerAutoTimezoneDetectionFromInputs();
+          } else if (val === 'manual') {
+            manualWrapper.classList.remove('hidden');
+            const mVal = parseFloat(document.getElementById('manualTzInput').value) || 0;
+            renderTzFeedback(
+              `🛠️ <em>Manuel saat dilimi girişi aktif: <strong>UTC${mVal >= 0 ? '+' : ''}${mVal}</strong> baz alınacak.</em>`,
+              'info'
+            );
+          } else {
+            manualWrapper.classList.add('hidden');
+            renderTzFeedback(
+              `📌 <em>Saat dilimi kullanıcı tarafından <strong>GMT+${val} (UTC+${val})</strong> olarak seçildi.</em>`,
+              'info'
+            );
+          }
+        });
+
+        document.getElementById('manualTzInput').addEventListener('input', (e) => {
+          const mVal = parseFloat(e.target.value);
+          if (!isNaN(mVal)) {
+            renderTzFeedback(
+              `🛠️ <em>Manuel saat dilimi girişi aktif: <strong>UTC${mVal >= 0 ? '+' : ''}${mVal}</strong> baz alınacak.</em>`,
+              'info'
+            );
+          }
+        });
+
+        document.getElementById('btnFindBirthCoords').addEventListener('click', () => {
+          const place = document.getElementById('birthPlace').value;
+          fetchCoordinatesFromNominatim(place, 'birthLat', 'birthLon', 'birthGeoSpinner', 'Doğum Yeri');
+        });
+
+        document.getElementById('btnFindRelocCoords').addEventListener('click', () => {
+          const place = document.getElementById('currentPlace').value;
+          fetchCoordinatesFromNominatim(place, 'relocLat', 'relocLon', 'relocGeoSpinner', 'Relokasyon Yeri');
+        });
+
+
+
+        document.getElementById('btnCalculateOnly').addEventListener('click', () => {
+          try {
+            performFullAstronomicalCalculation();
+            showStatus('📐 Astronomik Ephemeris, Evler, Asaletler, Arap Noktaları ve Orta Noktalar saf UTC zamanına göre hesaplandı.', 'success');
+            document.getElementById('resultsContainer').scrollIntoView({ behavior: 'smooth' });
+          } catch (err) {
+            showStatus(err.message, 'error');
+          }
+        });
+
+        function runLocalMasterSynthesis(payload) {
+          const loadingBox = document.getElementById('aiLoadingBox');
+          const reportArticle = document.getElementById('aiReportContent');
+          loadingBox.classList.remove('hidden');
+          reportArticle.innerHTML = '';
+
+          setTimeout(() => {
+            try {
+              const markdownText = generateLocalMasterReport(payload);
+              latestMarkdownReport = markdownText;
+              if (typeof marked !== 'undefined') {
+                marked.setOptions({ gfm: true, breaks: true });
+                reportArticle.innerHTML = marked.parse(markdownText);
+              } else {
+                reportArticle.innerHTML = `<pre class="whitespace-pre-wrap">${markdownText}</pre>`;
+              }
+              showStatus('✨ Dahili Master Astroloji Raporu başarıyla üretildi (Çevrimdışı / Yerel Motor).', 'success');
+            } catch (err) {
+              showStatus(`Rapor sentez hatası: ${err.message}`, 'error');
+              reportArticle.innerHTML = `<div class="p-4 bg-rose-950/60 border border-rose-500/40 rounded-xl text-rose-200">${err.message}</div>`;
+            } finally {
+              loadingBox.classList.add('hidden');
+            }
+          }, 60);
+        }
+
+        document.getElementById('astroForm').addEventListener('submit', (e) => {
+          e.preventDefault();
+          try {
+            const payload = performFullAstronomicalCalculation();
+            document.getElementById('resultsContainer').scrollIntoView({ behavior: 'smooth' });
+            runLocalMasterSynthesis(payload);
+          } catch (err) {
+            showStatus(err.message, 'error');
+          }
+        });
+
+        document.getElementById('btnRegenerateAI').addEventListener('click', () => {
+          try {
+            const payload = performFullAstronomicalCalculation();
+            runLocalMasterSynthesis(payload);
+          } catch (err) {
+            showStatus(err.message, 'error');
+          }
+        });
+
+        document.getElementById('btnDownloadMarkdown').addEventListener('click', downloadMarkdownFile);
+
+        document.getElementById('btnPrintPdf').addEventListener('click', () => {
+          window.print();
+        });
+
+        // Sayfa ilk açıldığında form temiz başlar; kullanıcı verileri girdiğinde hesaplama başlatılır.
+        const dayInput = document.getElementById('birthDay').value.trim();
+        if (dayInput) {
+          try {
+            triggerAutoTimezoneDetectionFromInputs();
+            const initialPayload = performFullAstronomicalCalculation();
+            runLocalMasterSynthesis(initialPayload);
+          } catch (err) {
+            console.error(err);
+          }
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
