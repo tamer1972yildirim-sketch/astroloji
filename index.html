@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>YILDIRIM ASTRA — Master Seviye Profesyonel Astroloji & Natal Harita Analiz Sistemi</title>
+  <title>YILDIRIM ASTRA — Master Seviye Profesyonel Astroloji &amp; Natal Harita Analiz Sistemi | Tamer Yıldırım</title>
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -251,7 +251,7 @@
 </head>
 <body class="min-h-screen selection:bg-amber-500 selection:text-slate-950">
 
-  <!-- TOP HEADER (SABİT DEĞİL: position relative/static - kaydırıldığında yukarıda kalır) -->
+  <!-- TOP HEADER -->
   <header class="relative border-b border-amber-500/20 bg-[#101430]/90 backdrop-blur-md z-10 no-print shadow-md">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row items-center justify-between gap-3">
       <div class="flex items-center gap-3">
@@ -395,7 +395,7 @@
           </div>
         </div>
 
-        <!-- Saat Dilimi (UTC/GMT) Modülü - Bağımsız ve Taşmayan Satır -->
+        <!-- Saat Dilimi (UTC/GMT) Modülü -->
         <div class="rounded-xl bg-[#131838]/70 border border-amber-500/20 p-3.5">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 mb-2">
             <label for="tzOffset" class="block text-xs font-semibold uppercase tracking-wider text-amber-300">
@@ -438,13 +438,12 @@
           <div id="tzFeedbackBox" class="hidden mt-2.5 rounded-lg px-3 py-2 text-xs leading-relaxed border"></div>
         </div>
 
-        <!-- 4. Doğum Yeri & Koordinatlar (Mobilde Alt Alta) -->
+        <!-- 4. Doğum Yeri & Koordinatlar -->
         <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-end">
           <div class="md:col-span-6">
             <label for="birthPlace" class="block text-xs font-semibold uppercase tracking-wider text-amber-300 mb-1.5">
               4. Doğum Yeri <span class="text-slate-300 font-normal">(İl, İlçe, Mahalle)</span>
             </label>
-            <!-- Mobilde alt alta, sm ve üzerinde yan yana -->
             <div class="flex flex-col sm:flex-row gap-2">
               <input
                 type="text"
@@ -490,7 +489,7 @@
           </div>
         </div>
 
-        <!-- 6. Şu Anki Yaşam Yeri (Relokasyon) - Mobilde Alt Alta -->
+        <!-- 6. Şu Anki Yaşam Yeri (Relokasyon) -->
         <div class="pt-3 border-t border-slate-700/60">
           <label for="currentPlace" class="block text-xs font-semibold uppercase tracking-wider text-amber-300 mb-1.5">
             6. Şu Anki Yaşam Yeri <span class="text-slate-300 font-normal">(Relokasyon / Yer Değişimi Analizi İçin)</span>
@@ -512,7 +511,6 @@
             </button>
           </div>
 
-          <!-- Mobilde tam genişlik (grid-cols-1 sm:grid-cols-2) taşmayan kutular -->
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
             <div class="flex items-center gap-2 bg-[#121633]/90 border border-slate-700/60 rounded-xl px-3 py-2">
               <span class="text-xs text-slate-300 whitespace-nowrap">Relok. Enlem:</span>
@@ -539,7 +537,7 @@
 
         <div id="statusAlert" class="hidden rounded-xl px-4 py-3 text-xs font-medium border"></div>
 
-        <!-- Hesaplama Butonları (Tek güçlü ana buton) -->
+        <!-- Hesaplama Butonları -->
         <div class="pt-3 border-t border-amber-500/20 flex flex-col sm:flex-row justify-end gap-3">
           <button
             type="submit"
@@ -552,7 +550,7 @@
       </form>
     </section>
 
-    <!-- SONUÇLAR ALANI (Hesaplama yapılınca görünür) -->
+    <!-- SONUÇLAR ALANI -->
     <div id="resultsContainer" class="hidden space-y-6">
 
       <!-- Özet Kartlar -->
@@ -573,7 +571,7 @@
           <div id="natalWheelContainer" class="w-full max-w-[340px] aspect-square flex items-center justify-center"></div>
         </div>
 
-        <!-- 1 ADET DERLİ TOPLU ÖZET GEZEGEN VE EV TABLOSU -->
+        <!-- Özet Gezegen ve Ev Tablosu -->
         <div class="lg:col-span-7 cosmic-card rounded-2xl p-4 sm:p-5">
           <div class="flex items-center justify-between mb-3 border-b border-amber-500/20 pb-2">
             <h3 class="font-display text-sm sm:text-base font-bold gold-gradient-text">
@@ -598,7 +596,7 @@
             </table>
           </div>
 
-          <!-- İLERİ SEVİYE TEKNİK DETAYLAR (GİZLİ AKORDİYON) -->
+          <!-- İLERİ SEVİYE TEKNİK DETAYLAR -->
           <div class="mt-4 pt-3 border-t border-slate-800/80">
             <details class="group">
               <summary class="cursor-pointer text-xs font-mono text-amber-300/80 hover:text-amber-200 flex items-center justify-between select-none py-1">
@@ -606,7 +604,6 @@
                 <span class="group-open:rotate-180 transition-transform">▼</span>
               </summary>
               <div class="mt-3 space-y-4">
-                <!-- 12 Ev Girişleri -->
                 <div class="overflow-x-auto w-full rounded-lg border border-slate-800">
                   <table class="w-full text-left text-[11px] font-mono">
                     <thead class="bg-slate-900 text-amber-300">
@@ -622,7 +619,6 @@
                   </table>
                 </div>
 
-                <!-- İkincil İlerletimler & Sekt -->
                 <div id="advancedSubDetails" class="p-3 rounded-lg bg-slate-950/70 border border-slate-800 text-xs text-slate-300 space-y-1"></div>
               </div>
             </details>
@@ -630,7 +626,7 @@
         </div>
       </section>
 
-      <!-- GERÇEK VE ÖZGÜN METİN ANALİZİ (6 NET BAŞLIK) -->
+      <!-- KİŞİYE ÖZEL DOĞUM HARİTASI ANALİZİ -->
       <section class="cosmic-card rounded-2xl p-5 sm:p-8">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 mb-5 border-b border-amber-500/20">
           <div>
@@ -666,8 +662,15 @@
     </div>
   </main>
 
-  <footer class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 text-center text-xs text-slate-400 border-t border-slate-800/80 no-print">
-    YILDIRIM ASTRA • Master Seviye Profesyonel Astroloji Sistemi • Astronomy Engine v2.1.19
+  <footer class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 mt-6 text-center border-t border-amber-500/20 no-print">
+    <div class="inline-flex flex-col items-center gap-1.5 px-6 py-3 rounded-2xl bg-[#121633]/80 border border-amber-500/25 shadow-lg">
+      <div class="font-display text-xs sm:text-sm font-bold tracking-wider gold-gradient-text">
+        ⚡ Tasarım &amp; Geliştirme: Tamer Yıldırım
+      </div>
+      <div class="text-[11px] font-mono text-slate-400">
+        YILDIRIM ASTRA • Master Seviye Astroloji &amp; Natal Harita Analiz Sistemi • &copy; 2026
+      </div>
+    </div>
   </footer>
 
   <!-- ========================================================================= -->
@@ -1118,7 +1121,7 @@
       }
 
       // -----------------------------------------------------------------------
-      // 5. OPENSTREETMAP NOMINATIM GEOCODING (MOBİL UYUMLU)
+      // 5. OPENSTREETMAP NOMINATIM GEOCODING
       // -----------------------------------------------------------------------
       async function fetchCoordinates(queryText, latInputId, lonInputId, spinnerId, label) {
         const q = queryText.trim();
@@ -1150,7 +1153,7 @@
       }
 
       // -----------------------------------------------------------------------
-      // 6. GERÇEK, ÖZGÜN VE KİŞİYE ÖZEL 6 BÖLÜMLÜK ANALİZ MOTORU
+      // 6. KİŞİYE ÖZEL 6 BÖLÜMLÜK ANALİZ MOTORU
       // -----------------------------------------------------------------------
       function generateUniquePersonalReport(data) {
         const pMap = {};
@@ -1163,16 +1166,12 @@
         const mer = pMap['Merkür'];
         const mar = pMap['Mars'];
         const ven = pMap['Venüs'];
-        const jup = pMap['Jüpiter'];
-        const sat = pMap['Satürn'];
-        const node = pMap['Kuzey Ay Düğümü'];
 
         const h2 = data.houses.placidusHouses[1];
         const h4 = data.houses.placidusHouses[3];
         const h6 = data.houses.placidusHouses[5];
         const h7 = data.houses.placidusHouses[6];
         const h8 = data.houses.placidusHouses[7];
-        const h10 = data.houses.placidusHouses[9];
 
         const sunP = SIGN_PROFILES[sun.signName];
         const moonP = SIGN_PROFILES[moon.signName];
@@ -1200,7 +1199,6 @@
         md += `### 1.3. Duygusal İç Dünyanız ve Saklı Refleksleriniz (Ay ${moon.signName})\n`;
         md += `Yalnız kaldığınızda veya en sevdiklerinizin yanındayken devreye giren duygusal pusulanız ise **${moon.signName}** burcundadır. ${moonP.duygu} `;
 
-        // Element uyum analizi (İçsel çatışma mı, uyum mu?)
         if (sun.element === moon.element) {
           md += `Güneş'iniz ve Ay'ınız aynı elementte (${sun.element}) buluştuğu için hissettikleriniz ile yapmak istedikleriniz arasında muazzam bir içsel uzlaşı vardır; ne istediğinizi çok iyi bilir ve kararlarınızda tutarlı olursunuz.\n\n`;
         } else if (
@@ -1238,7 +1236,7 @@
         md += `- **İlişkilerde Aradığınız Partner Tipi (7. Ev ${h7.signName}):** Hayatınıza çekeceğiniz veya uzun vadeli yoldaşlık kurabileceğiniz kişi ${h7P.kimlik.slice(0, 65)}... niteliklerini taşımalıdır. Olgun, ne istediğini bilen ve hayatın yükünü paylaşabilen insanlarla kalıcı bağ kurabilirsiniz.\n`;
         md += `- **Ev İçi Düzen ve Aile Huzuru (4. Ev ${h4.signName}):** Yaşam alanınız sizin için ${h4P.evHuzuru.toLowerCase()} niteliğinde olmalıdır. Kapıyı kapattığınızda dış dünyanın gürültüsünden arınmak, huzurla nefes almak ve kendi kurallarınızla yaşamak en temel ruhsal şarjınızdır.\n\n`;
 
-        // BÖLÜM 5: GEZEGENLERİN BİRBİRİYLE ETKİLEŞİMİ (EN ÖNEMLİ AÇILAR)
+        // BÖLÜM 5: GEZEGENLERİN BİRBİRİYLE ETKİLEŞİMİ
         md += `## 5. Gezegenlerin Birbiriyle Etkileşimi (Haritanızdaki En Önemli Açılar)\n\n`;
         if (data.aspects && data.aspects.length > 0) {
           md += `Haritanızda gökyüzünün oluşturduğu en net ve güçlü açısal temaslar şunlardır:\n\n`;
@@ -1330,11 +1328,9 @@
           throw new Error('Lütfen geçerli bir saat dilimi seçiniz.');
         }
 
-        // Kesin UTC Tarihi (Yerel saat bozulmadan)
         const utcTimestamp = Date.UTC(year, month - 1, day, hour, minute, 0) - (offsetHours * 3600 * 1000);
         const exactUtcDate = new Date(utcTimestamp);
 
-        // Hesaplamalar
         const natalHouses = calculateHousesAndAngles(exactUtcDate, birthLat, birthLon);
         const relocHouses = calculateHousesAndAngles(exactUtcDate, relocLat, relocLon);
 
@@ -1392,7 +1388,6 @@
         const asc = data.houses.asc;
         const mc = data.houses.mc;
 
-        // 1. Özet Kartlar
         const summaryCards = [
           { label: 'Güneş', value: `${sun.symbol} ${sun.signName}`, sub: `${formatDM(sun.degreeInSign)} • ${sun.house}. Ev` },
           { label: 'Ay', value: `${moon.symbol} ${moon.signName}`, sub: `${formatDM(moon.degreeInSign)} • ${moon.house}. Ev` },
@@ -1410,10 +1405,8 @@
           </div>
         `).join('');
 
-        // 2. SVG Çark
         renderWheelSVG(data);
 
-        // 3. Tek Derli Toplu Özet Tablo
         document.getElementById('cleanSummaryTableBody').innerHTML = data.bodies.map(b => `
           <tr class="hover:bg-slate-800/40 transition-colors">
             <td class="py-2 px-3 font-sans font-semibold text-amber-300 whitespace-nowrap">
@@ -1431,7 +1424,6 @@
           </tr>
         `).join('');
 
-        // 4. İleri Seviye Gizli Akordiyon Tabloları
         document.getElementById('housesSubTableBody').innerHTML = data.houses.placidusHouses.map((h, i) => {
           const rh = data.relocationHouses.placidusHouses[i];
           const delta = Number(shortestArc(h.longitude, rh.longitude).toFixed(2));
@@ -1452,7 +1444,6 @@
           <div><strong>Açı Sayısı:</strong> ${data.aspects.length} adet temel açısal temas tespit edildi.</div>
         `;
 
-        // 5. Özgün Metin Analizi
         const reportMd = generateUniquePersonalReport(data);
         latestMarkdownText = reportMd;
         if (typeof marked !== 'undefined') {
@@ -1492,7 +1483,6 @@
           `<circle cx="${cx}" cy="${cy}" r="${rHouseInner}" fill="#0d122b" stroke="#f59e0b" stroke-width="0.8" stroke-opacity="0.3" />`
         ];
 
-        // Burç dilimleri
         for (let i = 0; i < 12; i++) {
           const sLon = i * 30;
           const a1 = lonToAngle(sLon);
@@ -1507,7 +1497,6 @@
           svg.push(`<text x="${pSym.x.toFixed(1)}" y="${pSym.y.toFixed(1)}" fill="${col}" font-size="11" font-weight="bold" text-anchor="middle" dominant-baseline="central">${sign.symbol}</text>`);
         }
 
-        // Ev çizgileri
         data.houses.placidusHouses.forEach((h, idx) => {
           const a = lonToAngle(h.longitude);
           const isAngle = [0, 3, 6, 9].includes(idx);
@@ -1516,7 +1505,6 @@
           svg.push(`<line x1="${p1.x.toFixed(1)}" y1="${p1.y.toFixed(1)}" x2="${p2.x.toFixed(1)}" y2="${p2.y.toFixed(1)}" stroke="${isAngle ? '#fbbf24' : '#64748b'}" stroke-width="${isAngle ? '1.5' : '0.6'}" stroke-opacity="${isAngle ? '0.9' : '0.4'}" />`);
         });
 
-        // Gezegen glifleri
         const rP = 98;
         data.bodies.forEach((p, idx) => {
           const a = lonToAngle(p.longitude);
